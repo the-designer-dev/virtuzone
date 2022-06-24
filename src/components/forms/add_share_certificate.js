@@ -17,7 +17,6 @@ import {
   Button
 } from '@mui/material';
 import dynamic from 'next/dynamic';
-const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 
 function AddShareCertificate() {
   const [allEmails, setAllEmails] = useState([]);
@@ -36,18 +35,11 @@ function AddShareCertificate() {
       setAllEmails(res.data.user);
       console.log(res.data.user);
     });
-
-    const importModule = async () => {
-      const module = await import('react-rte');
-      setValue(module.createEmptyValue());
-    };
-    importModule();
   }, []);
 
   function onSubmit(e) {
     e.preventDefault();
     const form = new FormData();
-
     form.append('share-certificate', file);
     form.append('user', ID);
 

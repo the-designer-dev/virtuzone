@@ -39,7 +39,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const ArticleOfIncorporationTable = ({ data }) => {
+const ShareCertificateTable = ({ data, setImage }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -94,7 +94,7 @@ const ArticleOfIncorporationTable = ({ data }) => {
             </FormControl>
           </Box>
         }
-        title="Office Lease Agreement"
+        title="Share Ceritifcate"
       />
       <Divider />
       <TableContainer>
@@ -135,7 +135,11 @@ const ArticleOfIncorporationTable = ({ data }) => {
 
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
-                    <Button sx={{ margin: 1 }} variant="contained">
+                    <Button
+                      sx={{ margin: 1 }}
+                      onClick={() => setImage(el.file)}
+                      variant="contained"
+                    >
                       View
                     </Button>
                   </Tooltip>
@@ -188,4 +192,4 @@ const ArticleOfIncorporationTable = ({ data }) => {
   );
 };
 
-export default ArticleOfIncorporationTable;
+export default ShareCertificateTable;

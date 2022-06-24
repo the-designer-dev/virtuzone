@@ -3,38 +3,42 @@ import Head from 'next/head';
 import { useState } from 'react';
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import Modal from '../../src/components/modal';
-import AddArticleOfIncorporation from '../../src/components/forms/add_article_of_incorporation';
+import AddShareCertificate from '../../src/components/forms/add_share_certificate';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import ArticleOfIncorporationTable from '../../src/components/table/articleOfIncorporationTable';
+import ShareCertificateTable from '../../src/components/table/shareCertificateTable';
 import { useEffect } from 'react';
 import axios from 'axios';
+import DisplayImage from '../../src/components/displayImage/displayImage';
+import ImageModal from '../../src/components/modal/imageModal';
 
-function ArticleOfIncorporation() {
+function ShareCertificate() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/articlesofincorporation`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/sharecertificate`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      SetAllData(res.data.articlesOfIncorporation);
+      SetAllData(res.data.shareCertificate);
     });
   }, []);
   return (
     <>
       <Head>
-        <title>Article of Incorporation - Virtuzone</title>
+        <title>Share Ceritifcate - Virtuzone</title>
       </Head>
 
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Article of Incorporation
+              Share Ceritifcate
             </Typography>
           </Grid>
           <Grid item>
@@ -44,7 +48,7 @@ function ArticleOfIncorporation() {
               variant="contained"
               startIcon={<AddTwoToneIcon fontSize="small" />}
             >
-              Add Article of Incorporation
+              Add Share Ceritifcate
             </Button>
           </Grid>
         </Grid>
@@ -58,11 +62,17 @@ function ArticleOfIncorporation() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <ArticleOfIncorporationTable data={allData} />
+            <ShareCertificateTable setImage={setImage} data={allData} />
             <Modal
               open={open}
               setOpen={setOpen}
-              children={<AddArticleOfIncorporation />}
+              children={<AddShareCertificate />}
+            />
+
+            <ImageModal
+              image={image}
+              setImage={setImage}
+              children={<DisplayImage image={image} />}
             />
           </Grid>
         </Grid>
@@ -71,8 +81,6 @@ function ArticleOfIncorporation() {
   );
 }
 
-ArticleOfIncorporation.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ShareCertificate.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
-export default ArticleOfIncorporation;
+export default ShareCertificate;
