@@ -70,6 +70,10 @@ function AddArticleOfIncorporation() {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
       data: form
+    }).then((res) => {
+      if (res.status === 200) {
+        setShouldUpdate(!shouldUpdate);
+      }
     });
   }
 

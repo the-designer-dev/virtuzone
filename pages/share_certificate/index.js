@@ -16,8 +16,10 @@ function ShareCertificate() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
+  const [shouldUpdate, setShouldUpdate] = useState(null);
 
   useEffect(() => {
+    setOpen(false);
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/sharecertificate`,
@@ -27,7 +29,7 @@ function ShareCertificate() {
     }).then((res) => {
       SetAllData(res.data.shareCertificate);
     });
-  }, []);
+  }, [shouldUpdate]);
   return (
     <>
       <Head>
@@ -66,7 +68,12 @@ function ShareCertificate() {
             <Modal
               open={open}
               setOpen={setOpen}
-              children={<AddShareCertificate />}
+              children={
+                <AddShareCertificate
+                  shouldUpdate={shouldUpdate}
+                  setShouldUpdate={setShouldUpdate}
+                />
+              }
             />
 
             <ImageModal

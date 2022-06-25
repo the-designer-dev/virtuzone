@@ -18,12 +18,17 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
-function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
+function AddVisa({ shouldUpdate, setShouldUpdate }) {
+  const [allEmails, setAllEmails] = useState([]);
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
-  const [allEmails, setAllEmails] = useState([]);
   const [ID, setID] = useState(null);
   const [name, setName] = useState(null);
+  const [companyName, setCompanyName] = useState(null);
+  const [visaApplicant, setVisaApplicant] = useState(null);
+  const [visaUID, setVisaUID] = useState(null);
+  const [visaType, setVisaType] = useState(null);
+  const [jobTitle, setJobTitle] = useState(null);
   const [file, setFile] = useState(null);
   const [notify, setNotify] = useState(false);
   useEffect(() => {
@@ -42,15 +47,20 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
   function onSubmit(e) {
     e.preventDefault();
     const form = new FormData();
-
-    form.append('office-lease-agreement', file);
+    for (const key of Object.keys(file)) {
+      form.append('visa', file[key]);
+    }
     form.append('user', ID);
+    form.append('visaApplicant', visaApplicant);
+    form.append('visaUID', visaUID);
+    form.append('visaType', visaType);
+    form.append('jobTitle', jobTitle);
     form.append('dateOfIssue', issueDate);
     form.append('expiryDate', expiryDate);
 
     axios({
       method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/officeleaseagreements`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa`,
       headers: {
         'Content-Type': 'multipart/form-data',
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
@@ -66,7 +76,7 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
   return (
     <>
       <Head>
-        <title>Add Office Lease Agreement - Virtuzone</title>
+        <title>Add Visa - Virtuzone</title>
       </Head>
       <Container sx={{ mt: 2 }} maxWidth="lg">
         <Grid
@@ -78,7 +88,7 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
         >
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Add Office Lease Agreement" />
+              <CardHeader title="Add Visa" />
               <Divider />
               <CardContent>
                 <Box
@@ -96,6 +106,7 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
                       select
                       onChange={(e) => {
                         setName(JSON.parse(e.target.value).name);
+                        setCompanyName(JSON.parse(e.target.value).companyName);
                         setID(JSON.parse(e.target.value).id);
                       }}
                       id="outlined-required"
@@ -106,6 +117,7 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
                         <MenuItem
                           value={JSON.stringify({
                             name: `${el.firstName} ${el.lastName}`,
+                            companyName: el.companyName,
                             id: el._id
                           })}
                           key={el.email}
@@ -125,6 +137,50 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
                         shrink: true
                       }}
                     />
+                    <TextField
+                      id="outlined-number"
+                      value={companyName}
+                      label="Company Name"
+                      InputProps={{
+                        readOnly: true
+                      }}
+                      InputLabelProps={{
+                        shrink: true
+                      }}
+                    />
+                    <TextField
+                      id="outlined-password-input"
+                      label="VISA Applicant"
+                      onChange={(e) => setVisaApplicant(e.target.value)}
+                      placeholder="VISA Applicant"
+                    />
+                    <TextField
+                      required
+                      id="outlined-read-only-input"
+                      label="Visa UID"
+                      onChange={(e) => {
+                        setVisaUID(e.target.value);
+                      }}
+                      placeholder="Visa UID"
+                    />
+                    <TextField
+                      required
+                      id="outlined-required"
+                      label="Visa Type"
+                      onChange={(e) => {
+                        setVisaType(e.target.value);
+                      }}
+                      placeholder="Visa Type"
+                    />
+                    <TextField
+                      required
+                      id="outlined-required"
+                      label="Job Title"
+                      onChange={(e) => {
+                        setJobTitle(e.target.value);
+                      }}
+                      placeholder="Job Title"
+                    />
                     <DatePicker
                       label="Date of issue"
                       value={issueDate}
@@ -133,11 +189,11 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
                       }}
                       renderInput={(params) => <TextField {...params} />}
                     />
+
                     <DatePicker
                       label="Expiry Date"
                       value={expiryDate}
                       onChange={(newValue) => {
-                        console.log(newValue);
                         setExpiryDate(newValue);
                       }}
                       renderInput={(params) => <TextField {...params} />}
@@ -145,10 +201,11 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
                     <TextField
                       id="outlined-search"
                       label="Scan File"
-                      onChange={(e) => setFile(e.target.files[0])}
+                      onChange={(e) => setFile(e.target.files)}
                       InputLabelProps={{
                         shrink: true
                       }}
+                      inputProps={{ multiple: true }}
                       type={'file'}
                     />
                     <Box
@@ -175,4 +232,4 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate }) {
   );
 }
 
-export default AddOfficeLease;
+export default AddVisa;

@@ -15,10 +15,11 @@ import DisplayImage from '../../src/components/displayImage/displayImage';
 function TradeLicense() {
   const [open, setOpen] = useState(false);
   const [allLicenses, SetAllLicenses] = useState([]);
-
   const [image, setImage] = useState(null);
+  const [shouldUpdate, setShouldUpdate] = useState(null);
 
   useEffect(() => {
+    setOpen(false);
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/gettradelicense`,
@@ -26,7 +27,7 @@ function TradeLicense() {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => SetAllLicenses(res.data.tradeLicense));
-  }, []);
+  }, [shouldUpdate]);
   return (
     <>
       <Head>
@@ -62,7 +63,16 @@ function TradeLicense() {
         >
           <Grid item xs={12}>
             <TradeLicenseTable setImage={setImage} data={allLicenses} />
-            <Modal open={open} setOpen={setOpen} children={<AddLicense />} />
+            <Modal
+              open={open}
+              setOpen={setOpen}
+              children={
+                <AddLicense
+                  shouldUpdate={shouldUpdate}
+                  setShouldUpdate={setShouldUpdate}
+                />
+              }
+            />
 
             <ImageModal
               image={image}

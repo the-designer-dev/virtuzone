@@ -14,21 +14,23 @@ import DisplayImage from '../../src/components/displayImage/displayImage';
 
 function ImmigrationCard() {
   const [open, setOpen] = useState(false);
-  const [allAgreements, SetAllAgreements] = useState([]);
+  const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
+  const [shouldUpdate, setShouldUpdate] = useState(null);
 
   useEffect(() => {
+    setOpen(false);
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/officeleaseagreements`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/immigrationcard`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
       console.log(res.data);
-      SetAllAgreements(res.data.agreements);
+      SetAllData(res.data.immigrationCard);
     });
-  }, []);
+  }, [shouldUpdate]);
   return (
     <>
       <Head>
@@ -63,11 +65,16 @@ function ImmigrationCard() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <ImmigrationCardTable setImage={setImage} data={allAgreements} />
+            <ImmigrationCardTable setImage={setImage} data={allData} />
             <Modal
               open={open}
               setOpen={setOpen}
-              children={<AddImmigrationCard />}
+              children={
+                <AddImmigrationCard
+                  shouldUpdate={shouldUpdate}
+                  setShouldUpdate={setShouldUpdate}
+                />
+              }
             />
             <ImageModal
               image={image}

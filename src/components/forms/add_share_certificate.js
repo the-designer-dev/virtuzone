@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import dynamic from 'next/dynamic';
 
-function AddShareCertificate() {
+function AddShareCertificate({ shouldUpdate, setShouldUpdate }) {
   const [allEmails, setAllEmails] = useState([]);
   const [ID, setID] = useState(null);
   const [name, setName] = useState(null);
@@ -51,6 +51,10 @@ function AddShareCertificate() {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
       data: form
+    }).then((res) => {
+      if (res.status === 200) {
+        setShouldUpdate(!shouldUpdate);
+      }
     });
   }
 

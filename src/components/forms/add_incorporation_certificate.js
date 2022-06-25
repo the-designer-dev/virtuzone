@@ -17,7 +17,7 @@ import {
   Button
 } from '@mui/material';
 
-function AddIncorporationCertificate() {
+function AddIncorporationCertificate({ shouldUpdate, setShouldUpdate }) {
   const [allEmails, setAllEmails] = useState([]);
   const [ID, setID] = useState(null);
   const [name, setName] = useState(null);
@@ -50,6 +50,10 @@ function AddIncorporationCertificate() {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
       data: form
+    }).then((res) => {
+      if (res.status === 200) {
+        setShouldUpdate(!shouldUpdate);
+      }
     });
   }
 

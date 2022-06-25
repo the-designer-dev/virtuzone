@@ -9,6 +9,7 @@ import createEmotionCache from 'src/createEmotionCache';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import 'swiper/css';
 
 const clientSideEmotionCache = createEmotionCache();
 

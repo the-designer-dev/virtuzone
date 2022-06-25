@@ -18,7 +18,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
-function AddLicense() {
+function AddLicense({ shouldUpdate, setShouldUpdate }) {
   const [establishmentDate, setEstablishmentDate] = useState(null);
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
@@ -68,6 +68,10 @@ function AddLicense() {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
       data: form
+    }).then((res) => {
+      if (res.status === 200) {
+        setShouldUpdate(!shouldUpdate);
+      }
     });
   }
 

@@ -351,6 +351,19 @@ function SidebarMenu() {
           <SubMenuWrapper>
             <List component="div">
               <ListItem component="div">
+                <NextLink href="/visa" passHref>
+                  <Button
+                    className={currentRoute === '/visa' ? 'active' : ''}
+                    disableRipple
+                    component="a"
+                    onClick={closeSidebar}
+                    startIcon={<AccountCircleTwoToneIcon />}
+                  >
+                    Visa
+                  </Button>
+                </NextLink>
+              </ListItem>
+              <ListItem component="div">
                 <NextLink href="/management/profile" passHref>
                   <Button
                     className={
@@ -361,7 +374,7 @@ function SidebarMenu() {
                     onClick={closeSidebar}
                     startIcon={<AccountCircleTwoToneIcon />}
                   >
-                    Visas
+                    Salary Certificate
                   </Button>
                 </NextLink>
               </ListItem>

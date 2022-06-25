@@ -18,7 +18,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
-function AddImmigrationCard() {
+function AddImmigrationCard({ shouldUpdate, setShouldUpdate }) {
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
   const [allEmails, setAllEmails] = useState([]);
@@ -43,19 +43,23 @@ function AddImmigrationCard() {
     e.preventDefault();
     const form = new FormData();
 
-    form.append('office-lease-agreement', file);
+    form.append('immigration-card', file);
     form.append('user', ID);
     form.append('dateOfIssue', issueDate);
     form.append('expiryDate', expiryDate);
 
     axios({
       method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/officeleaseagreements`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/immigrationCard`,
       headers: {
         'Content-Type': 'multipart/form-data',
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
       data: form
+    }).then((res) => {
+      if (res.status === 200) {
+        setShouldUpdate(!shouldUpdate);
+      }
     });
   }
 
