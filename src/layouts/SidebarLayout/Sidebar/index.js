@@ -62,7 +62,9 @@ function Sidebar() {
                 width: 52
               }}
             >
-              <Typography variant={'h3'}>VIRTUZONE</Typography>
+              <Typography textAlign={'center'} color={'#fff'} variant={'h3'}>
+                VIRTUZONE
+              </Typography>
             </Box>
           </Box>
           <Divider

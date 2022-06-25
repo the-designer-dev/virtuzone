@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import {
   Tooltip,
   Divider,
@@ -38,7 +39,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const OfficeLeaseAgreementTable = ({ setImage, data }) => {
+const IncorporationCertificateTable = ({ data, setImage }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -93,7 +94,7 @@ const OfficeLeaseAgreementTable = ({ setImage, data }) => {
             </FormControl>
           </Box>
         }
-        title="Office Lease Agreement"
+        title="Incorporation Ceritifcate"
       />
       <Divider />
       <TableContainer>
@@ -102,8 +103,6 @@ const OfficeLeaseAgreementTable = ({ setImage, data }) => {
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Client Name</TableCell>
-              <TableCell>Date of Issue</TableCell>
-              <TableCell>Expiry Date</TableCell>
               <TableCell align="center">Scan File</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -133,33 +132,12 @@ const OfficeLeaseAgreementTable = ({ setImage, data }) => {
                     {el.user.firstName} {el.user.lastName}
                   </Typography>
                 </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.dateOfIssue}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.expiryDate}
-                  </Typography>
-                </TableCell>
+
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
                     <Button
-                      onClick={() => setImage(el.file)}
                       sx={{ margin: 1 }}
+                      onClick={() => setImage(el.file)}
                       variant="contained"
                     >
                       View
@@ -214,4 +192,4 @@ const OfficeLeaseAgreementTable = ({ setImage, data }) => {
   );
 };
 
-export default OfficeLeaseAgreementTable;
+export default IncorporationCertificateTable;

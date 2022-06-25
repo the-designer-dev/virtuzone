@@ -3,16 +3,16 @@ import Head from 'next/head';
 import { useState } from 'react';
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import Modal from '../../src/components/modal';
-import AddOfficeLease from '../../src/components/forms/add_office_lease';
+import AddImmigrationCard from '../../src/components/forms/add_immigration_card';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import OfficeLeaseAgreementTable from '../../src/components/table/officeLeaseAgreementTable';
+import ImmigrationCardTable from '../../src/components/table/immigrationCardTable';
 import { useEffect } from 'react';
 import axios from 'axios';
 import ImageModal from '../../src/components/modal/imageModal';
 import DisplayImage from '../../src/components/displayImage/displayImage';
 
-function OfficeLeaseAgreement() {
+function ImmigrationCard() {
   const [open, setOpen] = useState(false);
   const [allAgreements, SetAllAgreements] = useState([]);
   const [image, setImage] = useState(null);
@@ -32,14 +32,14 @@ function OfficeLeaseAgreement() {
   return (
     <>
       <Head>
-        <title>Office Lease Agreement - Virtuzone</title>
+        <title>Establishment/Immigration Card - Virtuzone</title>
       </Head>
 
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Office Lease Agreement
+              Establishment/Immigration Card
             </Typography>
           </Grid>
           <Grid item>
@@ -49,7 +49,7 @@ function OfficeLeaseAgreement() {
               variant="contained"
               startIcon={<AddTwoToneIcon fontSize="small" />}
             >
-              Add Office Lease Agreement
+              Add Establishment/Immigration Card
             </Button>
           </Grid>
         </Grid>
@@ -63,14 +63,11 @@ function OfficeLeaseAgreement() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <OfficeLeaseAgreementTable
-              setImage={setImage}
-              data={allAgreements}
-            />
+            <ImmigrationCardTable setImage={setImage} data={allAgreements} />
             <Modal
               open={open}
               setOpen={setOpen}
-              children={<AddOfficeLease />}
+              children={<AddImmigrationCard />}
             />
             <ImageModal
               image={image}
@@ -84,8 +81,6 @@ function OfficeLeaseAgreement() {
   );
 }
 
-OfficeLeaseAgreement.getLayout = (page) => (
-  <SidebarLayout>{page}</SidebarLayout>
-);
+ImmigrationCard.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
-export default OfficeLeaseAgreement;
+export default ImmigrationCard;

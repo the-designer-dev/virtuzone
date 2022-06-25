@@ -43,7 +43,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const TradeLicenseTable = ({ data }) => {
+const TradeLicenseTable = ({ setImage, data }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -236,7 +236,11 @@ const TradeLicenseTable = ({ data }) => {
 
                 <TableCell align="right">
                   <Tooltip title="View Issued License" arrow>
-                    <Button sx={{ margin: 1 }} variant="contained">
+                    <Button
+                      onClick={() => setImage(el.file)}
+                      sx={{ margin: 1 }}
+                      variant="contained"
+                    >
                       View
                     </Button>
                   </Tooltip>

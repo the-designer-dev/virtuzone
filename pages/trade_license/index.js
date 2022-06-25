@@ -9,10 +9,15 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import TradeLicenseTable from '../../src/components/table/tradeLicenseTable';
 import { useEffect } from 'react';
 import axios from 'axios';
+import ImageModal from '../../src/components/modal/imageModal';
+import DisplayImage from '../../src/components/displayImage/displayImage';
 
 function TradeLicense() {
   const [open, setOpen] = useState(false);
   const [allLicenses, SetAllLicenses] = useState([]);
+
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
     axios({
       method: 'GET',
@@ -56,8 +61,14 @@ function TradeLicense() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <TradeLicenseTable data={allLicenses} />
+            <TradeLicenseTable setImage={setImage} data={allLicenses} />
             <Modal open={open} setOpen={setOpen} children={<AddLicense />} />
+
+            <ImageModal
+              image={image}
+              setImage={setImage}
+              children={<DisplayImage image={image} />}
+            />
           </Grid>
         </Grid>
       </Container>

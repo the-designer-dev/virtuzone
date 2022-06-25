@@ -9,10 +9,14 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import ArticleOfIncorporationTable from '../../src/components/table/articleOfIncorporationTable';
 import { useEffect } from 'react';
 import axios from 'axios';
+import ImageModal from '../../src/components/modal/imageModal';
+import DisplayImage from '../../src/components/displayImage/displayImage';
 
 function ArticleOfIncorporation() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
     axios({
       method: 'GET',
@@ -58,11 +62,16 @@ function ArticleOfIncorporation() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <ArticleOfIncorporationTable data={allData} />
+            <ArticleOfIncorporationTable setImage={setImage} data={allData} />
             <Modal
               open={open}
               setOpen={setOpen}
               children={<AddArticleOfIncorporation />}
+            />
+            <ImageModal
+              image={image}
+              setImage={setImage}
+              children={<DisplayImage image={image} />}
             />
           </Grid>
         </Grid>

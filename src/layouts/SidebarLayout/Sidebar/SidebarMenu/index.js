@@ -275,10 +275,12 @@ function SidebarMenu() {
                 </NextLink>
               </ListItem>
               <ListItem component="div">
-                <NextLink href="/applications/messenger" passHref>
+                <NextLink href="/incorporation_certificate" passHref>
                   <Button
                     className={
-                      currentRoute === '/applications/messenger' ? 'active' : ''
+                      currentRoute === '/incorporation_certificate'
+                        ? 'active'
+                        : ''
                     }
                     disableRipple
                     component="a"
@@ -289,26 +291,12 @@ function SidebarMenu() {
                   </Button>
                 </NextLink>
               </ListItem>
+
               <ListItem component="div">
-                <NextLink href="/applications/messenger" passHref>
+                <NextLink href="/immigration_card" passHref>
                   <Button
                     className={
-                      currentRoute === '/applications/messenger' ? 'active' : ''
-                    }
-                    disableRipple
-                    component="a"
-                    onClick={closeSidebar}
-                    startIcon={<MmsTwoToneIcon />}
-                  >
-                    Incorporation Certificate
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component="div">
-                <NextLink href="/applications/messenger" passHref>
-                  <Button
-                    className={
-                      currentRoute === '/applications/messenger' ? 'active' : ''
+                      currentRoute === '/immigration_card' ? 'active' : ''
                     }
                     disableRipple
                     component="a"

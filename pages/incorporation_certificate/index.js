@@ -3,43 +3,42 @@ import Head from 'next/head';
 import { useState } from 'react';
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import Modal from '../../src/components/modal';
-import AddOfficeLease from '../../src/components/forms/add_office_lease';
+import AddIncorporationCertificate from '../../src/components/forms/add_incorporation_certificate';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import OfficeLeaseAgreementTable from '../../src/components/table/officeLeaseAgreementTable';
+import IncorporationCertificateTable from '../../src/components/table/incorporationCertificateTable';
 import { useEffect } from 'react';
 import axios from 'axios';
-import ImageModal from '../../src/components/modal/imageModal';
 import DisplayImage from '../../src/components/displayImage/displayImage';
+import ImageModal from '../../src/components/modal/imageModal';
 
-function OfficeLeaseAgreement() {
+function IncorporationCertificate() {
   const [open, setOpen] = useState(false);
-  const [allAgreements, SetAllAgreements] = useState([]);
+  const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
 
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/officeleaseagreements`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/incorporationCertificate`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      console.log(res.data);
-      SetAllAgreements(res.data.agreements);
+      SetAllData(res.data.incorporationCertificate);
     });
   }, []);
   return (
     <>
       <Head>
-        <title>Office Lease Agreement - Virtuzone</title>
+        <title>Incorporation Ceritifcate - Virtuzone</title>
       </Head>
 
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Office Lease Agreement
+              Incorporation Ceritifcate
             </Typography>
           </Grid>
           <Grid item>
@@ -49,7 +48,7 @@ function OfficeLeaseAgreement() {
               variant="contained"
               startIcon={<AddTwoToneIcon fontSize="small" />}
             >
-              Add Office Lease Agreement
+              Add Incorporation Ceritifcate
             </Button>
           </Grid>
         </Grid>
@@ -63,15 +62,13 @@ function OfficeLeaseAgreement() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <OfficeLeaseAgreementTable
-              setImage={setImage}
-              data={allAgreements}
-            />
+            <IncorporationCertificateTable setImage={setImage} data={allData} />
             <Modal
               open={open}
               setOpen={setOpen}
-              children={<AddOfficeLease />}
+              children={<AddIncorporationCertificate />}
             />
+
             <ImageModal
               image={image}
               setImage={setImage}
@@ -84,8 +81,8 @@ function OfficeLeaseAgreement() {
   );
 }
 
-OfficeLeaseAgreement.getLayout = (page) => (
+IncorporationCertificate.getLayout = (page) => (
   <SidebarLayout>{page}</SidebarLayout>
 );
 
-export default OfficeLeaseAgreement;
+export default IncorporationCertificate;

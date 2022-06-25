@@ -38,7 +38,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const OfficeLeaseAgreementTable = ({ setImage, data }) => {
+const ImmigrationCardTable = ({ setImage, data }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -93,7 +93,7 @@ const OfficeLeaseAgreementTable = ({ setImage, data }) => {
             </FormControl>
           </Box>
         }
-        title="Office Lease Agreement"
+        title="Establishment/Immigration Card"
       />
       <Divider />
       <TableContainer>
@@ -214,4 +214,4 @@ const OfficeLeaseAgreementTable = ({ setImage, data }) => {
   );
 };
 
-export default OfficeLeaseAgreementTable;
+export default ImmigrationCardTable;
