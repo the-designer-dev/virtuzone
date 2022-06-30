@@ -22,7 +22,7 @@ function Company() {
   const { user } = router.query;
   useEffect(() => {
     setOpen(false);
-    if (user !== undefined) {
+    if (user !== undefined || user !== null) {
       axios({
         method: 'GET',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${user}`,
