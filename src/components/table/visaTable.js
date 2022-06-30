@@ -157,7 +157,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.user.companyName}
+                    {el.visaApplicant}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -168,7 +168,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.user.companyName}
+                    {el.visaUID}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -179,7 +179,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.user.companyName}
+                    {el.visaType}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -190,7 +190,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.user.companyName}
+                    {el.jobTitle}
                   </Typography>
                 </TableCell>
                 <TableCell>

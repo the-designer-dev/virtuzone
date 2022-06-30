@@ -4,7 +4,7 @@ import '@mui/lab/themeAugmentation';
 // import i18n from 'src/i18n/i18n';
 
 const themeColors = {
-  primary: '#5569ff',
+  primary: '#cf3239',
   secondary: '#6E759F',
   success: '#57CA22',
   warning: '#FFA319',
@@ -12,6 +12,7 @@ const themeColors = {
   info: '#33C2FF',
   black: '#223354',
   white: '#ffffff',
+  red: '#cf3239',
   primaryAlt: '#000C57'
 };
 
@@ -55,12 +56,12 @@ const colors = {
       bodyBg: '#f2f5f9'
     },
     sidebar: {
-      background: themeColors.white,
+      background: themeColors.red,
       textColor: themeColors.secondary,
       dividerBg: '#f2f5f9',
       menuItemColor: '#242E6F',
       menuItemColorActive: themeColors.primary,
-      menuItemBg: themeColors.white,
+      menuItemBg: themeColors.red,
       menuItemBgActive: '#f2f5f9',
       menuItemIconColor: lighten(themeColors.secondary, 0.3),
       menuItemIconColorActive: themeColors.primary,
@@ -246,7 +247,7 @@ export const PureLightTheme = createTheme({
   },
   header: {
     height: '80px',
-    background: colors.alpha.white[100],
+    background: themeColors.red,
     boxShadow: colors.shadows.cardSm,
     textColor: colors.secondary.main
   },

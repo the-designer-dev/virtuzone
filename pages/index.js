@@ -37,12 +37,12 @@ function Overview() {
   return (
     <OverviewWrapper>
       <Head>
-        <title>Tokyo Free White NextJS Javascript Admin Dashboard</title>
+        <title>VIRTUZONE</title>
       </Head>
       <HeaderWrapper>
         <Container maxWidth="lg">
           <Box display="flex" alignItems="center">
-            <Logo />
+            <h1>VIRTUZONE</h1>
             <Box
               display="flex"
               alignItems="center"
@@ -53,7 +53,7 @@ function Overview() {
               <Box>
                 <Button
                   component={Link}
-                  href="/dashboards/crypto"
+                  href={`/trade_license`}
                   variant="contained"
                   sx={{ ml: 2 }}
                 >
@@ -64,19 +64,6 @@ function Overview() {
           </Box>
         </Container>
       </HeaderWrapper>
-      <Hero />
-      <Container maxWidth="lg" sx={{ mt: 8 }}>
-        <Typography textAlign="center" variant="subtitle1">
-          Crafted by{' '}
-          <Link
-            href="https://bloomui.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            BloomUI.com
-          </Link>
-        </Typography>
-      </Container>
     </OverviewWrapper>
   );
 }

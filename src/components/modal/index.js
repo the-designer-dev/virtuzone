@@ -14,12 +14,23 @@ const style = {
   boxShadow: 24
 };
 
-export default function BasicModal({ open, setOpen, children }) {
+export default function BasicModal({
+  open,
+  setOpen,
+  children,
+  edit,
+  setEdit,
+  setData
+}) {
   return (
     <div>
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={open || edit}
+        onClose={() => {
+          setOpen(false);
+          setEdit(false);
+          setData(null);
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

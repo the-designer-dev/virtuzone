@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import axios from 'axios';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import {
   Grid,
@@ -14,19 +17,12 @@ import {
   Button
 } from '@mui/material';
 
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useState } from 'react';
-import axios from 'axios';
-import { useEffect } from 'react';
-function AddOfficeLease({ shouldUpdate, setShouldUpdate, edit, id, data }) {
-  const [issueDate, setIssueDate] = useState(data ? data.dateOfIssue : null);
-  const [expiryDate, setExpiryDate] = useState(data ? data.expiryDate : null);
+function AddSalaryCertificate({ shouldUpdate, setShouldUpdate }) {
   const [allEmails, setAllEmails] = useState([]);
-  const [ID, setID] = useState(data ? data.user._id : null);
-  const [name, setName] = useState(
-    data ? `${data.user.firstName} ${data.user.lastName}` : null
-  );
-  const [file, setFile] = useState(data ? data.expiryDate : null);
+  const [ID, setID] = useState(null);
+  const [name, setName] = useState(null);
+  const [file, setFile] = useState(null);
+  const [visa, setVisa] = useState(null);
   const [notify, setNotify] = useState(false);
   useEffect(() => {
     axios({
@@ -39,57 +35,34 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate, edit, id, data }) {
       setAllEmails(res.data.user);
       console.log(res.data.user);
     });
-    if (edit === true) {
-    }
   }, []);
 
   function onSubmit(e) {
     e.preventDefault();
     const form = new FormData();
-
-    form.append('office-lease-agreement', file);
     form.append('user', ID);
-    form.append('dateOfIssue', issueDate);
-    form.append('expiryDate', expiryDate);
+    form.append('visa', visa);
+    form.append('salary-certificate', file);
 
-    if (edit !== true) {
-      axios({
-        method: 'POST',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/officeleaseagreements`,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-        },
-        data: form
-      }).then((res) => {
-        if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-        }
-      });
-    } else {
-      axios({
-        method: 'PUT',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/officeleaseagreements`,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-        },
-        params: {
-          _id: id
-        },
-        data: form
-      }).then((res) => {
-        if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-        }
-      });
-    }
+    axios({
+      method: 'POST',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/salarycertificate`,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      },
+      data: form
+    }).then((res) => {
+      if (res.status === 200) {
+        setShouldUpdate(!shouldUpdate);
+      }
+    });
   }
 
   return (
     <>
       <Head>
-        <title>Add Office Lease Agreement - Virtuzone</title>
+        <title>Add Salary Certificate - Virtuzone</title>
       </Head>
       <Container sx={{ mt: 2 }} maxWidth="lg">
         <Grid
@@ -101,7 +74,7 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate, edit, id, data }) {
         >
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Add Office Lease Agreement" />
+              <CardHeader title="Add Salary Certificate" />
               <Divider />
               <CardContent>
                 <Box
@@ -148,23 +121,19 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                         shrink: true
                       }}
                     />
-                    <DatePicker
-                      label="Date of issue"
-                      value={issueDate}
-                      onChange={(newValue) => {
-                        setIssueDate(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                    <DatePicker
-                      label="Expiry Date"
-                      value={expiryDate}
-                      onChange={(newValue) => {
-                        console.log(newValue);
-                        setExpiryDate(newValue);
-                      }}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
+                    <TextField
+                      id="outlined-read-only"
+                      label="Visa Type"
+                      value={visa}
+                      onChange={(e) => setVisa(e.target.value)}
+                      select
+                      required
+                    >
+                      <MenuItem value={'diplomatic'}>Diplomatic</MenuItem>
+                      <MenuItem value={'commercial'}>Commercial</MenuItem>
+                      <MenuItem value={'student'}>Student</MenuItem>
+                      <MenuItem value={'work'}>Work</MenuItem>
+                    </TextField>
                     <TextField
                       id="outlined-search"
                       label="Scan File"
@@ -198,4 +167,4 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   );
 }
 
-export default AddOfficeLease;
+export default AddSalaryCertificate;
