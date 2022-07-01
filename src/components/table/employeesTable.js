@@ -23,7 +23,6 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { useRouter } from 'next/router';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -39,7 +38,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const CompanyTable = ({ setImage, data }) => {
+const EmployeesTable = ({ setImage, data }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -67,7 +66,7 @@ const CompanyTable = ({ setImage, data }) => {
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
   };
-  const router = useRouter();
+
   const filteredData = applyFilters(data, filters);
   const paginatedData = applyPagination(filteredData, page, limit);
   const theme = useTheme();
@@ -94,7 +93,7 @@ const CompanyTable = ({ setImage, data }) => {
             </FormControl>
           </Box>
         }
-        title="Company Table"
+        title="Employees Table"
       />
       <Divider />
       <TableContainer>
@@ -102,15 +101,9 @@ const CompanyTable = ({ setImage, data }) => {
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell>Owner</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>License No </TableCell>
-              <TableCell>License Code</TableCell>
-              <TableCell>Judiciary</TableCell>
-              <TableCell>Establishment Date </TableCell>
-              <TableCell>Issue Date </TableCell>
-              <TableCell>Expiry Date</TableCell>
-              <TableCell>Activities</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Mobile</TableCell>
               <TableCell>View</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -235,7 +228,7 @@ const CompanyTable = ({ setImage, data }) => {
                   >
                     <Button
                       onClick={() => {
-                        router.push(`./employees/${el._id}`);
+                        router.push(`/company/${el._id}`);
                       }}
                       sx={{ margin: 1 }}
                       variant="contained"
@@ -292,4 +285,4 @@ const CompanyTable = ({ setImage, data }) => {
   );
 };
 
-export default CompanyTable;
+export default EmployeesTable;

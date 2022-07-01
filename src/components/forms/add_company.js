@@ -27,7 +27,8 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
   const [establishmentDate, setEstablishmentDate] = useState(null);
   const [issueDate, setIssueDate] = useState(null);
   const [expiryDate, setExpiryDate] = useState(null);
-  const [activities, setActivities] = useState(false);
+  const [activities, setActivities] = useState(null);
+  const [activity, setActivity] = useState(null);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -42,6 +43,15 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
         setLastName(res.data.user.lastName);
       });
     }
+    axios({
+      method: 'GET',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      }
+    }).then((res) => {
+      setActivities(res.data.activities);
+    });
   }, [id]);
 
   function onSubmit(e) {
@@ -62,7 +72,7 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
         establishmentDate: establishmentDate,
         issueDate: issueDate,
         expiryDate: expiryDate,
-        activities: activities
+        activities: activity
       }
     }).then((res) => {
       if (res.status === 200) {
@@ -172,12 +182,20 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
                     />
                     <TextField
                       required
+                      select
                       id="outlined-read-only"
                       label="Activities"
                       placeholder="Activities"
                       value={activities}
-                      onChange={(e) => setActivities(e.target.value)}
-                    />
+                      onChange={(e) => setActivity(e.target.value)}
+                    >
+                      {activities &&
+                        activities.map((el) => (
+                          <MenuItem value={el._id} key={el.name}>
+                            {el.name}
+                          </MenuItem>
+                        ))}
+                    </TextField>
                     <Box
                       sx={{
                         margin: '9px',
