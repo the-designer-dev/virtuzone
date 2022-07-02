@@ -25,12 +25,12 @@ function Employees() {
     if (company !== undefined) {
       axios({
         method: 'GET',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${user}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/employee?company=${company}`,
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        SetAllData(res.data.company);
+        SetAllData(res.data.employee);
       });
     }
   }, [company, shouldUpdate]);
@@ -44,7 +44,7 @@ function Employees() {
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              {/* Employees - {companyName} */}
+              Employees - {allData.length > 0 ? allData[0].company.name : ''}
             </Typography>
           </Grid>
           <Grid item>

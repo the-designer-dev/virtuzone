@@ -23,7 +23,7 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-
+import { useRouter } from 'next/router';
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
   //     let matches = true;
@@ -38,7 +38,14 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const EmployeesTable = ({ setImage, data }) => {
+const EmployeesTable = ({
+  setImage,
+  data,
+  buttonName,
+  buttonURL,
+  buttonPurpose
+}) => {
+  const router = useRouter();
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -104,7 +111,7 @@ const EmployeesTable = ({ setImage, data }) => {
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Mobile</TableCell>
-              <TableCell>View</TableCell>
+              {buttonName && <TableCell>View</TableCell>}
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -130,7 +137,7 @@ const EmployeesTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.owner.firstName} {el.owner.lastName}
+                    {el.firstName} {el.lastName}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -141,7 +148,7 @@ const EmployeesTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.name}
+                    {el.email}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -152,91 +159,25 @@ const EmployeesTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.licenseNo}
+                    {el.mobile}
                   </Typography>
                 </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.licenseCode}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.judiciary}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.establishmentDate}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.issueDate}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.expiryDate}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.activities}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Tooltip
-                    title="View or Add employees against this company"
-                    arrow
-                  >
-                    <Button
-                      onClick={() => {
-                        router.push(`/company/${el._id}`);
-                      }}
-                      sx={{ margin: 1 }}
-                      variant="contained"
-                    >
-                      View/Add Employees
-                    </Button>
-                  </Tooltip>
-                </TableCell>
+
+                {buttonName && (
+                  <TableCell align="center">
+                    <Tooltip title={buttonPurpose} arrow>
+                      <Button
+                        onClick={() => {
+                          router.push(`/${buttonURL}/${el._id}`);
+                        }}
+                        sx={{ margin: 1 }}
+                        variant="contained"
+                      >
+                        {buttonName}
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
+                )}
                 <TableCell align="right">
                   <Tooltip title="Edit" arrow>
                     <IconButton

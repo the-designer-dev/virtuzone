@@ -2,49 +2,49 @@ import { Button, Container, Grid, Typography } from '@mui/material';
 import Head from 'next/head';
 import { useState } from 'react';
 import SidebarLayout from 'src/layouts/SidebarLayout';
-import Modal from '../../src/components/modal';
-import AddCompany from '../../src/components/forms/add_company';
+import Modal from 'src/components/modal';
+import AddVisa from 'src/components/forms/add_visa';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import CompanyTable from '../../src/components/table/companyTable';
+import VisaTable from 'src/components/table/visaTable';
 import { useEffect } from 'react';
 import axios from 'axios';
-import DisplayImage from '../../src/components/displayImage/displayImage';
-import ImageModal from '../../src/components/modal/imageModal';
+import ImageModal from 'src/components/modal/imageModal';
+import DisplayImage from 'src/components/displayImage/displayImage';
 import { useRouter } from 'next/router';
-
-function Company() {
+function Visa() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
   const [shouldUpdate, setShouldUpdate] = useState(null);
   const router = useRouter();
-  const { user } = router.query;
+  const { id } = router.query;
+
   useEffect(() => {
     setOpen(false);
-    if (user !== undefined) {
+    if (id) {
       axios({
         method: 'GET',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?owner=${user}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa?employee=${id}`,
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        SetAllData(res.data.company);
+        SetAllData(res.data.visa);
       });
     }
-  }, [user, shouldUpdate]);
+  }, [id, shouldUpdate]);
   return (
     <>
       <Head>
-        <title>Company - Virtuzone</title>
+        <title>Visa - Virtuzone</title>
       </Head>
 
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Company
+              Visa
             </Typography>
           </Grid>
           <Grid item>
@@ -54,7 +54,7 @@ function Company() {
               variant="contained"
               startIcon={<AddTwoToneIcon fontSize="small" />}
             >
-              Add Company
+              Add Visa
             </Button>
           </Grid>
         </Grid>
@@ -68,23 +68,22 @@ function Company() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <CompanyTable
-              setImage={setImage}
-              data={allData}
-              buttonName={'View/Add Employees'}
-              buttonURL={'employees/'}
-              buttonPurpose={'View or Add employees against this company'}
-            />
+            <VisaTable setImage={setImage} data={allData} />
             <Modal
               open={open}
               setOpen={setOpen}
               children={
-                <AddCompany
-                  id={user}
+                <AddVisa
+                  employee={id}
                   shouldUpdate={shouldUpdate}
                   setShouldUpdate={setShouldUpdate}
                 />
               }
+            />
+            <ImageModal
+              image={image}
+              setImage={setImage}
+              children={<DisplayImage image={image} />}
             />
           </Grid>
         </Grid>
@@ -93,6 +92,6 @@ function Company() {
   );
 }
 
-Company.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
+Visa.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
-export default Company;
+export default Visa;

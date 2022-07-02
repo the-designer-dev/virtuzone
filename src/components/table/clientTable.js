@@ -38,7 +38,13 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const UserTable = ({ setImage, data }) => {
+const UserTable = ({
+  setImage,
+  data,
+  buttonName,
+  buttonURL,
+  buttonPurpose
+}) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -102,23 +108,23 @@ const UserTable = ({ setImage, data }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Client Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Country Code</TableCell>
-              <TableCell>Mobile</TableCell>
-              <TableCell>Nationality</TableCell>
-              <TableCell>Date Of Birth</TableCell>
-              <TableCell>Passport Details</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>View</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="center">#</TableCell>
+              <TableCell align="center">Client Name</TableCell>
+              <TableCell align="center">Email</TableCell>
+              <TableCell align="center">Country Code</TableCell>
+              <TableCell align="center">Mobile</TableCell>
+              <TableCell align="center">Nationality</TableCell>
+              <TableCell align="center">Date Of Birth</TableCell>
+              <TableCell align="center">Passport Details</TableCell>
+              <TableCell align="center">Role</TableCell>
+              {buttonName && <TableCell align="center">View</TableCell>}
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((el) => (
               <TableRow hover>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -129,7 +135,7 @@ const UserTable = ({ setImage, data }) => {
                     {++i}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -140,7 +146,7 @@ const UserTable = ({ setImage, data }) => {
                     {el.firstName} {el.lastName}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -151,7 +157,7 @@ const UserTable = ({ setImage, data }) => {
                     {el.email}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -162,7 +168,7 @@ const UserTable = ({ setImage, data }) => {
                     {el.countryCode}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -173,7 +179,7 @@ const UserTable = ({ setImage, data }) => {
                     {el.mobile}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -184,7 +190,7 @@ const UserTable = ({ setImage, data }) => {
                     {el.nationality}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
@@ -217,22 +223,22 @@ const UserTable = ({ setImage, data }) => {
                     {el.role}
                   </Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Tooltip
-                    title="View or Add companies against this user"
-                    arrow
-                  >
-                    <Button
-                      onClick={() => {
-                        router.push(`/company/${el._id}`);
-                      }}
-                      sx={{ margin: 1 }}
-                      variant="contained"
-                    >
-                      View/Add Company
-                    </Button>
-                  </Tooltip>
-                </TableCell>
+
+                {buttonName && (
+                  <TableCell align="center">
+                    <Tooltip title={buttonPurpose} arrow>
+                      <Button
+                        onClick={() => {
+                          router.push(`/${buttonURL}/${el._id}`);
+                        }}
+                        sx={{ margin: 1 }}
+                        variant="contained"
+                      >
+                        {buttonName}
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
+                )}
                 <TableCell align="right">
                   <Tooltip title="Edit" arrow>
                     <IconButton

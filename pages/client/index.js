@@ -62,7 +62,12 @@ function Client() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <ClientTable data={allData} />
+            <ClientTable
+              data={allData}
+              buttonName={'View/Add Company'}
+              buttonURL={'company'}
+              buttonPurpose={'View or Add companies against this user'}
+            />
             <Modal
               open={open}
               setOpen={setOpen}

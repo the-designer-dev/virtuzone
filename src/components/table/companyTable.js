@@ -39,7 +39,14 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const CompanyTable = ({ data, setImage }) => {
+const CompanyTable = ({
+  data,
+  setImage,
+  user,
+  buttonName,
+  buttonURL,
+  buttonPurpose
+}) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -229,29 +236,31 @@ const CompanyTable = ({ data, setImage }) => {
                       el.activities.map((activity, index) => {
                         return (
                           <p key={activity.id}>
-                            {activity.title}{' '}
+                            {activity.name}{' '}
                             {index < el.activities.length - 1 ? ', ' : ''}
                           </p>
                         );
                       })}
                   </Typography>
                 </TableCell>
-                <TableCell align="center">
-                  <Tooltip
-                    title="View or Add employees against this company"
-                    arrow
-                  >
-                    <Button
-                      onClick={() => {
-                        router.push(`./employees/${el._id}`);
-                      }}
-                      sx={{ margin: 1 }}
-                      variant="contained"
-                    >
-                      View/Add Employees
-                    </Button>
-                  </Tooltip>
-                </TableCell>
+
+                {buttonName && (
+                  <TableCell align="center">
+                    <Tooltip title={buttonPurpose} arrow>
+                      <Button
+                        onClick={() => {
+                          if (user)
+                            router.push(`./${user}/${buttonURL}${el._id}`);
+                          else router.push(`./${buttonURL}${el._id}`);
+                        }}
+                        sx={{ margin: 1 }}
+                        variant="contained"
+                      >
+                        {buttonName}
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
+                )}
                 <TableCell align="right">
                   <Tooltip title="Edit" arrow>
                     <IconButton
