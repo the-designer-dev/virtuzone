@@ -20,9 +20,9 @@ import {
   CardHeader,
   Button
 } from '@mui/material';
-
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import { useRouter } from 'next/router';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -38,19 +38,15 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const OfficeLeaseAgreementTable = ({
-  setImage,
-  data,
-  setEdit,
-  setId,
-  setData
-}) => {
+const UserTable = ({ setImage, data }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [filters, setFilters] = useState({
     status: null
   });
+
+  const router = useRouter();
 
   const handleStatusChange = (e) => {
     let value = null;
@@ -99,7 +95,7 @@ const OfficeLeaseAgreementTable = ({
             </FormControl>
           </Box>
         }
-        title="Office Lease Agreement"
+        title="Users"
       />
       <Divider />
       <TableContainer>
@@ -108,9 +104,14 @@ const OfficeLeaseAgreementTable = ({
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Client Name</TableCell>
-              <TableCell>Date of Issue</TableCell>
-              <TableCell>Expiry Date</TableCell>
-              <TableCell align="center">Scan File</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Country Code</TableCell>
+              <TableCell>Mobile</TableCell>
+              <TableCell>Nationality</TableCell>
+              <TableCell>Date Of Birth</TableCell>
+              <TableCell>Passport Details</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>View</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -136,7 +137,7 @@ const OfficeLeaseAgreementTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.user.firstName} {el.user.lastName}
+                    {el.firstName} {el.lastName}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -147,7 +148,7 @@ const OfficeLeaseAgreementTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.dateOfIssue}
+                    {el.email}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -158,17 +159,77 @@ const OfficeLeaseAgreementTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.expiryDate}
+                    {el.countryCode}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.mobile}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.nationality}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.dateOfBirth}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.passportDetails}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.role}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <Tooltip title="View Issued License" arrow>
+                  <Tooltip
+                    title="View or Add companies against this user"
+                    arrow
+                  >
                     <Button
-                      onClick={() => setImage(el.file)}
+                      onClick={() => {
+                        router.push(`/company/${el._id}`);
+                      }}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >
-                      View
+                      View/Add Company
                     </Button>
                   </Tooltip>
                 </TableCell>
@@ -183,11 +244,6 @@ const OfficeLeaseAgreementTable = ({
                       }}
                       color="inherit"
                       size="small"
-                      onClick={() => {
-                        setEdit(true);
-                        setId(el._id);
-                        setData(el);
-                      }}
                     >
                       <EditTwoToneIcon fontSize="small" />
                     </IconButton>
@@ -225,4 +281,4 @@ const OfficeLeaseAgreementTable = ({
   );
 };
 
-export default OfficeLeaseAgreementTable;
+export default UserTable;

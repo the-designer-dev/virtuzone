@@ -70,7 +70,7 @@ const SubMenuWrapper = styled(Box)(
             font-size: ${theme.typography.pxToRem(10)};
             font-weight: bold;
             text-transform: uppercase;
-            color: ${theme.palette.primary.contrastText};
+            color: ${theme.colors.alpha.trueWhite[10]};
           }
         }
     
@@ -187,9 +187,9 @@ function SidebarMenu() {
           <SubMenuWrapper>
             <List component="div">
               <ListItem component="div">
-                <NextLink href="/" passHref>
+                <NextLink href="/client" passHref>
                   <Button
-                    className={currentRoute === '="/' ? 'active' : ''}
+                    className={currentRoute === '="/client' ? 'active' : ''}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -321,13 +321,9 @@ function SidebarMenu() {
           <SubMenuWrapper>
             <List component="div">
               <ListItem component="div">
-                <NextLink href="/management/transactions" passHref>
+                <NextLink href="/" passHref>
                   <Button
-                    className={
-                      currentRoute === '/management/transactions'
-                        ? 'active'
-                        : ''
-                    }
+                    className={currentRoute === '/' ? 'active' : ''}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -364,10 +360,10 @@ function SidebarMenu() {
                 </NextLink>
               </ListItem>
               <ListItem component="div">
-                <NextLink href="/management/profile" passHref>
+                <NextLink href="/salary_certificate" passHref>
                   <Button
                     className={
-                      currentRoute === '/management/profile' ? 'active' : ''
+                      currentRoute === '/salary_certificate' ? 'active' : ''
                     }
                     disableRipple
                     component="a"

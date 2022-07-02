@@ -38,13 +38,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const OfficeLeaseAgreementTable = ({
-  setImage,
-  data,
-  setEdit,
-  setId,
-  setData
-}) => {
+const SalaryCertificateTable = ({ setImage, data }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -99,7 +93,7 @@ const OfficeLeaseAgreementTable = ({
             </FormControl>
           </Box>
         }
-        title="Office Lease Agreement"
+        title="Salary Certificate"
       />
       <Divider />
       <TableContainer>
@@ -108,8 +102,7 @@ const OfficeLeaseAgreementTable = ({
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Client Name</TableCell>
-              <TableCell>Date of Issue</TableCell>
-              <TableCell>Expiry Date</TableCell>
+              <TableCell>Visa Type</TableCell>
               <TableCell align="center">Scan File</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -147,25 +140,15 @@ const OfficeLeaseAgreementTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.dateOfIssue}
+                    {el.visa}
                   </Typography>
                 </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.expiryDate}
-                  </Typography>
-                </TableCell>
+
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
                     <Button
-                      onClick={() => setImage(el.file)}
                       sx={{ margin: 1 }}
+                      onClick={() => setImage(el.file)}
                       variant="contained"
                     >
                       View
@@ -183,11 +166,6 @@ const OfficeLeaseAgreementTable = ({
                       }}
                       color="inherit"
                       size="small"
-                      onClick={() => {
-                        setEdit(true);
-                        setId(el._id);
-                        setData(el);
-                      }}
                     >
                       <EditTwoToneIcon fontSize="small" />
                     </IconButton>
@@ -225,4 +203,4 @@ const OfficeLeaseAgreementTable = ({
   );
 };
 
-export default OfficeLeaseAgreementTable;
+export default SalaryCertificateTable;

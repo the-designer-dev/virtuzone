@@ -23,6 +23,7 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import { useRouter } from 'next/router';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -38,13 +39,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const OfficeLeaseAgreementTable = ({
-  setImage,
-  data,
-  setEdit,
-  setId,
-  setData
-}) => {
+const CompanyTable = ({ setImage, data }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -72,7 +67,7 @@ const OfficeLeaseAgreementTable = ({
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
   };
-
+  const router = useRouter();
   const filteredData = applyFilters(data, filters);
   const paginatedData = applyPagination(filteredData, page, limit);
   const theme = useTheme();
@@ -99,7 +94,7 @@ const OfficeLeaseAgreementTable = ({
             </FormControl>
           </Box>
         }
-        title="Office Lease Agreement"
+        title="Company Table"
       />
       <Divider />
       <TableContainer>
@@ -107,10 +102,16 @@ const OfficeLeaseAgreementTable = ({
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell>Client Name</TableCell>
-              <TableCell>Date of Issue</TableCell>
+              <TableCell>Owner</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>License No </TableCell>
+              <TableCell>License Code</TableCell>
+              <TableCell>Judiciary</TableCell>
+              <TableCell>Establishment Date </TableCell>
+              <TableCell>Issue Date </TableCell>
               <TableCell>Expiry Date</TableCell>
-              <TableCell align="center">Scan File</TableCell>
+              <TableCell>Activities</TableCell>
+              <TableCell>View</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -136,7 +137,7 @@ const OfficeLeaseAgreementTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.user.firstName} {el.user.lastName}
+                    {el.owner.firstName} {el.owner.lastName}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -147,7 +148,62 @@ const OfficeLeaseAgreementTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.dateOfIssue}
+                    {el.name}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.licenseNo}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.licenseCode}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.judiciary}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.establishmentDate}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.issueDate}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -161,14 +217,30 @@ const OfficeLeaseAgreementTable = ({
                     {el.expiryDate}
                   </Typography>
                 </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.activities}
+                  </Typography>
+                </TableCell>
                 <TableCell align="center">
-                  <Tooltip title="View Issued License" arrow>
+                  <Tooltip
+                    title="View or Add employees against this company"
+                    arrow
+                  >
                     <Button
-                      onClick={() => setImage(el.file)}
+                      onClick={() => {
+                        router.push(`./employees/${el._id}`);
+                      }}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >
-                      View
+                      View/Add Employees
                     </Button>
                   </Tooltip>
                 </TableCell>
@@ -183,11 +255,6 @@ const OfficeLeaseAgreementTable = ({
                       }}
                       color="inherit"
                       size="small"
-                      onClick={() => {
-                        setEdit(true);
-                        setId(el._id);
-                        setData(el);
-                      }}
                     >
                       <EditTwoToneIcon fontSize="small" />
                     </IconButton>
@@ -225,4 +292,4 @@ const OfficeLeaseAgreementTable = ({
   );
 };
 
-export default OfficeLeaseAgreementTable;
+export default CompanyTable;
