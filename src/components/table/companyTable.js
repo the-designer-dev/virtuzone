@@ -39,7 +39,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const CompanyTable = ({ setImage, data }) => {
+const CompanyTable = ({ data, setImage }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -225,7 +225,15 @@ const CompanyTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.activities}
+                    {el.activities &&
+                      el.activities.map((activity, index) => {
+                        return (
+                          <p key={activity.id}>
+                            {activity.title}{' '}
+                            {index < el.activities.length - 1 ? ', ' : ''}
+                          </p>
+                        );
+                      })}
                   </Typography>
                 </TableCell>
                 <TableCell align="center">

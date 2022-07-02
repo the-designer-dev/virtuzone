@@ -13,9 +13,11 @@ import {
   TextField,
   Checkbox,
   FormControlLabel,
-  Button
+  Button,
+  MenuItem
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
   const [firstName, setFirstName] = useState(null);
@@ -23,6 +25,7 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
   const [name, setName] = useState(null);
   const [licenseNo, setLicenseNo] = useState(null);
   const [licenseCode, setLicenseCode] = useState(null);
+  const [judiciaries, setJudiciaries] = useState(null);
   const [judiciary, setJudiciary] = useState(null);
   const [establishmentDate, setEstablishmentDate] = useState(null);
   const [issueDate, setIssueDate] = useState(null);
@@ -45,18 +48,17 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
     }
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      setActivities(res.data.activities);
+      setJudiciaries(res.data.emirates);
     });
   }, [id]);
 
   function onSubmit(e) {
     e.preventDefault();
-
     axios({
       method: 'POST',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
@@ -81,6 +83,24 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
     });
   }
 
+  function onJudiciaryChange(e) {
+    setJudiciary(e.target.value);
+    axios({
+      method: 'GET',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity?id=${e.target.value}`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      }
+    })
+      .then((res) => {
+        setActivity(null);
+        setActivities(res.data.activity);
+      })
+      .catch((err) => {
+        setActivities([]);
+        setActivity(null);
+      });
+  }
   return (
     <>
       <Head>
@@ -151,11 +171,19 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
                     <TextField
                       required
                       id="outlined-read-only"
+                      select
                       label="Judiciary"
                       placeholder="Judiciary"
                       value={judiciary}
-                      onChange={(e) => setJudiciary(e.target.value)}
-                    />
+                      onChange={(e) => onJudiciaryChange(e)}
+                    >
+                      {judiciaries &&
+                        judiciaries.map((el) => (
+                          <MenuItem value={el._id} key={el.name}>
+                            {el.name}
+                          </MenuItem>
+                        ))}
+                    </TextField>
                     <DatePicker
                       label="Establishment Date"
                       value={establishmentDate}
@@ -186,7 +214,7 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
                       id="outlined-read-only"
                       label="Activities"
                       placeholder="Activities"
-                      value={activities}
+                      value={activity}
                       onChange={(e) => setActivity(e.target.value)}
                     >
                       {activities &&

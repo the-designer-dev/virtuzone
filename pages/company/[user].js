@@ -68,7 +68,10 @@ function Company() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <CompanyTable setImage={setImage} data={allData} />
+            <CompanyTable
+              setImage={setImage}
+              data={allData.length > 0 ? allData : []}
+            />
             <Modal
               open={open}
               setOpen={setOpen}
