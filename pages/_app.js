@@ -22,7 +22,8 @@ function Virtuzone(props) {
   Router.events.on('routeChangeComplete', nProgress.done);
 
   return (
-    <CacheProvider value={emotionCache}>
+    // <CacheProvider value={emotionCache}>
+    <>
       <Head>
         <title>Tokyo Free White NextJS Javascript Admin Dashboard</title>
         <meta
@@ -38,7 +39,8 @@ function Virtuzone(props) {
           </LocalizationProvider>
         </ThemeProvider>
       </SidebarProvider>
-    </CacheProvider>
+    </>
+    // </CacheProvider>
   );
 }
 
