@@ -25,10 +25,10 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
   const [passportIssue, setPassportIssue] = useState(null);
   const [passportExpiry, setPassportExpiry] = useState(null);
   const [passportCountry, setPassportCountry] = useState(null);
-  const [entryPermitIssued, setEntryPermitIssued] = useState(null);
+  const [entryPermitIssued, setEntryPermitIssued] = useState(false);
   const [visaUID, setVisaUID] = useState(null);
-  const [residencyVisaIssued, setResidencyVisaIssued] = useState(null);
-  const [emiratesIdIssued, setEmiratesIdIssued] = useState(null);
+  const [residencyVisaIssued, setResidencyVisaIssued] = useState(false);
+  const [emiratesIdIssued, setEmiratesIdIssued] = useState(false);
   const [emiratesId, setEmiratesId] = useState(null);
   const [passport, setPassport] = useState(null);
   const [entryPermit, setEntryPermit] = useState(null);

@@ -15,18 +15,18 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-function AddEmployee({ id, shouldUpdate, setShouldUpdate }) {
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [mobile, setMobile] = useState(null);
+function AddEmployee({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
+  const [firstName, setFirstName] = useState(data ? data.firstName : null);
+  const [lastName, setLastName] = useState(data ? data.lastName : null);
+  const [email, setEmail] = useState(data ? data.email : null);
+  const [mobile, setMobile] = useState(data ? data.mobile : null);
   const [company, setCompany] = useState(null);
 
   useEffect(() => {
-    if (id !== undefined) {
+    if (comp !== undefined) {
       axios({
         method: 'GET',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${comp}`,
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
@@ -34,29 +34,49 @@ function AddEmployee({ id, shouldUpdate, setShouldUpdate }) {
         setCompany(res.data.company[0].name);
       });
     }
-  }, [id]);
+  }, [comp]);
 
   function onSubmit(e) {
     e.preventDefault();
-
-    axios({
-      method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/employee`,
-      headers: {
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      },
-      data: {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        mobile: mobile,
-        company: id
-      }
-    }).then((res) => {
-      if (res.status === 200) {
-        setShouldUpdate(!shouldUpdate);
-      }
-    });
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/employee`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          mobile: mobile,
+          company: comp
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/employee?id=${id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          mobile: mobile,
+          company: comp
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    }
   }
 
   return (
