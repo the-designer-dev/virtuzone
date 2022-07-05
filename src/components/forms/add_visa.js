@@ -37,17 +37,25 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
   function onSubmit(e) {
     e.preventDefault();
     const form = new FormData();
-    for (const key of Object.keys(passport)) {
-      form.append('passport', passport[key]);
+    if (passport) {
+      for (const key of Object.keys(passport)) {
+        form.append('passport', passport[key]);
+      }
     }
-    for (const key of Object.keys(entryPermit)) {
-      form.append('entryPermit', entryPermit[key]);
+    if (entryPermit) {
+      for (const key of Object.keys(entryPermit)) {
+        form.append('entryPermit', entryPermit[key]);
+      }
     }
-    for (const key of Object.keys(residencyVisa)) {
-      form.append('residencyVisa', residencyVisa[key]);
+    if (residencyVisa) {
+      for (const key of Object.keys(residencyVisa)) {
+        form.append('residencyVisa', residencyVisa[key]);
+      }
     }
-    for (const key of Object.keys(emiratesId)) {
-      form.append('emiratesId', emiratesId[key]);
+    if (emiratesId) {
+      for (const key of Object.keys(emiratesId)) {
+        form.append('emiratesId', emiratesId[key]);
+      }
     }
     form.append('firstName', firstName);
     form.append('lastName', lastName);
