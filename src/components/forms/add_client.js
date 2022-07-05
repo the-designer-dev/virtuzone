@@ -17,43 +17,70 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-function AddClient({ shouldUpdate, setShouldUpdate }) {
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState([]);
-  const [countryCode, setCountryCode] = useState([]);
-  const [mobile, setMobile] = useState([]);
-  const [nationality, setNationality] = useState([]);
-  const [dateOfBirth, setDateOfBirth] = useState([]);
-  const [passportDetails, setPassportDetails] = useState([]);
-  const [role, setRole] = useState(false);
+function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
+  console.log(data);
+  const [firstName, setFirstName] = useState(data ? data.firstName : null);
+  const [lastName, setLastName] = useState(data ? data.lastName : null);
+  const [email, setEmail] = useState(data ? data.email : null);
+  const [countryCode, setCountryCode] = useState(data ? data.countryCode : []);
+  const [mobile, setMobile] = useState(data ? data.mobile : []);
+  const [nationality, setNationality] = useState(data ? data.nationality : []);
+  const [dateOfBirth, setDateOfBirth] = useState(data ? data.dateOfBirth : []);
+  const [passportDetails, setPassportDetails] = useState(
+    data ? data.passportDetails : []
+  );
+  const [role, setRole] = useState(data ? data.role : false);
 
   function onSubmit(e) {
     e.preventDefault();
-    const form = new FormData();
 
-    axios({
-      method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/user`,
-      headers: {
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      },
-      data: {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        countryCode: countryCode,
-        mobile: mobile,
-        nationality: nationality,
-        dateOfBirth: dateOfBirth,
-        passportDetails: passportDetails,
-        role: role === false ? 'owner' : 'admin'
-      }
-    }).then((res) => {
-      if (res.status === 200) {
-        setShouldUpdate(!shouldUpdate);
-      }
-    });
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          countryCode: countryCode,
+          mobile: mobile,
+          nationality: nationality,
+          dateOfBirth: dateOfBirth,
+          passportDetails: passportDetails,
+          role: 'owner'
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          countryCode: countryCode,
+          mobile: mobile,
+          nationality: nationality,
+          dateOfBirth: dateOfBirth,
+          passportDetails: passportDetails,
+          role: 'owner'
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    }
   }
 
   return (
@@ -169,7 +196,7 @@ function AddClient({ shouldUpdate, setShouldUpdate }) {
                             onChange={(e) => setRole(e.target.checked)}
                           />
                         }
-                        label="Admin"
+                        label="Notify"
                       />
                       <Button type="submit" sx={{ margin: 1 }}>
                         Submit

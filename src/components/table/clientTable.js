@@ -43,7 +43,10 @@ const UserTable = ({
   data,
   buttonName,
   buttonURL,
-  buttonPurpose
+  buttonPurpose,
+  setEdit,
+  setId,
+  setData
 }) => {
   var i = 0;
   const [page, setPage] = useState(0);
@@ -250,6 +253,11 @@ const UserTable = ({
                       }}
                       color="inherit"
                       size="small"
+                      onClick={() => {
+                        setEdit(true);
+                        setId(el._id);
+                        setData(el);
+                      }}
                     >
                       <EditTwoToneIcon fontSize="small" />
                     </IconButton>
