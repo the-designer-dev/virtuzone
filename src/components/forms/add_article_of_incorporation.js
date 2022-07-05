@@ -40,8 +40,8 @@ function AddArticleOfIncorporation() {
     });
 
     const importModule = async () => {
-      const module = await import('react-rte');
-      setValue(module.createEmptyValue());
+      const mod = await import('react-rte');
+      setValue(mod.createEmptyValue());
     };
     importModule();
   }, []);
