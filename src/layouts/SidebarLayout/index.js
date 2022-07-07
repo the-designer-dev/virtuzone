@@ -44,7 +44,7 @@ const SidebarLayout = ({ children }) => {
             zIndex: 5,
             display: 'block',
             flex: 1,
-            pt: `${theme.header.height}`,
+            // pt: `${theme.header.height}`,
             [theme.breakpoints.up('lg')]: {
               ml: `${theme.sidebar.width}`
             }

@@ -13,6 +13,7 @@ const themeColors = {
   black: '#223354',
   white: '#ffffff',
   red: '#cf3239',
+  black: '#131313',
   primaryAlt: '#000C57'
 };
 
@@ -56,7 +57,7 @@ const colors = {
       bodyBg: '#f2f5f9'
     },
     sidebar: {
-      background: themeColors.red,
+      background: themeColors.black,
       textColor: themeColors.secondary,
       dividerBg: '#f2f5f9',
       menuItemColor: '#242E6F',
@@ -133,7 +134,6 @@ const colors = {
 };
 
 export const PureLightTheme = createTheme({
-  // direction: i18n.dir(),
   colors: {
     gradients: {
       blue1: colors.gradients.blue1,
@@ -488,7 +488,14 @@ export const PureLightTheme = createTheme({
           marginBottom: -5
         },
         title: {
-          fontSize: 15
+          fontSize: 25
+        },
+        root: {
+          padding: '16px 16px 16px 0px',
+          '& .MuiCardHeader-content': {
+            paddingLeft: '16px',
+            borderLeft: '5px solid #d0333a'
+          }
         }
       }
     },
@@ -976,13 +983,15 @@ export const PureLightTheme = createTheme({
     MuiTableRow: {
       styleOverrides: {
         head: {
-          background: colors.alpha.black[5]
+          background: colors.alpha.black[5],
+          boxShadow: '0px 0px 13px 2px rgba(0,0,0,0.47)'
         },
         root: {
           transition: 'background-color .2s',
 
           '&.MuiTableRow-hover:hover': {
-            backgroundColor: colors.alpha.black[5]
+            backgroundColor: themeColors.red,
+            color: `${colors.alpha.trueWhite[100]} !important`
           }
         }
       }
@@ -991,7 +1000,8 @@ export const PureLightTheme = createTheme({
       styleOverrides: {
         root: {
           borderBottomColor: colors.alpha.black[10],
-          fontSize: 14
+          fontSize: 14,
+          color: 'inherit'
         },
         head: {
           textTransform: 'uppercase',
@@ -1178,7 +1188,7 @@ export const PureLightTheme = createTheme({
       fontSize: 30
     },
     h3: {
-      fontWeight: 700,
+      fontWeight: 'bolder',
       fontSize: 25,
       lineHeight: 1.4,
       color: colors.alpha.black[100]

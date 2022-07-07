@@ -107,12 +107,12 @@ const SubMenuWrapper = styled(Box)(
 
           &.active,
           &:hover {
-            background-color: ${alpha(theme.colors.alpha.trueWhite[100], 0.06)};
-            color: ${theme.colors.alpha.trueWhite[100]};
+            background-color: ${theme.colors.alpha.trueWhite[100]};
+            color: #cf3239 ;
 
             .MuiButton-startIcon,
             .MuiButton-endIcon {
-              color: ${theme.colors.alpha.trueWhite[100]};
+              color: #cf3239;
             }
           }
         }
@@ -179,7 +179,6 @@ function SidebarMenu() {
   const { closeSidebar } = useContext(SidebarContext);
   const router = useRouter();
   const currentRoute = router.pathname;
-
   return (
     <>
       <MenuWrapper>
@@ -189,7 +188,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/client" passHref>
                   <Button
-                    className={currentRoute === '="/client' ? 'active' : ''}
+                    className={currentRoute === '/client' ? 'active' : ''}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -203,7 +202,7 @@ function SidebarMenu() {
                 <NextLink href="/trade_license" passHref>
                   <Button
                     className={
-                      currentRoute === '="/trade_license' ? 'active' : ''
+                      currentRoute === '/trade_license' ? 'active' : ''
                     }
                     disableRipple
                     component="a"

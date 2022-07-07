@@ -23,6 +23,7 @@ import {
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { useRouter } from 'next/router';
+import countries from '../../data/countries.json';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -131,7 +132,6 @@ const UserTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -142,7 +142,6 @@ const UserTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -153,7 +152,6 @@ const UserTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -164,7 +162,6 @@ const UserTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -175,7 +172,6 @@ const UserTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -183,21 +179,37 @@ const UserTable = ({
                   </Typography>
                 </TableCell>
                 <TableCell align="center">
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'nowrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
                   >
-                    {el.nationality}
-                  </Typography>
+                    <img
+                      style={{ width: '100%', maxWidth: '30px' }}
+                      src={
+                        countries.find((ele) => ele.name === el.nationality)
+                          ? countries.find((ele) => ele.name === el.nationality)
+                              .image
+                          : ''
+                      }
+                    />
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.nationality}
+                    </Typography>
+                  </div>
                 </TableCell>
                 <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -208,7 +220,6 @@ const UserTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -219,7 +230,6 @@ const UserTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -249,7 +259,7 @@ const UserTable = ({
                         '&:hover': {
                           background: theme.colors.primary.lighter
                         },
-                        color: theme.palette.primary.main
+                        color: theme.palette.error.main
                       }}
                       color="inherit"
                       size="small"

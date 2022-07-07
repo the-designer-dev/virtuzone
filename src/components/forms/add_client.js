@@ -2,6 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import Head from 'next/head';
+import styles from '../../css/addClient.module.css';
+import countries from '../../data/countries.json';
 import {
   Grid,
   Container,
@@ -16,16 +18,18 @@ import {
   Button
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import ReactFlagsSelect from 'react-flags-select';
 
 function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
-  console.log(data);
   const [firstName, setFirstName] = useState(data ? data.firstName : null);
   const [lastName, setLastName] = useState(data ? data.lastName : null);
   const [email, setEmail] = useState(data ? data.email : null);
   const [countryCode, setCountryCode] = useState(data ? data.countryCode : []);
   const [mobile, setMobile] = useState(data ? data.mobile : []);
   const [nationality, setNationality] = useState(data ? data.nationality : []);
-  const [dateOfBirth, setDateOfBirth] = useState(data ? data.dateOfBirth : []);
+  const [dateOfBirth, setDateOfBirth] = useState(
+    data ? data.dateOfBirth : null
+  );
   const [passportDetails, setPassportDetails] = useState(
     data ? data.passportDetails : []
   );
@@ -129,7 +133,6 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
                     />
-
                     <TextField
                       required
                       id="outlined-read-only"
@@ -138,13 +141,31 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
+                    <ReactFlagsSelect
+                      className={styles.country_dropdown}
+                      searchable
+                      placeholder={'Select Nationality'}
+                      searchPlaceholder="Search Countries"
+                      selected={countryCode}
+                      fullWidth={false}
+                      onSelect={(code) => {
+                        setNationality(
+                          countries.find((el) => el.code === code).name
+                        );
+                        setCountryCode(code);
+                        console.log(countries.find((el) => el.code === code));
+                      }}
+                    />
+
                     <TextField
                       required
                       id="outlined-read-only"
                       label="Country Code"
                       placeholder="Country Code"
+                      InputProps={{
+                        readOnly: true
+                      }}
                       value={countryCode}
-                      onChange={(e) => setCountryCode(e.target.value)}
                     />
                     <TextField
                       required
@@ -153,14 +174,6 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       placeholder="Mobile"
                       value={mobile}
                       onChange={(e) => setMobile(e.target.value)}
-                    />
-                    <TextField
-                      required
-                      id="outlined-read-only"
-                      label="Nationality"
-                      placeholder="Nationality"
-                      value={nationality}
-                      onChange={(e) => setNationality(e.target.value)}
                     />
 
                     <DatePicker
@@ -171,7 +184,6 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       }}
                       renderInput={(params) => <TextField {...params} />}
                     />
-
                     <TextField
                       required
                       id="outlined-read-only"
@@ -180,7 +192,6 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       value={passportDetails}
                       onChange={(e) => setPassportDetails(e.target.value)}
                     />
-
                     <Box
                       sx={{
                         margin: '9px',
