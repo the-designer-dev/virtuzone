@@ -100,17 +100,21 @@ const VisaTable = ({ setImage, data }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Client Name</TableCell>
-              <TableCell>Company Name</TableCell>
-              <TableCell>Visa applicant</TableCell>
-              <TableCell>Visa UID</TableCell>
-              <TableCell>Visa Type</TableCell>
-              <TableCell>Job Title</TableCell>
-              <TableCell>Date of Issue</TableCell>
-              <TableCell>Expiry Date</TableCell>
-              <TableCell align="center">Scan File</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="center">#</TableCell>
+              <TableCell align="center">Name</TableCell>
+              <TableCell align="center">Passport No</TableCell>
+              <TableCell align="center">Passport Issue</TableCell>
+              <TableCell align="center">Passport Expiry</TableCell>
+              <TableCell align="center">Passport Country</TableCell>
+              <TableCell align="center">Entry Permit Issued</TableCell>
+              <TableCell align="center">Visa UID</TableCell>
+              <TableCell align="center">Residency Visa Issued</TableCell>
+              <TableCell align="center">Emirates Id Issued</TableCell>
+              <TableCell align="center">Passport</TableCell>
+              <TableCell align="center">Entry Permit</TableCell>
+              <TableCell align="center">Residency Visa</TableCell>
+              <TableCell align="center">Emirates Id</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -135,7 +139,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.user.firstName} {el.user.lastName}
+                    {el.firstName} {el.lastName}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -146,7 +150,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.user.companyName}
+                    {el.passportNo}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -157,7 +161,40 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.visaApplicant}
+                    {el.passportIssue}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.passportExpiry}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.passportCountry}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography
+                    variant="body1"
+                    fontWeight="bold"
+                    color="text.primary"
+                    gutterBottom
+                    noWrap
+                  >
+                    {el.entryPermitIssued.toString()}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -179,7 +216,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.visaType}
+                    {el.residencyVisaIssued.toString()}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -190,35 +227,47 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.jobTitle}
+                    {el.emiratesIdIssued}
                   </Typography>
                 </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.dateOfIssue}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    color="text.primary"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.expiryDate}
-                  </Typography>
+
+                <TableCell align="center">
+                  <Tooltip title="View Issued License" arrow>
+                    <Button
+                      onClick={() => setImage(el.passport)}
+                      sx={{ margin: 1 }}
+                      variant="contained"
+                    >
+                      View
+                    </Button>
+                  </Tooltip>
                 </TableCell>
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
                     <Button
-                      onClick={() => setImage(el.visa)}
+                      onClick={() => setImage(el.entryPermit)}
+                      sx={{ margin: 1 }}
+                      variant="contained"
+                    >
+                      View
+                    </Button>
+                  </Tooltip>
+                </TableCell>
+                <TableCell align="center">
+                  <Tooltip title="View Issued License" arrow>
+                    <Button
+                      onClick={() => setImage(el.residencyVisa)}
+                      sx={{ margin: 1 }}
+                      variant="contained"
+                    >
+                      View
+                    </Button>
+                  </Tooltip>
+                </TableCell>
+                <TableCell align="center">
+                  <Tooltip title="View Issued License" arrow>
+                    <Button
+                      onClick={() => setImage(el.emiratesId)}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >

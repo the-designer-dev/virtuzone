@@ -39,8 +39,6 @@ function AddOfficeLease({ shouldUpdate, setShouldUpdate, edit, id, data }) {
       setAllEmails(res.data.user);
       console.log(res.data.user);
     });
-    if (edit === true) {
-    }
   }, []);
 
   function onSubmit(e) {

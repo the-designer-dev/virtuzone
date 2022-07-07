@@ -11,9 +11,9 @@
     "eslint-disable-next-line": "off",
     "react-hooks/exhaustive-deps": "off",
     "react/no-unescaped-entities": "off",
-    "react/no-children-prop": "off",
     "react/jsx-key": "off",
-    "@next/next/no-assign-module-variable": "off",
+    "react/no-children-prop": "off",
+    "react/jsx-no-undef": "off",
     "react/jsx-max-props-per-line": [
       1,
       {

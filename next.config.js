@@ -1,15 +1,9 @@
-const withImages = require('next-images');
-
-const redirects = {
-  async redirects() {
-    return [
-      {
-        source: '/dashboards',
-        destination: '/dashboards/crypto',
-        permanent: true
-      }
-    ];
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  compiler: {
+    emotion: true
   }
 };
 
-module.exports = withImages(redirects);
+module.exports = nextConfig;

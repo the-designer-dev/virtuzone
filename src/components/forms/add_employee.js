@@ -26,13 +26,12 @@ function AddEmployee({ id, shouldUpdate, setShouldUpdate }) {
     if (id !== undefined) {
       axios({
         method: 'GET',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${id}`,
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        setFirstName(res.data.user.firstName);
-        setLastName(res.data.user.lastName);
+        setCompany(res.data.company[0].name);
       });
     }
   }, [id]);
@@ -42,7 +41,7 @@ function AddEmployee({ id, shouldUpdate, setShouldUpdate }) {
 
     axios({
       method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/employee`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
@@ -124,7 +123,7 @@ function AddEmployee({ id, shouldUpdate, setShouldUpdate }) {
                       id="outlined-read-only"
                       label="Email"
                       placeholder="Email"
-                      value={Email}
+                      value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
