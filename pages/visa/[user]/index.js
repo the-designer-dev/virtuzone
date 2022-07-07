@@ -17,6 +17,12 @@ function Company() {
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
   const [shouldUpdate, setShouldUpdate] = useState(null);
+
+  const [edit, setEdit] = useState(null);
+  const [id, setId] = useState(null);
+  const [data, setData] = useState(null);
+  const [open, setOpen] = useState(false);
+
   const router = useRouter();
   const { user } = router.query;
   useEffect(() => {
@@ -63,6 +69,26 @@ function Company() {
               buttonName={'View/Add Employees'}
               buttonURL={'/employees/'}
               buttonPurpose={'View or Add employees against this company'}
+              setEdit={setEdit}
+              setId={setId}
+              setData={setData}
+            />
+            <Modal
+              open={open}
+              setOpen={setOpen}
+              setEdit={setEdit}
+              setData={setData}
+              edit={edit}
+              children={
+                <AddCompany
+                  edit={edit}
+                  id={user}
+                  comp={id}
+                  data={data}
+                  shouldUpdate={shouldUpdate}
+                  setShouldUpdate={setShouldUpdate}
+                />
+              }
             />
           </Grid>
         </Grid>

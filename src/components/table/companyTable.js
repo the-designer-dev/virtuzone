@@ -45,7 +45,10 @@ const CompanyTable = ({
   user,
   buttonName,
   buttonURL,
-  buttonPurpose
+  buttonPurpose,
+  setEdit,
+  setId,
+  setData
 }) => {
   var i = 0;
   const [page, setPage] = useState(0);
@@ -272,6 +275,11 @@ const CompanyTable = ({
                       }}
                       color="inherit"
                       size="small"
+                      onClick={() => {
+                        setEdit(true);
+                        setId(el._id);
+                        setData(el);
+                      }}
                     >
                       <EditTwoToneIcon fontSize="small" />
                     </IconButton>

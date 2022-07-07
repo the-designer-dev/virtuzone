@@ -19,19 +19,19 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ConstructionOutlined } from '@mui/icons-material';
 
-function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [name, setName] = useState(null);
-  const [licenseNo, setLicenseNo] = useState(null);
-  const [licenseCode, setLicenseCode] = useState(null);
+function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
+  const [firstName, setFirstName] = useState(data ? data.firstName : null);
+  const [lastName, setLastName] = useState(data ? data.lastName : null);
+  const [name, setName] = useState(data ? data.name : null);
+  const [licenseNo, setLicenseNo] = useState(data ? data.licenseNo : null);
+  const [licenseCode, setLicenseCode] = useState(data ? data.licenseCode : null);
   const [judiciaries, setJudiciaries] = useState(null);
-  const [judiciary, setJudiciary] = useState(null);
-  const [establishmentDate, setEstablishmentDate] = useState(null);
-  const [issueDate, setIssueDate] = useState(null);
-  const [expiryDate, setExpiryDate] = useState(null);
+  const [judiciary, setJudiciary] = useState(data ? data.judiciary : null);
+  const [establishmentDate, setEstablishmentDate] = useState(data ? data.establishmentDate : null);
+  const [issueDate, setIssueDate] = useState(data ? data.issueDate : null);
+  const [expiryDate, setExpiryDate] = useState(data ? data.expiryDate : null);
   const [activities, setActivities] = useState(null);
-  const [activity, setActivity] = useState(null);
+  const [activity, setActivity] = useState(data ? data.activities : null);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -59,28 +59,55 @@ function AddCompany({ id, shouldUpdate, setShouldUpdate }) {
 
   function onSubmit(e) {
     e.preventDefault();
-    axios({
-      method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
-      headers: {
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      },
-      data: {
-        owner: id,
-        name: name,
-        licenseNo: licenseNo,
-        licenseCode: licenseCode,
-        judiciary: judiciary,
-        establishmentDate: establishmentDate,
-        issueDate: issueDate,
-        expiryDate: expiryDate,
-        activities: activity
-      }
-    }).then((res) => {
-      if (res.status === 200) {
-        setShouldUpdate(!shouldUpdate);
-      }
-    });
+
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          owner: id,
+          name: name,
+          licenseNo: licenseNo,
+          licenseCode: licenseCode,
+          judiciary: judiciary,
+          establishmentDate: establishmentDate,
+          issueDate: issueDate,
+          expiryDate: expiryDate,
+          activities: activity
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      console.log(data)
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${comp}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          owner: id,
+          name: name,
+          licenseNo: licenseNo,
+          licenseCode: licenseCode,
+          judiciary: judiciary,
+          establishmentDate: establishmentDate,
+          issueDate: issueDate,
+          expiryDate: expiryDate,
+          activities: activity
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    }
   }
 
   function onJudiciaryChange(e) {

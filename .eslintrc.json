@@ -1,5 +1,8 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended"
+  ],
   "rules": {
     "prettier/prettier": "off",
     "@next/next/no-img-element": "off",
@@ -8,9 +11,9 @@
     "eslint-disable-next-line": "off",
     "react-hooks/exhaustive-deps": "off",
     "react/no-unescaped-entities": "off",
-    "react/jsx-key":"off",
-    "react/no-children-prop":"off",
-    "react/jsx-no-undef":"off",
+    "react/jsx-key": "off",
+    "react/no-children-prop": "off",
+    "react/jsx-no-undef": "off",
     "react/jsx-max-props-per-line": [
       1,
       {

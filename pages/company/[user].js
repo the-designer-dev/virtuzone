@@ -20,8 +20,13 @@ function Company() {
   const [shouldUpdate, setShouldUpdate] = useState(null);
   const router = useRouter();
   const { user } = router.query;
+  const [edit, setEdit] = useState(null);
+  const [id, setId] = useState(null);
+  const [data, setData] = useState(null);
   useEffect(() => {
     setOpen(false);
+    setEdit(false);
+    setData(null);
     if (user !== undefined) {
       axios({
         method: 'GET',
@@ -74,13 +79,22 @@ function Company() {
               buttonName={'View/Add Employees'}
               buttonURL={'employees/'}
               buttonPurpose={'View or Add employees against this company'}
+              setEdit={setEdit}
+              setId={setId}
+              setData={setData}
             />
             <Modal
               open={open}
               setOpen={setOpen}
+              setEdit={setEdit}
+              setData={setData}
+              edit={edit}
               children={
                 <AddCompany
+                  edit={edit}
                   id={user}
+                  comp={id}
+                  data={data}
                   shouldUpdate={shouldUpdate}
                   setShouldUpdate={setShouldUpdate}
                 />
