@@ -18,10 +18,15 @@ function Employees() {
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
   const [shouldUpdate, setShouldUpdate] = useState(null);
+  const [edit, setEdit] = useState(null);
+  const [id, setId] = useState(null);
+  const [data, setData] = useState(null);
   const router = useRouter();
   const { company } = router.query;
   useEffect(() => {
     setOpen(false);
+    setEdit(false);
+    setData(null);
     if (company !== undefined) {
       axios({
         method: 'GET',
@@ -68,13 +73,25 @@ function Employees() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <EmployeesTable setImage={setImage} data={allData} />
+            <EmployeesTable
+              setImage={setImage}
+              data={allData}
+              setEdit={setEdit}
+              setId={setId}
+              setData={setData}
+            />
             <Modal
               open={open}
               setOpen={setOpen}
+              setEdit={setEdit}
+              setData={setData}
+              edit={edit}
               children={
                 <AddEmployee
-                  id={company}
+                  edit={edit}
+                  id={id}
+                  data={data}
+                  comp={company}
                   shouldUpdate={shouldUpdate}
                   setShouldUpdate={setShouldUpdate}
                 />

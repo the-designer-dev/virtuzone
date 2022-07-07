@@ -14,9 +14,14 @@ function Client() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
   const [shouldUpdate, setShouldUpdate] = useState(null);
+  const [edit, setEdit] = useState(null);
+  const [id, setId] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     setOpen(false);
+    setEdit(false);
+    setData(null);
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/alluser`,
@@ -57,12 +62,21 @@ function Client() {
               buttonName={'View/Add Company'}
               buttonURL={'visa'}
               buttonPurpose={'View or Add companies against this user'}
+              setEdit={setEdit}
+              setId={setId}
+              setData={setData}
             />
             <Modal
               open={open}
               setOpen={setOpen}
+              setEdit={setEdit}
+              setData={setData}
+              edit={edit}
               children={
                 <AddClient
+                  edit={edit}
+                  id={id}
+                  data={data}
                   shouldUpdate={shouldUpdate}
                   setShouldUpdate={setShouldUpdate}
                 />

@@ -43,7 +43,10 @@ const EmployeesTable = ({
   data,
   buttonName,
   buttonURL,
-  buttonPurpose
+  buttonPurpose,
+  setEdit,
+  setId,
+  setData
 }) => {
   const router = useRouter();
   var i = 0;
@@ -189,6 +192,11 @@ const EmployeesTable = ({
                       }}
                       color="inherit"
                       size="small"
+                      onClick={() => {
+                        setEdit(true);
+                        setId(el._id);
+                        setData(el);
+                      }}
                     >
                       <EditTwoToneIcon fontSize="small" />
                     </IconButton>
