@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 
 import SidebarMenu from './SidebarMenu';
-import Logo from 'src/components/LogoSign';
+import Logo from 'public/static/images/Icons/logo.png';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -56,15 +56,8 @@ function Sidebar() {
       >
         <Scrollbar>
           <Box mt={3}>
-            <Box
-              mx={2}
-              sx={{
-                width: 52
-              }}
-            >
-              <Typography textAlign={'center'} color={'#fff'} variant={'h3'}>
-                VIRTUZONE
-              </Typography>
+            <Box mx={5}>
+              <img src={Logo.src} style={{ width: '100%' }} />
             </Box>
           </Box>
           <Divider

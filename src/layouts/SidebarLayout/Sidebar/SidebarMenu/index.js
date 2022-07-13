@@ -13,25 +13,18 @@ import {
 import NextLink from 'next/link';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
-import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
-import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
-import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
-import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
-import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import BallotTwoToneIcon from '@mui/icons-material/BallotTwoTone';
-import BeachAccessTwoToneIcon from '@mui/icons-material/BeachAccessTwoTone';
-import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
-import FilterVintageTwoToneIcon from '@mui/icons-material/FilterVintageTwoTone';
-import HowToVoteTwoToneIcon from '@mui/icons-material/HowToVoteTwoTone';
-import LocalPharmacyTwoToneIcon from '@mui/icons-material/LocalPharmacyTwoTone';
-import RedeemTwoToneIcon from '@mui/icons-material/RedeemTwoTone';
-import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-import TrafficTwoToneIcon from '@mui/icons-material/TrafficTwoTone';
-import CheckBoxTwoToneIcon from '@mui/icons-material/CheckBoxTwoTone';
-import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwoTone';
-import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
-import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
-import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import activity from 'public/static/images/Icons/activity.png';
+import article from 'public/static/images/Icons/article.png';
+import client from 'public/static/images/Icons/client.png';
+import expressacconting from 'public/static/images/Icons/expressacconting.png';
+import immigrationcard from 'public/static/images/Icons/immigrationcard.png';
+import incorporationcertificates from 'public/static/images/Icons/incorporationcertificates.png';
+import office from 'public/static/images/Icons/office.png';
+import salarycertificates from 'public/static/images/Icons/salarycertificates.png';
+import sharecertificates from 'public/static/images/Icons/sharecertificates.png';
+import trade from 'public/static/images/Icons/trade.png';
+import visa from 'public/static/images/Icons/visa.png';
+import contact from 'public/static/images/Icons/contact.png';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -94,12 +87,18 @@ const SubMenuWrapper = styled(Box)(
 
           .MuiButton-startIcon {
             color: ${theme.colors.alpha.trueWhite[30]};
+            filter: invert(100%) sepia(0%) saturate(7449%) hue-rotate(50deg) brightness(114%) contrast(104%);
+
+
             font-size: ${theme.typography.pxToRem(20)};
             margin-right: ${theme.spacing(1)};
           }
           
           .MuiButton-endIcon {
             color: ${theme.colors.alpha.trueWhite[50]};
+            filter: invert(100%) sepia(0%) saturate(7449%) hue-rotate(50deg) brightness(114%) contrast(104%);
+
+
             margin-left: auto;
             opacity: .8;
             font-size: ${theme.typography.pxToRem(20)};
@@ -110,9 +109,12 @@ const SubMenuWrapper = styled(Box)(
             background-color: ${theme.colors.alpha.trueWhite[100]};
             color: #cf3239 ;
 
+
             .MuiButton-startIcon,
             .MuiButton-endIcon {
               color: #cf3239;
+            filter: invert(24%) sepia(87%) saturate(2363%) hue-rotate(341deg) brightness(86%) contrast(87%);
+
             }
           }
         }
@@ -179,6 +181,7 @@ function SidebarMenu() {
   const { closeSidebar } = useContext(SidebarContext);
   const router = useRouter();
   const currentRoute = router.pathname;
+  console.log(client);
   return (
     <>
       <MenuWrapper>
@@ -192,7 +195,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<DesignServicesTwoToneIcon />}
+                    startIcon={<img src={client.src} />}
                   >
                     Client
                   </Button>
@@ -207,7 +210,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<DesignServicesTwoToneIcon />}
+                    startIcon={<img src={trade.src} />}
                   >
                     Trade Licenses
                   </Button>
@@ -235,7 +238,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<BrightnessLowTwoToneIcon />}
+                    startIcon={<img src={office.src} />}
                   >
                     Office Lease Agreement
                   </Button>
@@ -252,7 +255,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<MmsTwoToneIcon />}
+                    startIcon={<img src={article.src} />}
                   >
                     Article of Incorporation
                   </Button>
@@ -267,7 +270,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<MmsTwoToneIcon />}
+                    startIcon={<img src={sharecertificates.src} />}
                   >
                     Share Certificate
                   </Button>
@@ -284,7 +287,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<MmsTwoToneIcon />}
+                    startIcon={<img src={incorporationcertificates.src} />}
                   >
                     Incorporation Certificate
                   </Button>
@@ -300,7 +303,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<MmsTwoToneIcon />}
+                    startIcon={<img src={immigrationcard.src} />}
                   >
                     Immigration Card
                   </Button>
@@ -326,7 +329,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<TableChartTwoToneIcon />}
+                    startIcon={<img src={expressacconting.src} />}
                   >
                     Express Accounting
                   </Button>
@@ -352,7 +355,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<AccountCircleTwoToneIcon />}
+                    startIcon={<img src={visa.src} />}
                   >
                     Visa
                   </Button>
@@ -367,7 +370,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<AccountCircleTwoToneIcon />}
+                    startIcon={<img src={salarycertificates.src} />}
                   >
                     Salary Certificate
                   </Button>
@@ -386,7 +389,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<DesignServicesTwoToneIcon />}
+                    startIcon={<img src={contact.src} />}
                   >
                     Contact
                   </Button>
@@ -399,7 +402,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<DesignServicesTwoToneIcon />}
+                    startIcon={<img src={activity.src} />}
                   >
                     Activity
                   </Button>
@@ -427,7 +430,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<BallotTwoToneIcon />}
+                    startIcon={<img src={client} />}
                   >
                     Cost Calculator
                   </Button>
@@ -446,7 +449,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<DesignServicesTwoToneIcon />}
+                    startIcon={<img src={client} />}
                   >
                     Book an Appointment
                   </Button>
@@ -459,7 +462,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<DesignServicesTwoToneIcon />}
+                    startIcon={<img src={client} />}
                   >
                     Terms and Conditions
                   </Button>
