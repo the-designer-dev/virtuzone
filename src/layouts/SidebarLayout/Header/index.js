@@ -40,7 +40,7 @@ function Header() {
     <HeaderWrapper
       display="flex"
       alignItems="center"
-      sx={{ left: sidebarToggle ? '196px' : '-20px' }}
+      sx={{ left: sidebarToggle ? '213px' : '-20px' }}
     >
       <Box display="flex" alignItems="center">
         <Box

@@ -124,7 +124,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -135,7 +134,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -146,7 +144,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -157,7 +154,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -168,7 +164,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -179,7 +174,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -190,7 +184,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -201,7 +194,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -212,7 +204,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -223,7 +214,6 @@ const VisaTable = ({ setImage, data }) => {
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >

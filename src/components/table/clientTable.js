@@ -213,7 +213,7 @@ const UserTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.dateOfBirth}
+                    {moment(el.dateOfBirth).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>

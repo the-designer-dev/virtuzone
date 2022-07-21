@@ -23,6 +23,7 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 
 const applyFilters = (cryptoOrders, filters) => {
@@ -116,7 +117,7 @@ const CompanyTable = ({
               <TableCell>Name</TableCell>
               <TableCell>License No </TableCell>
               <TableCell>License Code</TableCell>
-              <TableCell>Judiciary</TableCell>
+              <TableCell>Jurisdiction</TableCell>
               <TableCell>Establishment Date </TableCell>
               <TableCell>Issue Date </TableCell>
               <TableCell>Expiry Date</TableCell>
@@ -132,7 +133,6 @@ const CompanyTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -143,7 +143,6 @@ const CompanyTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -154,7 +153,6 @@ const CompanyTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -165,7 +163,6 @@ const CompanyTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -176,7 +173,6 @@ const CompanyTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -187,51 +183,46 @@ const CompanyTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
-                    {el.judiciary}
+                    {el.judiciary.name}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
-                    {el.establishmentDate}
+                    {moment(el.establishmentDate).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
-                    {el.issueDate}
+                    {moment(el.issueDate).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
-                    {el.expiryDate}
+                    {moment(el.expiryDate).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >

@@ -125,7 +125,6 @@ const EmployeesTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -136,7 +135,6 @@ const EmployeesTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -147,7 +145,6 @@ const EmployeesTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
@@ -158,7 +155,6 @@ const EmployeesTable = ({
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >

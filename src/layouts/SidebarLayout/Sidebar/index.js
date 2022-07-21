@@ -95,13 +95,8 @@ function Sidebar() {
         >
           <Scrollbar>
             <Box mt={3}>
-              <Box
-                mx={2}
-                sx={{
-                  width: 52
-                }}
-              >
-                <Typography variant={'h3'}>VIRTUZONE</Typography>
+              <Box mx={6}>
+                <img src={Logo.src} style={{ width: '100%' }} />
               </Box>
             </Box>
             <Divider

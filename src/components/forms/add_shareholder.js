@@ -13,14 +13,18 @@ import {
   CardContent,
   Box,
   TextField,
-  Checkbox,
-  FormControlLabel,
   Button
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import ReactFlagsSelect from 'react-flags-select';
-
-function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
+function AddShareHolder({
+  shareHolders,
+  setShareHolders,
+  setOpen,
+  setEdit,
+  edit,
+  data
+}) {
   const [firstName, setFirstName] = useState(data ? data.firstName : null);
   const [lastName, setLastName] = useState(data ? data.lastName : null);
   const [email, setEmail] = useState(data ? data.email : null);
@@ -30,70 +34,45 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [dateOfBirth, setDateOfBirth] = useState(
     data ? data.dateOfBirth : null
   );
-  const [passportDetails, setPassportDetails] = useState(
-    data ? data.passportDetails : []
-  );
-  const [role, setRole] = useState(data ? data.role : false);
-
   function onSubmit(e) {
     e.preventDefault();
-
+    console.log(edit !== true);
     if (edit !== true) {
-      axios({
-        method: 'POST',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user`,
-        headers: {
-          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-        },
-        data: {
+      setShareHolders([
+        ...shareHolders,
+        {
           firstName: firstName,
           lastName: lastName,
           email: email,
           countryCode: countryCode,
           mobile: mobile,
           nationality: nationality,
-          dateOfBirth: dateOfBirth,
-          isVerified: false,
-
-          passportDetails: passportDetails,
-          role: 'owner'
+          dateOfBirth: dateOfBirth
         }
-      }).then((res) => {
-        if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-        }
-      });
+      ]);
+      setOpen(false);
     } else {
-      axios({
-        method: 'PUT',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`,
-        headers: {
-          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-        },
-        data: {
+      var stakeHoldersArr = shareHolders;
+      stakeHoldersArr[stakeHoldersArr.findIndex((el) => el._id === data._id)] =
+        {
           firstName: firstName,
           lastName: lastName,
           email: email,
           countryCode: countryCode,
           mobile: mobile,
           nationality: nationality,
-          dateOfBirth: dateOfBirth,
-          passportDetails: passportDetails,
-          isVerified: false,
-          role: 'owner'
-        }
-      }).then((res) => {
-        if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-        }
-      });
+          dateOfBirth: dateOfBirth
+        };
+      setShareHolders(stakeHoldersArr);
+      setEdit(false);
+      setOpen(false);
     }
   }
 
   return (
     <>
       <Head>
-        <title>Add Client - Virtuzone</title>
+        <title>Add Share-Holder - Virtuzone</title>
       </Head>
       <Container sx={{ mt: 2 }} maxWidth="lg">
         <Grid
@@ -105,7 +84,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
         >
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Add Client" />
+              <CardHeader title="Add Share-Holder" />
               <Divider />
               <CardContent>
                 <Box
@@ -182,18 +161,11 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       label="Date Of Birth"
                       value={dateOfBirth}
                       onChange={(newValue) => {
-                        setDateOfBirth(newValue.format());
+                        setDateOfBirth(newValue.utc().format());
                       }}
                       renderInput={(params) => <TextField {...params} />}
                     />
-                    <TextField
-                      required
-                      id="outlined-read-only"
-                      label="Passport Details"
-                      placeholder="Passport Details"
-                      value={passportDetails}
-                      onChange={(e) => setPassportDetails(e.target.value)}
-                    />
+
                     <Box
                       sx={{
                         margin: '9px',
@@ -202,15 +174,6 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       }}
                       component={'div'}
                     >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={role}
-                            onChange={(e) => setRole(e.target.checked)}
-                          />
-                        }
-                        label="Notify"
-                      />
                       <Button type="submit" sx={{ margin: 1 }}>
                         Submit
                       </Button>
@@ -226,4 +189,4 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   );
 }
 
-export default AddClient;
+export default AddShareHolder;

@@ -829,8 +829,7 @@ export const PureLightTheme = createTheme({
       styleOverrides: {
         root: {
           height: 38,
-          minHeight: 38,
-          overflow: 'visible'
+          minHeight: 38
         },
         indicator: {
           height: 38,
@@ -839,9 +838,7 @@ export const PureLightTheme = createTheme({
           border: '1px solid ' + colors.primary.dark,
           boxShadow: '0px 2px 10px ' + colors.primary.light
         },
-        scrollableX: {
-          overflow: 'visible !important'
-        }
+        scrollableX: {}
       }
     },
     MuiTab: {

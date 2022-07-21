@@ -14,9 +14,9 @@ import ImageModal from '../../src/components/modal/imageModal';
 
 function SalaryCertificate() {
   const [open, setOpen] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState(null);
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
-  const [shouldUpdate, setShouldUpdate] = useState(null);
 
   useEffect(() => {
     setOpen(false);
