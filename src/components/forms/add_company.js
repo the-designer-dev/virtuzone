@@ -106,7 +106,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [tradeLicense, setTradeLicense] = useState(null);
   const [message, setMessage] = useState(null);
   const [shareHolders, setShareHolders] = useState(
-    data ? data.shareHolder : null
+    data ? data.shareHolder : []
   );
 
   const [issueDateOfficeLease, setIssueDateOfficeLease] = useState(null);
@@ -774,146 +774,148 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {shareHolders.map((el, i) => {
-                            console.log(el);
-                            return (
-                              <TableRow hover>
-                                <TableCell align="center">
-                                  <Typography
-                                    variant="body1"
-                                    fontWeight="bold"
-                                    gutterBottom
-                                    noWrap
-                                  >
-                                    {i + 1}
-                                  </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Typography
-                                    variant="body1"
-                                    fontWeight="bold"
-                                    gutterBottom
-                                    noWrap
-                                  >
-                                    {el.firstName} {el.lastName}
-                                  </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Typography
-                                    variant="body1"
-                                    fontWeight="bold"
-                                    gutterBottom
-                                    noWrap
-                                  >
-                                    {el.email}
-                                  </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Typography
-                                    variant="body1"
-                                    fontWeight="bold"
-                                    gutterBottom
-                                    noWrap
-                                  >
-                                    {el.countryCode}
-                                  </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Typography
-                                    variant="body1"
-                                    fontWeight="bold"
-                                    gutterBottom
-                                    noWrap
-                                  >
-                                    {el.mobile}
-                                  </Typography>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <div
-                                    style={{
-                                      display: 'flex',
-                                      flexWrap: 'nowrap',
-                                      alignItems: 'center',
-                                      justifyContent: 'space-between'
-                                    }}
-                                  >
-                                    <img
-                                      style={{
-                                        width: '100%',
-                                        maxWidth: '30px'
-                                      }}
-                                      src={
-                                        countries.find(
-                                          (ele) => ele.name === el.nationality
-                                        )
-                                          ? countries.find(
-                                              (ele) =>
-                                                ele.name === el.nationality
-                                            ).image
-                                          : ''
-                                      }
-                                    />
+                          {shareHolders &&
+                            shareHolders.map((el, i) => {
+                              console.log(el);
+                              return (
+                                <TableRow hover>
+                                  <TableCell align="center">
                                     <Typography
                                       variant="body1"
                                       fontWeight="bold"
                                       gutterBottom
                                       noWrap
                                     >
-                                      {el.nationality}
+                                      {i + 1}
                                     </Typography>
-                                  </div>
-                                </TableCell>
-                                <TableCell align="center">
-                                  <Typography
-                                    variant="body1"
-                                    fontWeight="bold"
-                                    gutterBottom
-                                    noWrap
-                                  >
-                                    {moment(el.dateOfBirth).format(
-                                      'DD MMMM YYYY'
-                                    )}
-                                  </Typography>
-                                </TableCell>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <Typography
+                                      variant="body1"
+                                      fontWeight="bold"
+                                      gutterBottom
+                                      noWrap
+                                    >
+                                      {el.firstName} {el.lastName}
+                                    </Typography>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <Typography
+                                      variant="body1"
+                                      fontWeight="bold"
+                                      gutterBottom
+                                      noWrap
+                                    >
+                                      {el.email}
+                                    </Typography>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <Typography
+                                      variant="body1"
+                                      fontWeight="bold"
+                                      gutterBottom
+                                      noWrap
+                                    >
+                                      {el.countryCode}
+                                    </Typography>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <Typography
+                                      variant="body1"
+                                      fontWeight="bold"
+                                      gutterBottom
+                                      noWrap
+                                    >
+                                      {el.mobile}
+                                    </Typography>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <div
+                                      style={{
+                                        display: 'flex',
+                                        flexWrap: 'nowrap',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between'
+                                      }}
+                                    >
+                                      <img
+                                        style={{
+                                          width: '100%',
+                                          maxWidth: '30px'
+                                        }}
+                                        src={
+                                          countries.find(
+                                            (ele) => ele.name === el.nationality
+                                          )
+                                            ? countries.find(
+                                                (ele) =>
+                                                  ele.name === el.nationality
+                                              ).image
+                                            : ''
+                                        }
+                                      />
+                                      <Typography
+                                        variant="body1"
+                                        fontWeight="bold"
+                                        gutterBottom
+                                        noWrap
+                                      >
+                                        {el.nationality}
+                                      </Typography>
+                                    </div>
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <Typography
+                                      variant="body1"
+                                      fontWeight="bold"
+                                      gutterBottom
+                                      noWrap
+                                    >
+                                      {moment(el.dateOfBirth).format(
+                                        'DD MMMM YYYY'
+                                      )}
+                                    </Typography>
+                                  </TableCell>
 
-                                <TableCell align="right">
-                                  <Tooltip title="Edit" arrow>
-                                    <IconButton
-                                      sx={{
-                                        '&:hover': {
-                                          background:
-                                            theme.colors.primary.lighter
-                                        },
-                                        color: theme.palette.error.main
-                                      }}
-                                      color="inherit"
-                                      size="small"
-                                      onClick={() => {
-                                        setShareholderEdit(true);
-                                        setShareholderData(el);
-                                      }}
-                                    >
-                                      <EditTwoToneIcon fontSize="small" />
-                                    </IconButton>
-                                  </Tooltip>
-                                  <Tooltip title="Delete" arrow>
-                                    <IconButton
-                                      sx={{
-                                        '&:hover': {
-                                          background: theme.colors.error.lighter
-                                        },
-                                        color: theme.palette.error.main
-                                      }}
-                                      color="inherit"
-                                      size="small"
-                                    >
-                                      <DeleteTwoToneIcon fontSize="small" />
-                                    </IconButton>
-                                  </Tooltip>
-                                </TableCell>
-                              </TableRow>
-                            );
-                          })}
+                                  <TableCell align="right">
+                                    <Tooltip title="Edit" arrow>
+                                      <IconButton
+                                        sx={{
+                                          '&:hover': {
+                                            background:
+                                              theme.colors.primary.lighter
+                                          },
+                                          color: theme.palette.error.main
+                                        }}
+                                        color="inherit"
+                                        size="small"
+                                        onClick={() => {
+                                          setShareholderEdit(true);
+                                          setShareholderData(el);
+                                        }}
+                                      >
+                                        <EditTwoToneIcon fontSize="small" />
+                                      </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="Delete" arrow>
+                                      <IconButton
+                                        sx={{
+                                          '&:hover': {
+                                            background:
+                                              theme.colors.error.lighter
+                                          },
+                                          color: theme.palette.error.main
+                                        }}
+                                        color="inherit"
+                                        size="small"
+                                      >
+                                        <DeleteTwoToneIcon fontSize="small" />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </TableCell>
+                                </TableRow>
+                              );
+                            })}
                         </TableBody>
                       </Table>
                     </TableContainer>
