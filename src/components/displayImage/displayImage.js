@@ -19,15 +19,17 @@ export default function DisplayImage({ image }) {
       var mimes = [];
       for (const file of image) {
         const fetched = await axios({
-          url: `${process.env.NEXT_PUBLIC_BASE_URL}/files/${file}`,
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}/files/${file}/false`,
           responseType: 'blob',
           headers: {
             'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
           }
         });
+        console.log(fetched.data);
         const f = new Blob([fetched.data], {
           type: fetched.headers['content-type']
         });
+        console.log(f);
         imgs.push(URL.createObjectURL(f));
         mimes.push(fetched.headers['content-type']);
       }
@@ -36,13 +38,15 @@ export default function DisplayImage({ image }) {
       console.log(imgs);
     } else {
       axios({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/files/${image}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/files/${image}/false`,
         responseType: 'blob',
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        const file = new Blob([res.data], {
+        console.log(res.data.bitmap);
+
+        const file = new Blob([res.data.bitmap], {
           type: res.headers['content-type']
         });
         setViewImg(URL.createObjectURL(file));
