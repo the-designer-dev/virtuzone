@@ -25,6 +25,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { useRouter } from 'next/router';
 import countries from '../../data/countries.json';
 import moment from 'moment';
+import axios from 'axios';
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
   //     let matches = true;
@@ -47,7 +48,9 @@ const UserTable = ({
   buttonPurpose,
   setEdit,
   setId,
-  setData
+  setData,
+  setShouldUpdate,
+  shouldUpdate
 }) => {
   var i = 0;
   const [page, setPage] = useState(0);
@@ -58,6 +61,14 @@ const UserTable = ({
 
   const router = useRouter();
 
+  const deleteRecord = (id) => {
+    axios({
+      method: 'DELETE',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`
+    }).then((res) => {
+      setShouldUpdate(!shouldUpdate);
+    });
+  };
   const handleStatusChange = (e) => {
     let value = null;
 
@@ -280,6 +291,9 @@ const UserTable = ({
                       }}
                       color="inherit"
                       size="small"
+                      onClick={() => {
+                        deleteRecord(el._id);
+                      }}
                     >
                       <DeleteTwoToneIcon fontSize="small" />
                     </IconButton>

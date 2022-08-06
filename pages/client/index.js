@@ -13,7 +13,7 @@ import axios from 'axios';
 function Client() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
-  const [shouldUpdate, setShouldUpdate] = useState(null);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
   const [edit, setEdit] = useState(null);
   const [id, setId] = useState(null);
   const [data, setData] = useState(null);
@@ -74,6 +74,8 @@ function Client() {
               setEdit={setEdit}
               setId={setId}
               setData={setData}
+              setShouldUpdate={setShouldUpdate}
+              shouldUpdate={shouldUpdate}
             />
             <Modal
               open={open}

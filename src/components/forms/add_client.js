@@ -54,7 +54,6 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           nationality: nationality,
           dateOfBirth: dateOfBirth,
           isVerified: false,
-
           passportDetails: passportDetails,
           role: 'owner'
         }

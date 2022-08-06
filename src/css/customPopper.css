@@ -1,0 +1,16 @@
+.MyCustomTransition-appear-active,
+.MyCustomTransition-enter-active,
+.MyCustomTransition-enter-done {
+  opacity: 1;
+  right: 0px;
+  transition: all 200ms ease-out;
+}
+
+.MyCustomTransition-appear,
+.MyCustomTransition-enter,
+.MyCustomTransition-exit-active,
+.MyCustomTransition-exit-done {
+    opacity: 1;
+    right: 100px;
+    transition: all 200ms ease-out;
+}

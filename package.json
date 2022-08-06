@@ -36,6 +36,8 @@
     "react-flags-select": "^2.2.3",
     "react-rte": "^0.16.5",
     "react-swipeable-views": "^0.14.0",
+    "react-transition-group": "^4.4.5",
+    "socket.io-client": "^4.5.1",
     "swiper": "^8.2.4"
   },
   "scripts": {
