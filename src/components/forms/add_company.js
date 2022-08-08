@@ -139,6 +139,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
   };
 
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_ADMIN_JWT);
     if (id !== undefined) {
       axios({
         method: 'GET',

@@ -58,9 +58,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           role: 'owner'
         }
       }).then((res) => {
-        if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-        }
+        setShouldUpdate(!shouldUpdate);
       });
     } else {
       axios({
@@ -82,9 +80,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           role: 'owner'
         }
       }).then((res) => {
-        if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-        }
+        setShouldUpdate(!shouldUpdate);
       });
     }
   }

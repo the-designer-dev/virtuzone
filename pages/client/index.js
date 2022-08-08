@@ -18,6 +18,7 @@ function Client() {
   const [id, setId] = useState(null);
   const [data, setData] = useState(null);
   useEffect(() => {
+    console.log('hello');
     setOpen(false);
     setEdit(false);
     setData(null);
