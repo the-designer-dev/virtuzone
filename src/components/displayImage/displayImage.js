@@ -44,11 +44,12 @@ export default function DisplayImage({ image }) {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        console.log(res.data.bitmap);
+        console.log(res.data);
 
-        const file = new Blob([res.data.bitmap], {
+        const file = new Blob([res.data], {
           type: res.headers['content-type']
         });
+        console.log(file);
         setViewImg(URL.createObjectURL(file));
         setMimeType(res.headers['content-type']);
       });
