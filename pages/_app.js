@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import createEmotionCache from 'src/createEmotionCache';
 import { SidebarProvider } from 'src/contexts/SidebarContext';
+import { CompanyProvider } from 'src/contexts/CompanyContext';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import NotificationsComponent from '../src/layouts/SidebarLayout/Header/Buttons/Notifications';
@@ -62,14 +63,16 @@ function Virtuzone(props) {
         notifications={notifications.length > 0 ? notifications : []}
         socket={socket}
       />
-      <SidebarProvider>
-        <ThemeProvider>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <CssBaseline />
-            {getLayout(<Component {...pageProps} />)}
-          </LocalizationProvider>
-        </ThemeProvider>
-      </SidebarProvider>
+      <CompanyProvider>
+        <SidebarProvider>
+          <ThemeProvider>
+            <LocalizationProvider dateAdapter={AdapterMoment}>
+              <CssBaseline />
+              {getLayout(<Component {...pageProps} />)}
+            </LocalizationProvider>
+          </ThemeProvider>
+        </SidebarProvider>
+      </CompanyProvider>
     </>
   );
 }

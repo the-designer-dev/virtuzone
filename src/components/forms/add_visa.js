@@ -13,12 +13,16 @@ import {
   FormControlLabel,
   Button
 } from '@mui/material';
+import { CompanyContext } from 'src/contexts/CompanyContext';
 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useContext } from 'react';
 function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
+  const { Company, setCompany } = useContext(CompanyContext);
+
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [passportNo, setPassportNo] = useState(null);
@@ -33,7 +37,7 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
   const [passport, setPassport] = useState(null);
   const [entryPermit, setEntryPermit] = useState(null);
   const [residencyVisa, setResidencyVisa] = useState(null);
-
+  console.log(Company);
   function onSubmit(e) {
     e.preventDefault();
     const form = new FormData();
@@ -59,6 +63,7 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
     }
     form.append('firstName', firstName);
     form.append('lastName', lastName);
+    form.append('company', Company);
     form.append('passportNo', passportNo);
     form.append('passportIssue', passportIssue);
     form.append('passportExpiry', passportExpiry);

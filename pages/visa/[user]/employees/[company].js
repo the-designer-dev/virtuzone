@@ -1,6 +1,6 @@
 import { Button, Container, Grid, Typography } from '@mui/material';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import Modal from 'src/components/modal';
 import AddEmployee from 'src/components/forms/add_employee';
@@ -9,8 +9,7 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import EmployeesTable from 'src/components/table/employeesTable';
 import { useEffect } from 'react';
 import axios from 'axios';
-import DisplayImage from 'src/components/displayImage/displayImage';
-import ImageModal from 'src/components/modal/imageModal';
+import { CompanyContext } from 'src/contexts/CompanyContext';
 import { useRouter } from 'next/router';
 
 function Employees() {
@@ -21,9 +20,12 @@ function Employees() {
   const [edit, setEdit] = useState(null);
   const [id, setId] = useState(null);
   const [data, setData] = useState(null);
+  const { Company, setCompany } = useContext(CompanyContext);
+
   const router = useRouter();
   const { company } = router.query;
   useEffect(() => {
+    setCompany(company);
     setOpen(false);
     setEdit(false);
     setData(null);
