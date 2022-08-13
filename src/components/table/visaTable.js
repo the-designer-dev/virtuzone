@@ -23,6 +23,7 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import moment from 'moment';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -157,7 +158,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.passportIssue}
+                    {moment(el.passportIssue).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -167,7 +168,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.passportExpiry}
+                    {moment(el.passportExpiry).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -187,7 +188,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.entryPermitIssued.toString()}
+                    {el.entryPermitIssued ? 'Yes' : 'No'}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -207,7 +208,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.residencyVisaIssued.toString()}
+                    {el.residencyVisaIssued ? 'Yes' : 'No'}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -217,7 +218,7 @@ const VisaTable = ({ setImage, data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.emiratesIdIssued}
+                    {el.emiratesIdIssued ? 'Yes' : 'No'}
                   </Typography>
                 </TableCell>
 

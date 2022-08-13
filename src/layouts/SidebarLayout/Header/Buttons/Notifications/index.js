@@ -143,9 +143,19 @@ function HeaderNotifications({ notifications, socket }) {
                     })}
                   </Typography>
                 </Box>
+                <Box>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    Name: {el.user.firstName} {el.user.lastName} | Phone :{' '}
+                    {el.user.phone} | Email : {el.user.email}
+                  </Typography>
+                </Box>
                 <Typography
                   component="span"
-                  variant="body2"
+                  variant="body1"
                   color="text.secondary"
                 >
                   {el.message}
