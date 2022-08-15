@@ -181,14 +181,14 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       }}
                       renderInput={(params) => <TextField {...params} />}
                     />
-                    <TextField
+                    {/* <TextField
                       required
                       id="outlined-read-only"
                       label="Passport Details"
                       placeholder="Passport Details"
                       value={passportDetails}
                       onChange={(e) => setPassportDetails(e.target.value)}
-                    />
+                    /> */}
                     <Box
                       sx={{
                         margin: '9px',

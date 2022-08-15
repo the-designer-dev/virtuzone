@@ -512,6 +512,15 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                             label="Notify"
                           />
                         </Box>
+                        <TextField
+                          id="outlined-search"
+                          label="Scan File"
+                          onChange={(e) => setOfficeLease(e.target.files[0])}
+                          InputLabelProps={{
+                            shrink: true
+                          }}
+                          type={'file'}
+                        />
                       </div>
                     </Box>
                   </CardContent>

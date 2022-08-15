@@ -212,14 +212,14 @@ function SidebarMenu() {
                     onClick={closeSidebar}
                     startIcon={<img src={trade.src} />}
                   >
-                    Trade Licenses
+                    Incorporation Documents
                   </Button>
                 </NextLink>
               </ListItem>
             </List>
           </SubMenuWrapper>
         </List>
-        <List
+        {/* <List
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
@@ -311,7 +311,7 @@ function SidebarMenu() {
               </ListItem>
             </List>
           </SubMenuWrapper>
-        </List>
+        </List> */}
         <List
           component="div"
           subheader={
@@ -361,7 +361,7 @@ function SidebarMenu() {
                   </Button>
                 </NextLink>
               </ListItem>
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <NextLink href="/salary_certificate" passHref>
                   <Button
                     className={
@@ -375,7 +375,7 @@ function SidebarMenu() {
                     Salary Certificate
                   </Button>
                 </NextLink>
-              </ListItem>
+              </ListItem> */}
             </List>
           </SubMenuWrapper>
         </List>

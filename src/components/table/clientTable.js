@@ -116,7 +116,7 @@ const UserTable = ({
             </FormControl>
           </Box>
         }
-        title="Users"
+        title="Client Information"
       />
       <Divider />
       <TableContainer>
