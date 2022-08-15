@@ -31,7 +31,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
     data ? data.dateOfBirth : null
   );
   const [passportDetails, setPassportDetails] = useState(
-    data ? data.passportDetails : []
+    data ? data.passportDetails : 'sasd'
   );
   const [role, setRole] = useState(data ? data.role : false);
 
