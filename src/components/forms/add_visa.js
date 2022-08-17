@@ -20,27 +20,49 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
-  const { Company, setCompany } = useContext(CompanyContext);
-
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [passportNo, setPassportNo] = useState(null);
-  const [passportIssue, setPassportIssue] = useState(null);
-  const [passportExpiry, setPassportExpiry] = useState(null);
-  const [passportCountry, setPassportCountry] = useState(null);
-  const [entryPermitIssued, setEntryPermitIssued] = useState(false);
-  const [visaUID, setVisaUID] = useState(null);
-  const [residencyVisaIssued, setResidencyVisaIssued] = useState(false);
-  const [emiratesIdIssued, setEmiratesIdIssued] = useState(false);
-  const [emiratesId, setEmiratesId] = useState(null);
-  const [passport, setPassport] = useState(null);
-  const [entryPermit, setEntryPermit] = useState(null);
-  const [residencyVisa, setResidencyVisa] = useState(null);
-  console.log(Company);
+function AddVisa({
+  setOpen,
+  shouldUpdate,
+  setShouldUpdate,
+  company,
+  data,
+  edit
+}) {
+  const [firstName, setFirstName] = useState(data ? data.firstName : null);
+  const [lastName, setLastName] = useState(data ? data.lastName : null);
+  const [passportNo, setPassportNo] = useState(data ? data.passportNo : null);
+  const [passportIssue, setPassportIssue] = useState(
+    data ? data.passportIssue : null
+  );
+  const [passportExpiry, setPassportExpiry] = useState(
+    data ? data.passportExpiry : null
+  );
+  const [passportCountry, setPassportCountry] = useState(
+    data ? data.passportCountry : null
+  );
+  const [entryPermitIssued, setEntryPermitIssued] = useState(
+    data ? data.entryPermitIssued : null
+  );
+  const [visaUID, setVisaUID] = useState(data ? data.visaUID : null);
+  const [residencyVisaIssued, setResidencyVisaIssued] = useState(
+    data ? data.residencyVisaIssued : null
+  );
+  const [emiratesIdIssued, setEmiratesIdIssued] = useState(
+    data ? data.emiratesIdIssued : null
+  );
+  const [emiratesId, setEmiratesId] = useState(data ? data.emiratesId : null);
+  const [passport, setPassport] = useState(data ? data.passport : null);
+  const [entryPermit, setEntryPermit] = useState(
+    data ? data.entryPermit : null
+  );
+  const [residencyVisa, setResidencyVisa] = useState(
+    data ? data.residencyVisa : null
+  );
+  console.log(company);
   function onSubmit(e) {
     e.preventDefault();
     const form = new FormData();
+
     if (passport) {
       for (const key of Object.keys(passport)) {
         form.append('passport', passport[key]);
@@ -63,7 +85,7 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
     }
     form.append('firstName', firstName);
     form.append('lastName', lastName);
-    form.append('company', Company);
+    form.append('company', company);
     form.append('passportNo', passportNo);
     form.append('passportIssue', passportIssue);
     form.append('passportExpiry', passportExpiry);
@@ -72,21 +94,38 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
     form.append('visaUID', visaUID);
     form.append('residencyVisaIssued', residencyVisaIssued);
     form.append('emiratesIdIssued', emiratesIdIssued);
-    form.append('employee', employee);
-
-    axios({
-      method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa`,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      },
-      data: form
-    }).then((res) => {
-      if (res.status === 200) {
-        setShouldUpdate(!shouldUpdate);
-      }
-    });
+    // form.append('employee', employee);
+    if (!edit) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa`,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: form
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+          setOpen(false);
+        }
+      });
+    } else {
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa?id=${data._id}`,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: form
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+          setOpen(false);
+        }
+      });
+    }
   }
 
   return (
@@ -160,6 +199,7 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
                       required
                       id="outlined-required"
                       label="Passport Country"
+                      value={passportCountry}
                       onChange={(e) => {
                         setPassportCountry(e.target.value);
                       }}
@@ -170,6 +210,7 @@ function AddVisa({ employee, shouldUpdate, setShouldUpdate }) {
                       required
                       id="outlined-required"
                       label="Visa UID"
+                      value={visaUID}
                       onChange={(e) => {
                         setVisaUID(e.target.value);
                       }}

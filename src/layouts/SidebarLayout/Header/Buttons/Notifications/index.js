@@ -149,8 +149,8 @@ function HeaderNotifications({ notifications, socket }) {
                     variant="body2"
                     color="text.secondary"
                   >
-                    Name: {el.user.firstName} {el.user.lastName} | Phone :{' '}
-                    {el.user.phone} | Email : {el.user.email}
+                    Name: {el?.user?.firstName} {el?.user?.lastName} | Phone :{' '}
+                    {el?.user?.phone} | Email : {el?.user?.email}
                   </Typography>
                 </Box>
                 <Typography

@@ -24,6 +24,7 @@ import {
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import moment from 'moment';
+import axios from 'axios';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -39,13 +40,25 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const VisaTable = ({ setImage, data }) => {
+const VisaTable = ({ setImage, data, setEdit, setData }) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [filters, setFilters] = useState({
     status: null
   });
+
+  const deleteRecord = (id) => {
+    axios({
+      method: 'DELETE',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa?id=${id}`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      }
+    }).then((res) => {
+      setShouldUpdate(!shouldUpdate);
+    });
+  };
 
   const handleStatusChange = (e) => {
     let value = null;
@@ -101,21 +114,21 @@ const VisaTable = ({ setImage, data }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="center">#</TableCell>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Passport No</TableCell>
-              <TableCell align="center">Passport Issue</TableCell>
-              <TableCell align="center">Passport Expiry</TableCell>
-              <TableCell align="center">Passport Country</TableCell>
-              <TableCell align="center">Entry Permit Issued</TableCell>
-              <TableCell align="center">Visa UID</TableCell>
-              <TableCell align="center">Residency Visa Issued</TableCell>
-              <TableCell align="center">Emirates Id Issued</TableCell>
-              <TableCell align="center">Passport</TableCell>
-              <TableCell align="center">Entry Permit</TableCell>
-              <TableCell align="center">Residency Visa</TableCell>
-              <TableCell align="center">Emirates Id</TableCell>
-              <TableCell align="center">Actions</TableCell>
+              <TableCell>#</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Passport No</TableCell>
+              <TableCell>Passport Issue</TableCell>
+              <TableCell>Passport Expiry</TableCell>
+              <TableCell>Passport Country</TableCell>
+              <TableCell>Entry Permit Issued</TableCell>
+              <TableCell>Visa UID</TableCell>
+              <TableCell>Residency Visa Issued</TableCell>
+              <TableCell>Emirates Id Issued</TableCell>
+              <TableCell>Passport</TableCell>
+              <TableCell>Entry Permit</TableCell>
+              <TableCell>Residency Visa</TableCell>
+              <TableCell>Emirates Id</TableCell>
+              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -275,6 +288,10 @@ const VisaTable = ({ setImage, data }) => {
                         },
                         color: theme.palette.primary.main
                       }}
+                      onClick={() => {
+                        setEdit(true);
+                        setData(el);
+                      }}
                       color="inherit"
                       size="small"
                     >
@@ -287,6 +304,7 @@ const VisaTable = ({ setImage, data }) => {
                         '&:hover': { background: theme.colors.error.lighter },
                         color: theme.palette.error.main
                       }}
+                      onClick={() => deleteRecord(el._id)}
                       color="inherit"
                       size="small"
                     >

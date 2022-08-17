@@ -23,7 +23,8 @@ import {
   TableCell,
   TableBody,
   Tooltip,
-  IconButton
+  IconButton,
+  Select
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PropTypes from 'prop-types';
@@ -78,22 +79,26 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
 
-  const [firstName, setFirstName] = useState(data ? data.firstName : null);
-  const [lastName, setLastName] = useState(data ? data.lastName : null);
+  const [firstName, setFirstName] = useState(
+    data ? data.owner.firstName : null
+  );
+  const [lastName, setLastName] = useState(data ? data.owner.lastName : null);
   const [name, setName] = useState(data ? data.name : null);
   const [licenseNo, setLicenseNo] = useState(data ? data.licenseNo : null);
   const [licenseCode, setLicenseCode] = useState(
     data ? data.licenseCode : null
   );
   const [judiciaries, setJudiciaries] = useState(null);
-  const [judiciary, setJudiciary] = useState(data ? data.judiciary : null);
+  const [judiciary, setJudiciary] = useState(data ? data.judiciary._id : null);
   const [establishmentDate, setEstablishmentDate] = useState(
     data ? data.establishmentDate : null
   );
   const [issueDate, setIssueDate] = useState(data ? data.issueDate : null);
   const [expiryDate, setExpiryDate] = useState(data ? data.expiryDate : null);
   const [activities, setActivities] = useState(null);
-  const [activity, setActivity] = useState(data ? data.activities : null);
+  const [activity, setActivity] = useState(
+    data ? data.activities.map((el) => el._id) : null
+  );
 
   const [issueDateTradeLicense, setIssueDateTradeLicense] = useState(null);
   const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(null);
@@ -103,6 +108,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [code, setCode] = useState(null);
   const [tradeLicensejudiciary, setTradeLicensejudiciary] = useState(null);
 
+  const [establishmentCard, setEstablishmentCard] = useState(null);
   const [tradeLicense, setTradeLicense] = useState(null);
   const [message, setMessage] = useState(null);
   const [shareHolders, setShareHolders] = useState(
@@ -122,14 +128,6 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [tabValue, setTabValue] = useState(0);
   const [value, setValue] = useState(null);
 
-  const handleChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setTabValue(index);
-  };
-
   const handleOnChange = (value) => {
     setValue(value);
     if (event.onChange) {
@@ -138,8 +136,16 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
     setMessage(value.toString('html'));
   };
 
+  const handleChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setTabValue(index);
+  };
+
   useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_ADMIN_JWT);
+    console.log(data);
     if (id !== undefined) {
       axios({
         method: 'GET',
@@ -189,6 +195,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
     form.append('shareCertificate', shareCertificate);
     form.append('articleOfIncorporation', articleOfIncorporation);
     form.append('incorporationCertificate', incorporationCertificate);
+    form.append('establishmentCard', establishmentCard);
     form.append('officeLeaseIssue', issueDate);
     form.append('officeLeaseExpiry', expiryDate);
     form.append('immigrationCard', immigrationCard);
@@ -214,7 +221,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
       console.log(data);
       axios({
         method: 'PUT',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${comp}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${data._id}`,
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
@@ -237,7 +244,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
       }
     })
       .then((res) => {
-        setActivity(null);
+        setActivity([]);
         setActivities(res.data.activity);
       })
       .catch((err) => {
@@ -383,14 +390,22 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           }}
                           renderInput={(params) => <TextField {...params} />}
                         />
-                        <TextField
+                        <Select
                           required
                           select
+                          multiple
                           id="outlined-read-only"
-                          label="Activities"
+                          // label="Activities"
                           placeholder="Activities"
+                          input={<TextField label="Activities" />}
                           value={activity}
-                          onChange={(e) => setActivity(e.target.value)}
+                          onChange={(e) => {
+                            setActivity(
+                              typeof e.target.value === 'string'
+                                ? e.target.value.split(',')
+                                : e.target.value
+                            );
+                          }}
                         >
                           {activities &&
                             activities.map((el) => (
@@ -398,7 +413,19 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                                 {el.name}
                               </MenuItem>
                             ))}
-                        </TextField>
+                        </Select>
+                        <TextField
+                          id="outlined-search"
+                          label="Scan File"
+                          onChange={(e) => {
+                            console.log(e.target.files[0]);
+                            setTradeLicense(e.target.files[0]);
+                          }}
+                          InputLabelProps={{
+                            shrink: true
+                          }}
+                          type={'file'}
+                        />
                         <Box
                           sx={{
                             margin: '9px',
@@ -492,7 +519,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           label="Scan File"
                           onChange={(e) => {
                             console.log(e.target.files[0]);
-                            setTradeLicense(e.target.files[0]);
+                            setEstablishmentCard(e.target.files[0]);
                           }}
                           InputLabelProps={{
                             shrink: true
@@ -512,15 +539,6 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                             label="Notify"
                           />
                         </Box>
-                        <TextField
-                          id="outlined-search"
-                          label="Scan File"
-                          onChange={(e) => setOfficeLease(e.target.files[0])}
-                          InputLabelProps={{
-                            shrink: true
-                          }}
-                          type={'file'}
-                        />
                       </div>
                     </Box>
                   </CardContent>

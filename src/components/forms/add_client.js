@@ -15,16 +15,21 @@ import {
   TextField,
   Checkbox,
   FormControlLabel,
-  Button
+  Button,
+  MenuItem,
+  Typography
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import ReactFlagsSelect from 'react-flags-select';
+import dynamic from 'next/dynamic';
+const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 
 function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [firstName, setFirstName] = useState(data ? data.firstName : null);
   const [lastName, setLastName] = useState(data ? data.lastName : null);
   const [email, setEmail] = useState(data ? data.email : null);
   const [countryCode, setCountryCode] = useState(data ? data.countryCode : []);
+  const [dialCode, setDialCode] = useState(null);
   const [mobile, setMobile] = useState(data ? data.mobile : []);
   const [nationality, setNationality] = useState(data ? data.nationality : []);
   const [dateOfBirth, setDateOfBirth] = useState(
@@ -33,7 +38,25 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [passportDetails, setPassportDetails] = useState(
     data ? data.passportDetails : 'sasd'
   );
-  const [role, setRole] = useState(data ? data.role : false);
+  const [notify, setNotify] = useState(false);
+
+  const [value, setValue] = useState(null);
+
+  const handleOnChange = (value) => {
+    setValue(value);
+    if (event.onChange) {
+      onChange(value.toString('html'));
+    }
+    setMessage(value.toString('html'));
+  };
+
+  useEffect(() => {
+    const importModule = async () => {
+      const mod = await import('react-rte');
+      setValue(mod.createEmptyValue());
+    };
+    importModule();
+  }, []);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -50,6 +73,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           lastName: lastName,
           email: email,
           countryCode: countryCode,
+          dialCode: dialCode,
           mobile: mobile,
           nationality: nationality,
           dateOfBirth: dateOfBirth,
@@ -57,9 +81,15 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           passportDetails: passportDetails,
           role: 'owner'
         }
-      }).then((res) => {
-        setShouldUpdate(!shouldUpdate);
-      });
+      })
+        .then((res) => {
+          console.log(res);
+          alert(res.data.message);
+          setShouldUpdate(!shouldUpdate);
+        })
+        .catch((err) => {
+          err.response ? alert(err.response?.data?.message) : console.log(err);
+        });
     } else {
       axios({
         method: 'PUT',
@@ -79,9 +109,16 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           isVerified: false,
           role: 'owner'
         }
-      }).then((res) => {
-        setShouldUpdate(!shouldUpdate);
-      });
+      })
+        .then((res) => {
+          console.log(res);
+          alert(res.data.message);
+          setShouldUpdate(!shouldUpdate);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(err);
+        });
     }
   }
 
@@ -156,15 +193,53 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                     />
 
                     <TextField
+                      select
                       required
                       id="outlined-read-only"
                       label="Country Code"
                       placeholder="Country Code"
-                      InputProps={{
-                        readOnly: true
-                      }}
-                      value={countryCode}
-                    />
+                      value={dialCode}
+                      maxWidth
+                      onChange={(e) => setDialCode(e.target.value)}
+                    >
+                      {countries.map((el) => (
+                        <MenuItem value={el.dialCode}>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              width: '100%',
+
+                              flexWrap: 'nowrap',
+                              alignItems: 'center'
+                            }}
+                          >
+                            <img
+                              src={el.image}
+                              style={{ width: '100%', maxWidth: '30px' }}
+                            />
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                width: '100%',
+                                flexWrap: 'nowrap',
+                                paddingLeft: '10px',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
+                              }}
+                            >
+                              <Typography variant="body1">
+                                {el.name.length > 11
+                                  ? el.name.substring(0, 11) + '...'
+                                  : el.name}
+                              </Typography>
+                              <Typography variant="body2">
+                                {el.dialCode}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </MenuItem>
+                      ))}
+                    </TextField>
                     <TextField
                       required
                       id="outlined-read-only"
@@ -189,26 +264,35 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       value={passportDetails}
                       onChange={(e) => setPassportDetails(e.target.value)}
                     /> */}
-                    <Box
-                      sx={{
-                        margin: '9px',
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                      }}
-                      component={'div'}
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={role}
-                            onChange={(e) => setRole(e.target.checked)}
-                          />
-                        }
-                        label="Notify"
-                      />
-                      <Button type="submit" sx={{ margin: 1 }}>
-                        Submit
-                      </Button>
+
+                    <Box>
+                      {notify && (
+                        <RichTextEditor
+                          value={value}
+                          onChange={handleOnChange}
+                        />
+                      )}
+                      <Box
+                        sx={{
+                          margin: '9px',
+                          display: 'flex',
+                          justifyContent: 'flex-end'
+                        }}
+                        component={'div'}
+                      >
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={notify}
+                              onChange={(e) => setNotify(e.target.checked)}
+                            />
+                          }
+                          label="Notify"
+                        />
+                        <Button type="submit" sx={{ margin: 1 }}>
+                          Submit
+                        </Button>
+                      </Box>
                     </Box>
                   </div>
                 </Box>

@@ -17,20 +17,20 @@ function Visa() {
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
   const [shouldUpdate, setShouldUpdate] = useState(null);
-  const [edit, setEdit] = useState(null);
+  const [edit, setEdit] = useState(false);
   const [visaId, setId] = useState(null);
   const [data, setData] = useState(null);
   const router = useRouter();
-  const { id } = router.query;
-
+  const { company } = router.query;
+  console.log(edit);
   useEffect(() => {
     setOpen(false);
     setEdit(false);
     setData(null);
-    if (id) {
+    if (company) {
       axios({
         method: 'GET',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa?employee=${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa?company=${company}`,
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
@@ -38,7 +38,7 @@ function Visa() {
         SetAllData(res.data.visa);
       });
     }
-  }, [id, shouldUpdate]);
+  }, [company, shouldUpdate]);
   return (
     <>
       <Head>
@@ -52,7 +52,7 @@ function Visa() {
               Visa
             </Typography>
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <Button
               onClick={() => setOpen(!open)}
               sx={{ mt: { xs: 2, md: 0 } }}
@@ -61,7 +61,7 @@ function Visa() {
             >
               Add Visa
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       </PageTitleWrapper>
       <Container sx={{ mt: 3 }} maxWidth="xl">
@@ -79,6 +79,8 @@ function Visa() {
               setEdit={setEdit}
               setId={setId}
               setData={setData}
+              shouldUpdate={shouldUpdate}
+              setShouldUpdate={setShouldUpdate}
             />
             <Modal
               open={open}
@@ -88,10 +90,10 @@ function Visa() {
               edit={edit}
               children={
                 <AddVisa
+                  company={company}
                   edit={edit}
-                  id={visaId}
                   data={data}
-                  employee={id}
+                  setOpen={setOpen}
                   shouldUpdate={shouldUpdate}
                   setShouldUpdate={setShouldUpdate}
                 />

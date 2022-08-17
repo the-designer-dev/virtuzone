@@ -46,7 +46,7 @@ function Client() {
               Client
             </Typography>
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <Button
               onClick={() => setOpen(!open)}
               sx={{ mt: { xs: 2, md: 0 } }}
@@ -55,7 +55,7 @@ function Client() {
             >
               Add Client
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
       </PageTitleWrapper>
       <Container sx={{ mt: 3 }} maxWidth="xl">
@@ -67,7 +67,8 @@ function Client() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <ClientTable
+            <AddClient />
+            {/* <ClientTable
               data={allData}
               buttonName={'View/Add Company'}
               buttonURL={'company'}
@@ -93,7 +94,7 @@ function Client() {
                   setShouldUpdate={setShouldUpdate}
                 />
               }
-            />
+            /> */}
           </Grid>
         </Grid>
       </Container>

@@ -25,6 +25,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -42,14 +43,19 @@ const applyPagination = (cryptoOrders, page, limit) => {
 
 const CompanyTable = ({
   data,
-  setImage,
-  user,
+  setCompany,
+  setOpen,
   buttonName,
   buttonURL,
   buttonPurpose,
   setEdit,
   setId,
-  setData
+  setData,
+  buttonName2,
+  buttonPurpose2,
+  actions,
+  setShouldUpdate,
+  shouldUpdate
 }) => {
   var i = 0;
   const [page, setPage] = useState(0);
@@ -78,6 +84,19 @@ const CompanyTable = ({
   const handleLimitChange = (event) => {
     setLimit(parseInt(event.target.value));
   };
+
+  const deleteRecord = (id) => {
+    axios({
+      method: 'DELETE',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${id}`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      }
+    }).then((res) => {
+      setShouldUpdate(!shouldUpdate);
+    });
+  };
+
   const router = useRouter();
   const filteredData = applyFilters(data, filters);
   const paginatedData = applyPagination(filteredData, page, limit);
@@ -122,8 +141,9 @@ const CompanyTable = ({
               <TableCell>Issue Date </TableCell>
               <TableCell>Expiry Date</TableCell>
               <TableCell>Activities</TableCell>
-              <TableCell>View</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="center">View</TableCell>
+              {buttonName2 && <TableCell align="center">Add</TableCell>}
+              {!actions && <TableCell align="right">Actions</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -186,7 +206,7 @@ const CompanyTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.judiciary.name}
+                    {el.judiciary?.name}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -196,7 +216,8 @@ const CompanyTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {moment(el.establishmentDate).format('DD MMMM YYYY')}
+                    {el.establishmentDate &&
+                      moment(el.establishmentDate).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -206,7 +227,8 @@ const CompanyTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {moment(el.issueDate).format('DD MMMM YYYY')}
+                    {el.issueDate &&
+                      moment(el.issueDate).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -216,7 +238,8 @@ const CompanyTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {moment(el.expiryDate).format('DD MMMM YYYY')}
+                    {el.expiryDate &&
+                      moment(el.expiryDate).format('DD MMMM YYYY')}
                   </Typography>
                 </TableCell>
                 <TableCell>
@@ -238,14 +261,28 @@ const CompanyTable = ({
                   </Typography>
                 </TableCell>
 
+                {!buttonName && (
+                  <TableCell align="center">
+                    <Tooltip title={'Add Company'} arrow>
+                      <Button
+                        onClick={() => {
+                          setOpen(true);
+                          setId(el.owner._id);
+                        }}
+                        sx={{ margin: 1 }}
+                        variant="contained"
+                      >
+                        Add Company
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
+                )}
                 {buttonName && (
                   <TableCell align="center">
                     <Tooltip title={buttonPurpose} arrow>
                       <Button
                         onClick={() => {
-                          if (user)
-                            router.push(`./${user}/${buttonURL}${el._id}`);
-                          else router.push(`./${buttonURL}${el._id}`);
+                          router.push(`/${buttonURL}/${el._id}`);
                         }}
                         sx={{ margin: 1 }}
                         variant="contained"
@@ -255,39 +292,58 @@ const CompanyTable = ({
                     </Tooltip>
                   </TableCell>
                 )}
-                <TableCell align="right">
-                  <Tooltip title="Edit" arrow>
-                    <IconButton
-                      sx={{
-                        '&:hover': {
-                          background: theme.colors.primary.lighter
-                        },
-                        color: theme.palette.primary.main
-                      }}
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setEdit(true);
-                        setId(el._id);
-                        setData(el);
-                      }}
-                    >
-                      <EditTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete" arrow>
-                    <IconButton
-                      sx={{
-                        '&:hover': { background: theme.colors.error.lighter },
-                        color: theme.palette.error.main
-                      }}
-                      color="inherit"
-                      size="small"
-                    >
-                      <DeleteTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
+                {buttonName2 && (
+                  <TableCell align="center">
+                    <Tooltip title={buttonPurpose2} arrow>
+                      <Button
+                        onClick={() => {
+                          setCompany(el._id);
+                          setOpen(true);
+                        }}
+                        sx={{ margin: 1 }}
+                        variant="contained"
+                      >
+                        {buttonName2}
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
+                )}
+                {!actions && (
+                  <TableCell align="right">
+                    <Tooltip title="Edit" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': {
+                            background: theme.colors.primary.lighter
+                          },
+                          color: theme.palette.primary.main
+                        }}
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setEdit(true);
+                          setId(el._id);
+                          setData(el);
+                        }}
+                      >
+                        <EditTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': { background: theme.colors.error.lighter },
+                          color: theme.palette.error.main
+                        }}
+                        onClick={() => deleteRecord(el._id)}
+                        color="inherit"
+                        size="small"
+                      >
+                        <DeleteTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

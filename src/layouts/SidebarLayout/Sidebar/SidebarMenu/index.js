@@ -197,16 +197,14 @@ function SidebarMenu() {
                     onClick={closeSidebar}
                     startIcon={<img src={client.src} />}
                   >
-                    Client
+                    Register New Client
                   </Button>
                 </NextLink>
               </ListItem>
               <ListItem component="div">
-                <NextLink href="/trade_license" passHref>
+                <NextLink href="/company" passHref>
                   <Button
-                    className={
-                      currentRoute === '/trade_license' ? 'active' : ''
-                    }
+                    className={currentRoute === '/company' ? 'active' : ''}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
