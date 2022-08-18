@@ -89,7 +89,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
     data ? data.licenseCode : null
   );
   const [judiciaries, setJudiciaries] = useState(null);
-  const [judiciary, setJudiciary] = useState(data ? data.judiciary._id : null);
+  const [judiciary, setJudiciary] = useState(data ? data.judiciary?._id : null);
   const [establishmentDate, setEstablishmentDate] = useState(
     data ? data.establishmentDate : null
   );
@@ -108,8 +108,12 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [code, setCode] = useState(null);
   const [tradeLicensejudiciary, setTradeLicensejudiciary] = useState(null);
 
-  const [establishmentCard, setEstablishmentCard] = useState(null);
-  const [tradeLicense, setTradeLicense] = useState(null);
+  const [establishmentCard, setEstablishmentCard] = useState(
+    data ? data.establishmentCard : []
+  );
+  const [tradeLicense, setTradeLicense] = useState(
+    data ? data.tradeLicense : []
+  );
   const [message, setMessage] = useState(null);
   const [shareHolders, setShareHolders] = useState(
     data ? data.shareHolder : []
@@ -117,12 +121,19 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
 
   const [issueDateOfficeLease, setIssueDateOfficeLease] = useState(null);
   const [expiryDateOfficeLease, setExpiryDateOfficeLease] = useState(null);
-  const [officeLease, setOfficeLease] = useState(null);
-  const [articleOfIncorporation, setArticleOfIncorporation] = useState(null);
-  const [incorporationCertificate, setIncorporationCertificate] =
-    useState(null);
-  const [shareCertificate, setShareCertificate] = useState(null);
-  const [immigrationCard, setImmigrationCard] = useState(null);
+  const [officeLease, setOfficeLease] = useState(data ? data.officeLease : []);
+  const [articleOfIncorporation, setArticleOfIncorporation] = useState(
+    data ? data.articleOfIncorporation : []
+  );
+  const [incorporationCertificate, setIncorporationCertificate] = useState(
+    data ? data.incorporationCertificate : []
+  );
+  const [shareCertificate, setShareCertificate] = useState(
+    data ? data.shareCertificate : null
+  );
+  const [immigrationCard, setImmigrationCard] = useState(
+    data ? data.immigrationCard : null
+  );
 
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
@@ -146,6 +157,21 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
 
   useEffect(() => {
     console.log(data);
+    if (data.judiciary) {
+      axios({
+        method: 'GET',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity?id=${data.judiciary?.id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        }
+      })
+        .then((res) => {
+          setActivities(res.data.activity);
+        })
+        .catch((err) => {
+          setActivity(null);
+        });
+    }
     if (id !== undefined) {
       axios({
         method: 'GET',
@@ -177,7 +203,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
 
   function onSubmit(e) {
     e.preventDefault();
-
+    console.log(activity);
     const form = new FormData();
     form.append('owner', id);
     form.append('name', name);
@@ -190,15 +216,29 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
     form.append('activities', activity);
     form.append('code', code);
     form.append('dateOfIssue', issueDate);
-    form.append('tradelicense', tradeLicense);
-    form.append('officeLease', officeLease);
-    form.append('shareCertificate', shareCertificate);
-    form.append('articleOfIncorporation', articleOfIncorporation);
-    form.append('incorporationCertificate', incorporationCertificate);
-    form.append('establishmentCard', establishmentCard);
+    tradeLicense.length > 0 &&
+      tradeLicense[0] instanceof File &&
+      form.append('tradelicense', tradeLicense);
+    officeLease.length > 0 &&
+      officeLease[0] instanceof File &&
+      form.append('officeLease', officeLease);
+    shareCertificate.length > 0 &&
+      shareCertificate[0] instanceof File &&
+      form.append('shareCertificate', shareCertificate);
+    articleOfIncorporation.length > 0 &&
+      articleOfIncorporation[0] instanceof File &&
+      form.append('articleOfIncorporation', articleOfIncorporation);
+    incorporationCertificate.length > 0 &&
+      incorporationCertificate[0] instanceof File &&
+      form.append('incorporationCertificate', incorporationCertificate);
+    establishmentCard.length > 0 &&
+      establishmentCard[0] instanceof File &&
+      form.append('establishmentCard', establishmentCard);
     form.append('officeLeaseIssue', issueDate);
     form.append('officeLeaseExpiry', expiryDate);
-    form.append('immigrationCard', immigrationCard);
+    immigrationCard.length > 0 &&
+      immigrationCard[0] instanceof File &&
+      form.append('immigrationCard', immigrationCard);
     form.append('shareHolder', JSON.stringify(shareHolders));
     form.append('message', message);
 
@@ -400,6 +440,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           input={<TextField label="Activities" />}
                           value={activity}
                           onChange={(e) => {
+                            console.log(e.target.value);
                             setActivity(
                               typeof e.target.value === 'string'
                                 ? e.target.value.split(',')
@@ -418,14 +459,28 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           id="outlined-search"
                           label="Scan File"
                           onChange={(e) => {
-                            console.log(e.target.files[0]);
-                            setTradeLicense(e.target.files[0]);
+                            // console.log(e.target.files[0]);
+                            setTradeLicense(e.target.files);
                           }}
                           InputLabelProps={{
                             shrink: true
                           }}
                           type={'file'}
                         />
+                        {console.log(data)}
+                        <Tooltip title={'View File'} arrow>
+                          <Button
+                            onClick={() => {
+                              setImage(data?.tradeLicense);
+                              setImageOpen(true);
+                            }}
+                            sx={{ margin: 1 }}
+                            disabled={data?.tradeLicense.length === 0}
+                            variant="contained"
+                          >
+                            View File
+                          </Button>
+                        </Tooltip>
                         <Box
                           sx={{
                             margin: '9px',
@@ -526,6 +581,19 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           }}
                           type={'file'}
                         />
+                        <Tooltip title={'View File'} arrow>
+                          <Button
+                            onClick={() => {
+                              setImage(data?.establishmentCard);
+                              setImageOpen(true);
+                            }}
+                            sx={{ margin: 1 }}
+                            disabled={data?.establishmentCard.length === 0}
+                            variant="contained"
+                          >
+                            View File
+                          </Button>
+                        </Tooltip>
                         <Box
                           sx={{
                             margin: '9px',

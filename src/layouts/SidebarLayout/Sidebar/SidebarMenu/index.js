@@ -321,15 +321,17 @@ function SidebarMenu() {
           <SubMenuWrapper>
             <List component="div">
               <ListItem component="div">
-                <NextLink href="/" passHref>
+                <NextLink href="/support_services" passHref>
                   <Button
-                    className={currentRoute === '/' ? 'active' : ''}
+                    className={
+                      currentRoute === '/support_services' ? 'active' : ''
+                    }
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
                     startIcon={<img src={expressacconting.src} />}
                   >
-                    Express Accounting
+                    All Support Services
                   </Button>
                 </NextLink>
               </ListItem>
