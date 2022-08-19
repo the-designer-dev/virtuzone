@@ -519,6 +519,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
+                              data?.tradeLicense.length === 0 ||
                               data?.tradeLicense[data?.tradeLicense.length - 1]
                                 ?.file.length === 0
                             }
@@ -640,6 +641,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
+                              data?.establishmentCard.length === 0 ||
                               data?.establishmentCard[
                                 data?.establishmentCard.length - 1
                               ]?.file.length === 0
@@ -715,6 +717,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
+                              data?.officeLeaseAgreement.length === 0 ||
                               data?.officeLeaseAgreement[
                                 data?.officeLeaseAgreement.length - 1
                               ]?.file.length === 0
@@ -778,6 +781,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
+                              data?.articleOfIncoporation.length === 0 ||
                               data?.articleOfIncoporation[
                                 data?.articleOfIncoporation.length - 1
                               ]?.file.length === 0
@@ -845,6 +849,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
+                              data?.incorporationCertificate.length === 0 ||
                               data?.incorporationCertificate[
                                 data?.incorporationCertificate.length - 1
                               ]?.file.length === 0
@@ -907,6 +912,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
+                              data?.shareCertificate.length === 0 ||
                               data?.shareCertificate[
                                 data?.shareCertificate.length - 1
                               ]?.file.length === 0
@@ -987,6 +993,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
+                              data?.immigrationCard.length === 0 ||
                               data?.immigrationCard[
                                 data?.immigrationCard.length - 1
                               ]?.file.length === 0

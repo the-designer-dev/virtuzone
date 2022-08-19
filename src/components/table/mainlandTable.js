@@ -93,7 +93,7 @@ const MainlandTable = ({ setImage, data }) => {
             </FormControl>
           </Box>
         }
-        title="Mainland"
+        title="Jurisdiction"
       />
       <Divider />
       <TableContainer>

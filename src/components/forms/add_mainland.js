@@ -13,7 +13,8 @@ import {
   TextField,
   Checkbox,
   FormControlLabel,
-  Button
+  Button,
+  MenuItem
 } from '@mui/material';
 
 function AddMainland({ shouldUpdate, setShouldUpdate }) {
@@ -39,7 +40,6 @@ function AddMainland({ shouldUpdate, setShouldUpdate }) {
     const form = new FormData();
     form.append('name', mainland);
     form.append('emirates_id', emirates);
-    form.append('salary-certificate', file);
 
     axios({
       method: 'POST',
@@ -59,7 +59,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate }) {
   return (
     <>
       <Head>
-        <title>Add Mainland - Virtuzone</title>
+        <title>Add Jurisdiction - Virtuzone</title>
       </Head>
       <Container sx={{ mt: 2 }} maxWidth="lg">
         <Grid
@@ -71,7 +71,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate }) {
         >
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Add Mainland" />
+              <CardHeader title="Add Jurisdiction" />
               <Divider />
               <CardContent>
                 <Box
@@ -86,12 +86,9 @@ function AddMainland({ shouldUpdate, setShouldUpdate }) {
                   <div>
                     <TextField
                       id="outlined-read-only"
-                      label="Mainland"
+                      label="Jurisdiction"
                       value={mainland}
                       onChange={(e) => setMainland(e.target.value)}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
                     />
                     <TextField
                       required
@@ -124,7 +121,6 @@ function AddMainland({ shouldUpdate, setShouldUpdate }) {
                       }}
                       component={'div'}
                     >
-                      <FormControlLabel control={<Checkbox />} label="Notify" />
                       <Button type="submit" sx={{ margin: 1 }}>
                         Submit
                       </Button>

@@ -13,15 +13,14 @@ import {
 import NextLink from 'next/link';
 import { SidebarContext } from 'src/contexts/SidebarContext';
 
-import activity from 'public/static/images/Icons/activity.png';
-import article from 'public/static/images/Icons/article.png';
+import supportservices from 'public/static/images/Icons/supportservices.png';
 import client from 'public/static/images/Icons/client.png';
+import jurisdiction from 'public/static/images/Icons/jurisdiction.png';
+import promotions from 'public/static/images/Icons/promotions.png';
+import activities from 'public/static/images/Icons/activities-.png';
 import expressacconting from 'public/static/images/Icons/expressacconting.png';
-import immigrationcard from 'public/static/images/Icons/immigrationcard.png';
-import incorporationcertificates from 'public/static/images/Icons/incorporationcertificates.png';
-import office from 'public/static/images/Icons/office.png';
-import salarycertificates from 'public/static/images/Icons/salarycertificates.png';
-import sharecertificates from 'public/static/images/Icons/sharecertificates.png';
+import termsconditions from 'public/static/images/Icons/terms&conditions.png';
+import bookanappoitnment from 'public/static/images/Icons/bookanappoitnment.png';
 import trade from 'public/static/images/Icons/trade.png';
 import visa from 'public/static/images/Icons/visa.png';
 import contact from 'public/static/images/Icons/contact.png';
@@ -329,7 +328,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<img src={expressacconting.src} />}
+                    startIcon={<img src={supportservices.src} />}
                   >
                     All Support Services
                   </Button>
@@ -389,7 +388,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<img src={activity.src} />}
+                    startIcon={<img src={promotions.src} />}
                   >
                     Promotions
                   </Button>
@@ -417,7 +416,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<img src={activity.src} />}
+                    startIcon={<img src={jurisdiction.src} />}
                   >
                     Jurisdictions
                   </Button>
@@ -430,7 +429,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<img src={activity.src} />}
+                    startIcon={<img src={activities.src} />}
                   >
                     Activity
                   </Button>
@@ -458,7 +457,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<img src={client} />}
+                    startIcon={<img src={expressacconting.src} />}
                   >
                     Cost Calculator
                   </Button>
@@ -477,7 +476,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<img src={client} />}
+                    startIcon={<img src={bookanappoitnment.src} />}
                   >
                     Book an Appointment
                   </Button>
@@ -490,7 +489,7 @@ function SidebarMenu() {
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
-                    startIcon={<img src={client} />}
+                    startIcon={<img src={termsconditions.src} />}
                   >
                     Terms and Conditions
                   </Button>

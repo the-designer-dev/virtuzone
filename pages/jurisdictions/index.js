@@ -33,14 +33,14 @@ function Mainland() {
   return (
     <>
       <Head>
-        <title>Mainland - Virtuzone</title>
+        <title>Jurisdiction - Virtuzone</title>
       </Head>
 
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Mainland
+              Jurisdiction
             </Typography>
           </Grid>
           <Grid item>
@@ -50,7 +50,7 @@ function Mainland() {
               variant="contained"
               startIcon={<AddTwoToneIcon fontSize="small" />}
             >
-              Add Mainland
+              Add Jurisdiction
             </Button>
           </Grid>
         </Grid>
