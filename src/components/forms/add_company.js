@@ -74,7 +74,15 @@ function a11yProps(index) {
   };
 }
 
-function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
+function AddCompany({
+  comp,
+  shouldUpdate,
+  setShouldUpdate,
+  edit,
+  id,
+  data,
+  setImage
+}) {
   const [open, setOpen] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
@@ -121,9 +129,11 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
 
   const [issueDateOfficeLease, setIssueDateOfficeLease] = useState(null);
   const [expiryDateOfficeLease, setExpiryDateOfficeLease] = useState(null);
-  const [officeLease, setOfficeLease] = useState(data ? data.officeLease : []);
+  const [officeLease, setOfficeLease] = useState(
+    data ? data.officeLeaseAgreement : []
+  );
   const [articleOfIncorporation, setArticleOfIncorporation] = useState(
-    data ? data.articleOfIncorporation : []
+    data ? data.articleOfIncoporation : []
   );
   const [incorporationCertificate, setIncorporationCertificate] = useState(
     data ? data.incorporationCertificate : []
@@ -157,7 +167,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
 
   useEffect(() => {
     console.log(data);
-    if (data.judiciary) {
+    if (data?.judiciary) {
       axios({
         method: 'GET',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity?id=${data.judiciary?.id}`,
@@ -203,7 +213,6 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
 
   function onSubmit(e) {
     e.preventDefault();
-    console.log(activity);
     const form = new FormData();
     form.append('owner', id);
     form.append('name', name);
@@ -216,30 +225,61 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
     form.append('activities', activity);
     form.append('code', code);
     form.append('dateOfIssue', issueDate);
-    tradeLicense.length > 0 &&
-      tradeLicense[0] instanceof File &&
-      form.append('tradelicense', tradeLicense);
-    officeLease.length > 0 &&
-      officeLease[0] instanceof File &&
-      form.append('officeLease', officeLease);
-    shareCertificate.length > 0 &&
-      shareCertificate[0] instanceof File &&
-      form.append('shareCertificate', shareCertificate);
-    articleOfIncorporation.length > 0 &&
-      articleOfIncorporation[0] instanceof File &&
-      form.append('articleOfIncorporation', articleOfIncorporation);
-    incorporationCertificate.length > 0 &&
-      incorporationCertificate[0] instanceof File &&
-      form.append('incorporationCertificate', incorporationCertificate);
-    establishmentCard.length > 0 &&
-      establishmentCard[0] instanceof File &&
-      form.append('establishmentCard', establishmentCard);
+
+    if (tradeLicense.length > 0 && tradeLicense[0] instanceof File) {
+      for (const key of Object.keys(tradeLicense)) {
+        form.append('tradelicense', tradeLicense[key]);
+      }
+    }
+
+    if (officeLease.length > 0 && officeLease[0] instanceof File) {
+      for (const key of Object.keys(officeLease)) {
+        form.append('officeLease', officeLease[key]);
+      }
+    }
+
+    if (shareCertificate.length > 0 && shareCertificate[0] instanceof File) {
+      for (const key of Object.keys(shareCertificate)) {
+        form.append('shareCertificate', shareCertificate[key]);
+      }
+    }
+
+    if (
+      articleOfIncorporation.length > 0 &&
+      articleOfIncorporation[0] instanceof File
+    ) {
+      for (const key of Object.keys(articleOfIncorporation)) {
+        form.append('articleOfIncorporation', articleOfIncorporation[key]);
+      }
+    }
+
+    if (
+      incorporationCertificate.length > 0 &&
+      incorporationCertificate[0] instanceof File
+    ) {
+      for (const key of Object.keys(incorporationCertificate)) {
+        form.append('incorporationCertificate', incorporationCertificate[key]);
+      }
+    }
+    console.log(establishmentCard);
+    if (establishmentCard.length > 0 && establishmentCard[0] instanceof File) {
+      for (const key of Object.keys(establishmentCard)) {
+        form.append('establishmentCard', establishmentCard[key]);
+      }
+    }
+
+    if (immigrationCard.length > 0 && immigrationCard[0] instanceof File) {
+      for (const key of Object.keys(immigrationCard)) {
+        form.append('immigrationCard', immigrationCard[key]);
+      }
+    }
+
     form.append('officeLeaseIssue', issueDate);
+
     form.append('officeLeaseExpiry', expiryDate);
-    immigrationCard.length > 0 &&
-      immigrationCard[0] instanceof File &&
-      form.append('immigrationCard', immigrationCard);
+
     form.append('shareHolder', JSON.stringify(shareHolders));
+
     form.append('message', message);
 
     if (edit !== true) {
@@ -458,6 +498,7 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                         <TextField
                           id="outlined-search"
                           label="Scan File"
+                          inputProps={{ multiple: true }}
                           onChange={(e) => {
                             // console.log(e.target.files[0]);
                             setTradeLicense(e.target.files);
@@ -467,15 +508,20 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           }}
                           type={'file'}
                         />
-                        {console.log(data)}
                         <Tooltip title={'View File'} arrow>
                           <Button
                             onClick={() => {
-                              setImage(data?.tradeLicense);
-                              setImageOpen(true);
+                              setImage(
+                                data?.tradeLicense[
+                                  data?.tradeLicense.length - 1
+                                ]?.file
+                              );
                             }}
-                            sx={{ margin: 1 }}
-                            disabled={data?.tradeLicense.length === 0}
+                            sx={{ margin: 1, height: '53.5px' }}
+                            disabled={
+                              data?.tradeLicense[data?.tradeLicense.length - 1]
+                                ?.file.length === 0
+                            }
                             variant="contained"
                           >
                             View File
@@ -572,23 +618,32 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                         <TextField
                           id="outlined-search"
                           label="Scan File"
+                          inputProps={{ multiple: true }}
                           onChange={(e) => {
-                            console.log(e.target.files[0]);
-                            setEstablishmentCard(e.target.files[0]);
+                            console.log(e.target.files);
+                            setEstablishmentCard(e.target.files);
                           }}
                           InputLabelProps={{
                             shrink: true
                           }}
                           type={'file'}
                         />
+
                         <Tooltip title={'View File'} arrow>
                           <Button
                             onClick={() => {
-                              setImage(data?.establishmentCard);
-                              setImageOpen(true);
+                              setImage(
+                                data?.establishmentCard[
+                                  data?.establishmentCard.length - 1
+                                ]?.file
+                              );
                             }}
-                            sx={{ margin: 1 }}
-                            disabled={data?.establishmentCard.length === 0}
+                            sx={{ margin: 1, height: '53.5px' }}
+                            disabled={
+                              data?.establishmentCard.length[
+                                data?.establishmentCard.length - 1
+                              ]?.file.length === 0
+                            }
                             variant="contained"
                           >
                             View File
@@ -635,15 +690,41 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           readOnly={true}
                           renderInput={(params) => <TextField {...params} />}
                         />
+
                         <TextField
                           id="outlined-search"
                           label="Scan File"
-                          onChange={(e) => setOfficeLease(e.target.files[0])}
+                          inputProps={{ multiple: true }}
+                          onChange={(e) => {
+                            console.log(e.target.files);
+                            setOfficeLease(e.target.files);
+                          }}
                           InputLabelProps={{
                             shrink: true
                           }}
                           type={'file'}
                         />
+                        <Tooltip title={'View File'} arrow>
+                          <Button
+                            onClick={() => {
+                              setImage(
+                                data?.officeLeaseAgreement[
+                                  data?.officeLeaseAgreement.length - 1
+                                ]?.file
+                              );
+                            }}
+                            sx={{ margin: 1, height: '53.5px' }}
+                            disabled={
+                              data?.officeLeaseAgreement[
+                                data?.officeLeaseAgreement.length - 1
+                              ]?.file.length === 0
+                            }
+                            variant="contained"
+                          >
+                            View File
+                          </Button>
+                        </Tooltip>
+
                         <Box
                           sx={{
                             margin: '9px',
@@ -676,14 +757,37 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                         <TextField
                           id="outlined-search"
                           label="Scan File"
-                          onChange={(e) =>
-                            setArticleOfIncorporation(e.target.files[0])
-                          }
+                          inputProps={{ multiple: true }}
+                          onChange={(e) => {
+                            console.log(e.target.files);
+                            setArticleOfIncorporation(e.target.files);
+                          }}
                           InputLabelProps={{
                             shrink: true
                           }}
                           type={'file'}
                         />
+                        <Tooltip title={'View File'} arrow>
+                          <Button
+                            onClick={() => {
+                              setImage(
+                                data?.articleOfIncoporation[
+                                  data?.articleOfIncoporation.length - 1
+                                ]?.file
+                              );
+                            }}
+                            sx={{ margin: 1, height: '53.5px' }}
+                            disabled={
+                              data?.articleOfIncoporation[
+                                data?.articleOfIncoporation.length - 1
+                              ]?.file.length === 0
+                            }
+                            variant="contained"
+                          >
+                            View File
+                          </Button>
+                        </Tooltip>
+
                         <RichTextEditor
                           value={value}
                           onChange={handleOnChange}
@@ -720,14 +824,36 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                         <TextField
                           id="outlined-search"
                           label="Scan File"
-                          onChange={(e) =>
-                            setIncorporationCertificate(e.target.files[0])
-                          }
+                          inputProps={{ multiple: true }}
+                          onChange={(e) => {
+                            // console.log(e.target.files[0]);
+                            setIncorporationCertificate(e.target.files);
+                          }}
                           InputLabelProps={{
                             shrink: true
                           }}
                           type={'file'}
                         />
+                        <Tooltip title={'View File'} arrow>
+                          <Button
+                            onClick={() => {
+                              setImage(
+                                data?.incorporationCertificate[
+                                  data?.incorporationCertificate.length - 1
+                                ]?.file
+                              );
+                            }}
+                            sx={{ margin: 1, height: '53.5px' }}
+                            disabled={
+                              data?.incorporationCertificate[
+                                data?.incorporationCertificate.length - 1
+                              ]?.file.length === 0
+                            }
+                            variant="contained"
+                          >
+                            View File
+                          </Button>
+                        </Tooltip>
                         <Box
                           sx={{
                             margin: '9px',
@@ -760,14 +886,36 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                         <TextField
                           id="outlined-search"
                           label="Scan File"
-                          onChange={(e) =>
-                            setShareCertificate(e.target.files[0])
-                          }
+                          inputProps={{ multiple: true }}
+                          onChange={(e) => {
+                            // console.log(e.target.files[0]);
+                            setShareCertificate(e.target.files);
+                          }}
                           InputLabelProps={{
                             shrink: true
                           }}
                           type={'file'}
                         />
+                        <Tooltip title={'View File'} arrow>
+                          <Button
+                            onClick={() => {
+                              setImage(
+                                data?.shareCertificate[
+                                  data?.shareCertificate.length - 1
+                                ]?.file
+                              );
+                            }}
+                            sx={{ margin: 1, height: '53.5px' }}
+                            disabled={
+                              data?.shareCertificate[
+                                data?.shareCertificate.length - 1
+                              ]?.file.length === 0
+                            }
+                            variant="contained"
+                          >
+                            View File
+                          </Button>
+                        </Tooltip>
                         <Box
                           sx={{
                             margin: '9px',
@@ -814,17 +962,41 @@ function AddCompany({ comp, shouldUpdate, setShouldUpdate, edit, id, data }) {
                           }}
                           renderInput={(params) => <TextField {...params} />}
                         />
+
                         <TextField
                           id="outlined-search"
                           label="Scan File"
-                          onChange={(e) =>
-                            setImmigrationCard(e.target.files[0])
-                          }
+                          inputProps={{ multiple: true }}
+                          onChange={(e) => {
+                            // console.log(e.target.files[0]);
+                            setImmigrationCard(e.target.files);
+                          }}
                           InputLabelProps={{
                             shrink: true
                           }}
                           type={'file'}
                         />
+                        <Tooltip title={'View File'} arrow>
+                          <Button
+                            onClick={() => {
+                              setImage(
+                                data?.immigrationCard[
+                                  data?.immigrationCard.length - 1
+                                ]?.file
+                              );
+                            }}
+                            sx={{ margin: 1, height: '53.5px' }}
+                            disabled={
+                              data?.immigrationCard[
+                                data?.immigrationCard.length - 1
+                              ]?.file?.length === 0
+                            }
+                            variant="contained"
+                          >
+                            View File
+                          </Button>
+                        </Tooltip>
+
                         <Box
                           sx={{
                             margin: '9px',

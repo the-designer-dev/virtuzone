@@ -73,7 +73,6 @@ function Company() {
         >
           <Grid item xs={12}>
             <CompanyTable
-              setImage={setImage}
               data={allData}
               setEdit={setEdit}
               setId={setUser}
@@ -90,6 +89,7 @@ function Company() {
               edit={edit}
               children={
                 <AddCompany
+                  setImage={setImage}
                   edit={edit}
                   comp={id}
                   id={user}
@@ -98,6 +98,11 @@ function Company() {
                   setShouldUpdate={setShouldUpdate}
                 />
               }
+            />
+            <ImageModal
+              image={image}
+              setImage={setImage}
+              children={<DisplayImage image={image} />}
             />
           </Grid>
         </Grid>

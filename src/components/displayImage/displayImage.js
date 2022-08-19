@@ -14,6 +14,7 @@ export default function DisplayImage({ image }) {
   }
 
   useEffect(async () => {
+    console.log(image);
     if (isArray(image)) {
       var imgs = [];
       var mimes = [];

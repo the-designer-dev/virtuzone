@@ -409,6 +409,21 @@ function SidebarMenu() {
                 </NextLink>
               </ListItem>
               <ListItem component="div">
+                <NextLink href="/jurisdictions" passHref>
+                  <Button
+                    className={
+                      currentRoute === '="/jurisdictions' ? 'active' : ''
+                    }
+                    disableRipple
+                    component="a"
+                    onClick={closeSidebar}
+                    startIcon={<img src={activity.src} />}
+                  >
+                    Jurisdictions
+                  </Button>
+                </NextLink>
+              </ListItem>
+              <ListItem component="div">
                 <NextLink href="/" passHref>
                   <Button
                     className={currentRoute === '="/' ? 'active' : ''}
