@@ -640,7 +640,7 @@ function AddCompany({
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
-                              data?.establishmentCard.length[
+                              data?.establishmentCard[
                                 data?.establishmentCard.length - 1
                               ]?.file.length === 0
                             }
@@ -989,7 +989,7 @@ function AddCompany({
                             disabled={
                               data?.immigrationCard[
                                 data?.immigrationCard.length - 1
-                              ]?.file?.length === 0
+                              ]?.file.length === 0
                             }
                             variant="contained"
                           >
