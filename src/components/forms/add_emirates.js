@@ -18,36 +18,17 @@ import {
 } from '@mui/material';
 
 function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
-  const [mainland, setMainland] = useState(data ? data.mainland : null);
   const [emirates, setEmirates] = useState(data ? data.emirates : null);
-  const [allEmirates, setAllEmirates] = useState([]);
-  const [notify, setNotify] = useState(false);
-  useEffect(() => {
-    axios({
-      method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
-      headers: {
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      }
-    }).then((res) => {
-      setAllEmirates(res.data.emirates);
-      console.log(res.data.emirates);
-    });
-  }, []);
 
   function onSubmit(e) {
     e.preventDefault();
-
     axios({
       method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
-      data: {
-        name: mainland,
-        emirates_id: emirates
-      }
+      data: { name: emirates }
     }).then((res) => {
       if (res.status === 200) {
         setShouldUpdate(!shouldUpdate);
@@ -58,7 +39,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
   return (
     <>
       <Head>
-        <title>Add Mainland - Virtuzone</title>
+        <title>Add Emirates - Virtuzone</title>
       </Head>
       <Container sx={{ mt: 2 }} maxWidth="lg">
         <Grid
@@ -70,7 +51,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
         >
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Add Mainland" />
+              <CardHeader title="Add Emirates" />
               <Divider />
               <CardContent>
                 <Box
@@ -85,35 +66,10 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                   <div>
                     <TextField
                       id="outlined-read-only"
-                      label="Mainland"
-                      value={mainland}
-                      onChange={(e) => setMainland(e.target.value)}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
-                    />
-                    <TextField
-                      required
-                      select
-                      onChange={(e) => {
-                        setEmirates(JSON.parse(e.target.value).id);
-                      }}
-                      id="outlined-required"
                       label="Emirates"
-                      placeholder="Select Emirates"
-                    >
-                      {allEmirates.map((el) => (
-                        <MenuItem
-                          value={JSON.stringify({
-                            name: el.name,
-                            id: el._id
-                          })}
-                          key={el.name}
-                        >
-                          {el.name}
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                      value={emirates}
+                      onChange={(e) => setEmirates(e.target.value)}
+                    />
 
                     <Box
                       sx={{

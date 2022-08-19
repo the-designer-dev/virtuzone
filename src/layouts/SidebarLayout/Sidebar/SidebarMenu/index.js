@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 import { SidebarContext } from 'src/contexts/SidebarContext';
-
 import supportservices from 'public/static/images/Icons/supportservices.png';
 import client from 'public/static/images/Icons/client.png';
 import jurisdiction from 'public/static/images/Icons/jurisdiction.png';
@@ -384,7 +383,7 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/promotions" passHref>
                   <Button
-                    className={currentRoute === '="/promotions' ? 'active' : ''}
+                    className={currentRoute === '/promotions' ? 'active' : ''}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -411,7 +410,7 @@ function SidebarMenu() {
                 <NextLink href="/jurisdictions" passHref>
                   <Button
                     className={
-                      currentRoute === '="/jurisdictions' ? 'active' : ''
+                      currentRoute === '/jurisdictions' ? 'active' : ''
                     }
                     disableRipple
                     component="a"
@@ -423,9 +422,22 @@ function SidebarMenu() {
                 </NextLink>
               </ListItem>
               <ListItem component="div">
-                <NextLink href="/" passHref>
+                <NextLink href="/emirates" passHref>
                   <Button
-                    className={currentRoute === '="/' ? 'active' : ''}
+                    className={currentRoute === '/emirates' ? 'active' : ''}
+                    disableRipple
+                    component="a"
+                    onClick={closeSidebar}
+                    startIcon={<img src={jurisdiction.src} />}
+                  >
+                    Emirates
+                  </Button>
+                </NextLink>
+              </ListItem>
+              <ListItem component="div">
+                <NextLink href="/activity" passHref>
+                  <Button
+                    className={currentRoute === '/activity' ? 'active' : ''}
                     disableRipple
                     component="a"
                     onClick={closeSidebar}

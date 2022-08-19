@@ -3,17 +3,17 @@ import Head from 'next/head';
 import { useState } from 'react';
 import SidebarLayout from 'src/layouts/SidebarLayout';
 import Modal from '../../src/components/modal';
-import AddMainland from '../../src/components/forms/add_mainland';
+import AddActivity from '../../src/components/forms/add_activity';
 import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import JurisdictionTable from '../../src/components/table/mainlandTable';
+import ActivityTable from '../../src/components/table/activityTable';
 import { useEffect } from 'react';
 import axios from 'axios';
 import DisplayImage from '../../src/components/displayImage/displayImage';
 import ImageModal from '../../src/components/modal/imageModal';
 import { useRouter } from 'next/router';
 
-function Jurisdiction() {
+function Activity() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
@@ -30,25 +30,25 @@ function Jurisdiction() {
 
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      SetAllData(res.data.mainland);
+      SetAllData(res.data.activity);
     });
   }, [shouldUpdate]);
   return (
     <>
       <Head>
-        <title>Jurisdictions - Virtuzone</title>
+        <title>Activity - Virtuzone</title>
       </Head>
 
       <PageTitleWrapper>
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
             <Typography variant="h3" component="h3" gutterBottom>
-              Jurisdictions
+              Activity
             </Typography>
           </Grid>
           <Grid item>
@@ -58,7 +58,7 @@ function Jurisdiction() {
               variant="contained"
               startIcon={<AddTwoToneIcon fontSize="small" />}
             >
-              Add Jurisdiction
+              Add Activity
             </Button>
           </Grid>
         </Grid>
@@ -72,7 +72,7 @@ function Jurisdiction() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <JurisdictionTable
+            <ActivityTable
               data={allData}
               setEdit={setEdit}
               setId={setUser}
@@ -88,7 +88,7 @@ function Jurisdiction() {
               setData={setData}
               edit={edit}
               children={
-                <AddMainland
+                <AddActivity
                   setImage={setImage}
                   edit={edit}
                   comp={id}
@@ -111,6 +111,6 @@ function Jurisdiction() {
   );
 }
 
-Jurisdiction.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
+Activity.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
 
-export default Jurisdiction;
+export default Activity;

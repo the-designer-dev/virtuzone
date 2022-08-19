@@ -17,21 +17,20 @@ import {
   MenuItem
 } from '@mui/material';
 
-function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
-  const [mainland, setMainland] = useState(data ? data.mainland : null);
-  const [emirates, setEmirates] = useState(data ? data.emirates : null);
-  const [allEmirates, setAllEmirates] = useState([]);
+function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
+  const [activity, setActivity] = useState(data ? data.activity : null);
+  const [jurisdiction, setJurisdiction] = useState(data ? data.mainland : null);
+  const [allJurisdictions, setAllJurisdictions] = useState([]);
   const [notify, setNotify] = useState(false);
   useEffect(() => {
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      setAllEmirates(res.data.emirates);
-      console.log(res.data.emirates);
+      setAllJurisdictions(res.data.emirates);
     });
   }, []);
 
@@ -40,13 +39,13 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
 
     axios({
       method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
       data: {
-        name: mainland,
-        emirates_id: emirates
+        name: activity,
+        mainland_id: jurisdiction
       }
     }).then((res) => {
       if (res.status === 200) {
@@ -58,7 +57,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
   return (
     <>
       <Head>
-        <title>Add Mainland - Virtuzone</title>
+        <title>Add Activity - Virtuzone</title>
       </Head>
       <Container sx={{ mt: 2 }} maxWidth="lg">
         <Grid
@@ -70,7 +69,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
         >
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Add Mainland" />
+              <CardHeader title="Add Activity" />
               <Divider />
               <CardContent>
                 <Box
@@ -85,24 +84,21 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                   <div>
                     <TextField
                       id="outlined-read-only"
-                      label="Mainland"
-                      value={mainland}
-                      onChange={(e) => setMainland(e.target.value)}
-                      InputLabelProps={{
-                        shrink: true
-                      }}
+                      label="Activity"
+                      value={activity}
+                      onChange={(e) => setActivity(e.target.value)}
                     />
                     <TextField
                       required
                       select
                       onChange={(e) => {
-                        setEmirates(JSON.parse(e.target.value).id);
+                        setJurisdiction(JSON.parse(e.target.value).id);
                       }}
                       id="outlined-required"
                       label="Emirates"
                       placeholder="Select Emirates"
                     >
-                      {allEmirates.map((el) => (
+                      {allJurisdictions.map((el) => (
                         <MenuItem
                           value={JSON.stringify({
                             name: el.name,
@@ -139,4 +135,4 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
   );
 }
 
-export default AddMainland;
+export default AddActivity;
