@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Paper } from '@mui/material';
+import { Paper, Icon } from '@mui/material';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 const style = {
   position: 'absolute',
@@ -34,7 +35,19 @@ export default function BasicModal({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{children}</Box>
+        <Box sx={style}>
+          <Button
+            sx={{ position: 'absolute', right: 40, top: 30 }}
+            onClick={() => {
+              setOpen(false);
+              setEdit(false);
+              setData(null);
+            }}
+          >
+            <ClearOutlinedIcon />
+          </Button>
+          {children}
+        </Box>
       </Modal>
     </div>
   );
