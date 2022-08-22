@@ -127,8 +127,14 @@ function AddCompany({
     data ? data.shareHolder : []
   );
 
-  const [issueDateOfficeLease, setIssueDateOfficeLease] = useState(null);
-  const [expiryDateOfficeLease, setExpiryDateOfficeLease] = useState(null);
+  const [
+    establismentDateEstablismentCard,
+    setEstablismentDateEstablismentCard
+  ] = useState(null);
+  const [issueDateEstablismentCard, setIssueDateEstablismentCard] =
+    useState(null);
+  const [expiryDateEstablismentCard, setExpiryDateEstablismentCard] =
+    useState(null);
   const [officeLease, setOfficeLease] = useState(
     data ? data.officeLeaseAgreement : []
   );
@@ -221,6 +227,12 @@ function AddCompany({
     form.append('judiciary', judiciary);
     form.append('establishmentDate', establishmentDate);
     form.append('establishmentCardNo', establishmentCardNo);
+    form.append(
+      'establismentDateEstablismentCard',
+      establismentDateEstablismentCard
+    );
+    form.append('issueDateEstablismentCard', issueDateEstablismentCard);
+    form.append('expiryDateEstablismentCard', expiryDateEstablismentCard);
     form.append('issueDate', issueDate);
     form.append('expiryDate', expiryDate);
     form.append('activities', activity);
@@ -611,20 +623,26 @@ function AddCompany({
                         />
                         <DatePicker
                           label="Establishment Date"
-                          value={establishmentDate}
-                          readOnly={true}
+                          onChange={(e) =>
+                            establismentDateEstablismentCard(e.target.value)
+                          }
+                          value={establismentDateEstablismentCard}
                           renderInput={(params) => <TextField {...params} />}
                         />
                         <DatePicker
                           label="Date of issue"
-                          value={issueDate}
-                          readOnly={true}
+                          value={issueDateEstablismentCard}
+                          onChange={(e) =>
+                            issueDateEstablismentCard(e.target.value)
+                          }
                           renderInput={(params) => <TextField {...params} />}
                         />
                         <DatePicker
                           label="Expiry Date"
-                          value={expiryDate}
-                          readOnly={true}
+                          value={expiryDateEstablismentCard}
+                          onChange={(e) =>
+                            expiryDateEstablismentCard(e.target.value)
+                          }
                           renderInput={(params) => <TextField {...params} />}
                         />
                         <TextField
