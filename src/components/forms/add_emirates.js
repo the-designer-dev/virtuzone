@@ -18,22 +18,39 @@ import {
 } from '@mui/material';
 
 function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
-  const [emirates, setEmirates] = useState(data ? data.emirates : null);
-
+  const [emirates, setEmirates] = useState(data ? data.name : null);
+  console.log(data)
   function onSubmit(e) {
     e.preventDefault();
-    axios({
-      method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
-      headers: {
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      },
-      data: { name: emirates }
-    }).then((res) => {
-      if (res.status === 200) {
-        setShouldUpdate(!shouldUpdate);
-      }
-    });
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: { name: emirates }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates?id=${data._id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: { name: emirates }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+
+    }
+
   }
 
   return (

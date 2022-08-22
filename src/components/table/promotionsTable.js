@@ -26,6 +26,9 @@ import { useRouter } from 'next/router';
 import countries from '../../data/countries.json';
 import moment from 'moment';
 import axios from 'axios';
+import Modal from '../modal'
+import ConfirmationModal from '../confirmationBox';
+
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
   //     let matches = true;
@@ -55,6 +58,8 @@ const PromotionsTable = ({
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [id, setID] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [filters, setFilters] = useState({
     status: null
   });
@@ -64,11 +69,12 @@ const PromotionsTable = ({
   const deleteRecord = (id) => {
     axios({
       method: 'DELETE',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/deletePromotions?id=${id}`
     }).then((res) => {
       setShouldUpdate(!shouldUpdate);
     });
   };
+
   const handleStatusChange = (e) => {
     let value = null;
 
@@ -210,7 +216,9 @@ const PromotionsTable = ({
                       color="inherit"
                       size="small"
                       onClick={() => {
-                        deleteRecord(el._id);
+                        setShowModal(true)
+                        setID(el._id)
+                        // deleteRecord(el._id);
                       }}
                     >
                       <DeleteTwoToneIcon fontSize="small" />
@@ -233,6 +241,13 @@ const PromotionsTable = ({
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
+      <Modal
+        setOpen={setShowModal}
+        open={showModal}
+        children={
+          <ConfirmationModal executeFunction={() => deleteRecord(id)} setShowModal={setShowModal} />
+        }
+      />
     </Card>
   );
 };

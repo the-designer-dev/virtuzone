@@ -18,11 +18,14 @@ import {
 } from '@mui/material';
 
 function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
-  const [mainland, setMainland] = useState(data ? data.mainland : null);
-  const [emirates, setEmirates] = useState(data ? data.emirates : null);
+  const [mainland, setMainland] = useState(data ? data.name : null);
+  const [emirates, setEmirates] = useState(data ? data.emirates_id._id : null);
   const [allEmirates, setAllEmirates] = useState([]);
   const [notify, setNotify] = useState(false);
+
+
   useEffect(() => {
+    console.log(data)
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
@@ -38,21 +41,42 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
   function onSubmit(e) {
     e.preventDefault();
 
-    axios({
-      method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
-      headers: {
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      },
-      data: {
-        name: mainland,
-        emirates_id: emirates
-      }
-    }).then((res) => {
-      if (res.status === 200) {
-        setShouldUpdate(!shouldUpdate);
-      }
-    });
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          name: mainland,
+          emirates_id: emirates
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland?id=${data._id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          name: mainland,
+          emirates_id: emirates
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    }
+
+
+
   }
 
   return (
@@ -96,18 +120,17 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                       required
                       select
                       onChange={(e) => {
-                        setEmirates(JSON.parse(e.target.value).id);
+                        console.log(JSON.parse(e.target.value))
+                        setEmirates(e.target.value);
                       }}
                       id="outlined-required"
                       label="Emirates"
                       placeholder="Select Emirates"
+                      value={emirates}
                     >
                       {allEmirates.map((el) => (
                         <MenuItem
-                          value={JSON.stringify({
-                            name: el.name,
-                            id: el._id
-                          })}
+                          value={el._id}
                           key={el.name}
                         >
                           {el.name}
