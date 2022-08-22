@@ -576,8 +576,11 @@ function AddCompany({
                           id="outlined-read-only-input"
                           label="Establishment Card No"
                           value={establishmentCardNo}
+                          onChange={(e) =>
+                            setEstablishmentCardNo(e.currentTarget.value)
+                          }
                           placeholder="Establishment Card Number"
-                          type={'number'}
+                          // type={'number'}
                         />
                         <TextField
                           required
