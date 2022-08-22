@@ -20,10 +20,12 @@ import {
   CardHeader,
   Button
 } from '@mui/material';
-
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-
+import { useRouter } from 'next/router';
+import countries from '../../data/countries.json';
+import moment from 'moment';
+import axios from 'axios';
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
   //     let matches = true;
@@ -38,7 +40,18 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const MainlandTable = ({ setImage, data }) => {
+const ConsultantsTable = ({
+  setImage,
+  data,
+  buttonName,
+  buttonURL,
+  buttonPurpose,
+  setEdit,
+  setId,
+  setData,
+  setShouldUpdate,
+  shouldUpdate
+}) => {
   var i = 0;
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -46,6 +59,16 @@ const MainlandTable = ({ setImage, data }) => {
     status: null
   });
 
+  const router = useRouter();
+
+  const deleteRecord = (id) => {
+    axios({
+      method: 'DELETE',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`
+    }).then((res) => {
+      setShouldUpdate(!shouldUpdate);
+    });
+  };
   const handleStatusChange = (e) => {
     let value = null;
 
@@ -93,54 +116,66 @@ const MainlandTable = ({ setImage, data }) => {
             </FormControl>
           </Box>
         }
-        title="Jurisdiction"
+        title="Consultants"
       />
       <Divider />
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Emirates</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell align="center">#</TableCell>
+              <TableCell align="center">Client Name</TableCell>
+              <TableCell align="center">Languages</TableCell>
+              {buttonName && <TableCell align="center">View</TableCell>}
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((el) => (
               <TableRow hover>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
                     {++i}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
-                    {el.name}
+                    {el.firstName} {el.lastName}
                   </Typography>
                 </TableCell>
-                <TableCell>
+                <TableCell align="center">
                   <Typography
                     variant="body1"
                     fontWeight="bold"
-                    color="text.primary"
                     gutterBottom
                     noWrap
                   >
-                    {el.emirates_id.name}
+                    {el.languages}
                   </Typography>
+                </TableCell>
+
+                <TableCell align="center">
+                  <Tooltip title={'View Picture'} arrow>
+                    <Button
+                      onClick={() => {
+                        // router.push(`/${buttonURL}/${el._id}`);
+                      }}
+                      sx={{ margin: 1 }}
+                      variant="contained"
+                    >
+                      View
+                    </Button>
+                  </Tooltip>
                 </TableCell>
 
                 <TableCell align="right">
@@ -150,10 +185,15 @@ const MainlandTable = ({ setImage, data }) => {
                         '&:hover': {
                           background: theme.colors.primary.lighter
                         },
-                        color: theme.palette.primary.main
+                        color: theme.palette.error.main
                       }}
                       color="inherit"
                       size="small"
+                      onClick={() => {
+                        setEdit(true);
+                        setId(el._id);
+                        setData(el);
+                      }}
                     >
                       <EditTwoToneIcon fontSize="small" />
                     </IconButton>
@@ -166,6 +206,9 @@ const MainlandTable = ({ setImage, data }) => {
                       }}
                       color="inherit"
                       size="small"
+                      onClick={() => {
+                        deleteRecord(el._id);
+                      }}
                     >
                       <DeleteTwoToneIcon fontSize="small" />
                     </IconButton>
@@ -191,4 +234,4 @@ const MainlandTable = ({ setImage, data }) => {
   );
 };
 
-export default MainlandTable;
+export default ConsultantsTable;

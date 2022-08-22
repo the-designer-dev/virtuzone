@@ -141,7 +141,7 @@ const Activity = ({ data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.emirates_id}
+                    {el.mainland_id.name}
                   </Typography>
                 </TableCell>
 

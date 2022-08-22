@@ -30,7 +30,7 @@ function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      setAllJurisdictions(res.data.emirates);
+      setAllJurisdictions(res.data.mainland);
     });
   }, []);
 
