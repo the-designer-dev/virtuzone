@@ -86,6 +86,7 @@ function Promotions() {
               children={
                 <AddPromotion
                   edit={edit}
+                  setEdit={setEdit}
                   setOpen={setOpen}
                   id={id}
                   data={data}

@@ -48,10 +48,9 @@ function AddPromotion({
       const form = new FormData();
       form.append('image', image);
       form.append('link', link);
-      console.log('hell0');
       axios({
-        method: 'POST',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/postPromotions`,
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/updatePromotions?id=${data._id}`,
         headers: {
           'Content-Type': 'multipart/form-data',
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
