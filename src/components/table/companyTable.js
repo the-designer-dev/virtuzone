@@ -263,7 +263,7 @@ const CompanyTable = ({
 
                 {!buttonName && (
                   <TableCell align="center">
-                    <Tooltip title={'Add Company'} arrow>
+                    <Tooltip title={'Add New Company'} arrow>
                       <Button
                         onClick={() => {
                           setOpen(true);
@@ -272,7 +272,7 @@ const CompanyTable = ({
                         sx={{ margin: 1 }}
                         variant="contained"
                       >
-                        Add Company
+                        New Company
                       </Button>
                     </Tooltip>
                   </TableCell>
