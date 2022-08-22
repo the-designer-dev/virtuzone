@@ -19,7 +19,7 @@ import {
 
 function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
   const [emirates, setEmirates] = useState(data ? data.name : null);
-  console.log(data)
+  console.log(data);
   function onSubmit(e) {
     e.preventDefault();
     if (edit !== true) {
@@ -48,9 +48,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
           setShouldUpdate(!shouldUpdate);
         }
       });
-
     }
-
   }
 
   return (
@@ -96,7 +94,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                       }}
                       component={'div'}
                     >
-                      <FormControlLabel control={<Checkbox />} label="Notify" />
+                      {/* <FormControlLabel control={<Checkbox />} label="Notify" /> */}
                       <Button type="submit" sx={{ margin: 1 }}>
                         Submit
                       </Button>

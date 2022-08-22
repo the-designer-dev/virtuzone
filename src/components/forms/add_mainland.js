@@ -139,7 +139,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                       }}
                       component={'div'}
                     >
-                      <FormControlLabel control={<Checkbox />} label="Notify" />
+                      {/* <FormControlLabel control={<Checkbox />} label="Notify" /> */}
                       <Button type="submit" sx={{ margin: 1 }}>
                         Submit
                       </Button>

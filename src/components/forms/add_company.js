@@ -108,7 +108,7 @@ function AddCompany({
     data ? data.activities.map((el) => el._id) : null
   );
 
-  const [issueDateTradeLicense, setIssueDateTradeLicense] = useState(null);
+  const [establishmentCardNo, setEstablishmentCardNo] = useState(null);
   const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(null);
   const [establishmentDateTradeLicense, setEstablishmentDateTradeLicense] =
     useState(null);
@@ -220,6 +220,7 @@ function AddCompany({
     form.append('licenseCode', licenseCode);
     form.append('judiciary', judiciary);
     form.append('establishmentDate', establishmentDate);
+    form.append('establishmentCardNo', establishmentCardNo);
     form.append('issueDate', issueDate);
     form.append('expiryDate', expiryDate);
     form.append('activities', activity);
@@ -570,6 +571,13 @@ function AddCompany({
                           }}
                           value={licenseCode}
                           placeholder="Code"
+                        />
+                        <TextField
+                          id="outlined-read-only-input"
+                          label="Establishment Card No"
+                          value={establishmentCardNo}
+                          placeholder="Establishment Card Number"
+                          type={'number'}
                         />
                         <TextField
                           required
