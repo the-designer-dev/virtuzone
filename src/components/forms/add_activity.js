@@ -19,7 +19,7 @@ import {
 
 function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
   const [activity, setActivity] = useState(data ? data.name : null);
-  const [jurisdiction, setJurisdiction] = useState(data ? data.mainland : null);
+  const [jurisdiction, setJurisdiction] = useState(data ? data.mainland_id._id : null);
   const [allJurisdictions, setAllJurisdictions] = useState([]);
   const [notify, setNotify] = useState(false);
   useEffect(() => {
@@ -118,8 +118,9 @@ function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
                       id="outlined-required"
                       label="Jurisdiction"
                       placeholder="Select Jurisdiction"
+                      value={jurisdiction}
                     >
-                      {allJurisdictions.map((el) => (
+                      {allJurisdictions?.map((el) => (
                         <MenuItem
                           value={JSON.stringify({
                             name: el.name,

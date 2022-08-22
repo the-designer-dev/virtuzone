@@ -124,7 +124,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                       placeholder="Select Emirates"
                       value={emirates}
                     >
-                      {allEmirates.map((el) => (
+                      {allEmirates?.map((el) => (
                         <MenuItem value={el._id} key={el.name}>
                           {el.name}
                         </MenuItem>
