@@ -102,7 +102,7 @@ const Activity = ({ data }) => {
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Activity</TableCell>
-              <TableCell>Emirates</TableCell>
+              <TableCell>Jurisdiction</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>

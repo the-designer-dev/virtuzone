@@ -108,10 +108,14 @@ function AddCompany({
     data ? data.activities.map((el) => el._id) : null
   );
 
-  const [establishmentCardNo, setEstablishmentCardNo] = useState(null);
-  const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(null);
+  const [establishmentCardNo, setEstablishmentCardNo] = useState(
+    data ? data.establishmentCardNo : null
+  );
+  const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(
+    data ? data.expiryDateTradeLicense : null
+  );
   const [establishmentDateTradeLicense, setEstablishmentDateTradeLicense] =
-    useState(null);
+    useState(data ? data.establishmentDateTradeLicense : null);
   const [license, setLicense] = useState(null);
   const [code, setCode] = useState(null);
   const [tradeLicensejudiciary, setTradeLicensejudiciary] = useState(null);

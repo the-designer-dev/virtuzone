@@ -95,8 +95,8 @@ function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
                         setJurisdiction(JSON.parse(e.target.value).id);
                       }}
                       id="outlined-required"
-                      label="Emirates"
-                      placeholder="Select Emirates"
+                      label="Jurisdiction"
+                      placeholder="Select Jurisdiction"
                     >
                       {allJurisdictions.map((el) => (
                         <MenuItem
