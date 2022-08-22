@@ -23,9 +23,8 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
   const [allEmirates, setAllEmirates] = useState([]);
   const [notify, setNotify] = useState(false);
 
-
   useEffect(() => {
-    console.log(data)
+    console.log(data);
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
@@ -74,15 +73,12 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
         }
       });
     }
-
-
-
   }
 
   return (
     <>
       <Head>
-        <title>Add Mainland - Virtuzone</title>
+        <title>Add Jurisdiction - Virtuzone</title>
       </Head>
       <Container sx={{ mt: 2 }} maxWidth="lg">
         <Grid
@@ -94,7 +90,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
         >
           <Grid item xs={12}>
             <Card>
-              <CardHeader title="Add Mainland" />
+              <CardHeader title="Add Jurisdiction" />
               <Divider />
               <CardContent>
                 <Box
@@ -109,7 +105,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                   <div>
                     <TextField
                       id="outlined-read-only"
-                      label="Mainland"
+                      label="Jurisdiction"
                       value={mainland}
                       onChange={(e) => setMainland(e.target.value)}
                       InputLabelProps={{
@@ -120,7 +116,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                       required
                       select
                       onChange={(e) => {
-                        console.log(JSON.parse(e.target.value))
+                        console.log(e.target.value);
                         setEmirates(e.target.value);
                       }}
                       id="outlined-required"
@@ -129,10 +125,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
                       value={emirates}
                     >
                       {allEmirates.map((el) => (
-                        <MenuItem
-                          value={el._id}
-                          key={el.name}
-                        >
+                        <MenuItem value={el._id} key={el.name}>
                           {el.name}
                         </MenuItem>
                       ))}

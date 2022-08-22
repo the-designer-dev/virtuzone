@@ -196,12 +196,12 @@ function AddCompany({
     }
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      setJudiciaries(res.data.emirates);
+      setJudiciaries(res.data.mainland);
     });
 
     const importModule = async () => {
