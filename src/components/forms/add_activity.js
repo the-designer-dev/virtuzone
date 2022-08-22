@@ -19,11 +19,13 @@ import {
 
 function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
   const [activity, setActivity] = useState(data ? data.name : null);
-  const [jurisdiction, setJurisdiction] = useState(data ? data.mainland_id._id : null);
+  const [jurisdiction, setJurisdiction] = useState(
+    data ? data.mainland_id._id : null
+  );
   const [allJurisdictions, setAllJurisdictions] = useState([]);
   const [notify, setNotify] = useState(false);
   useEffect(() => {
-    console.log(data)
+    console.log(data);
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
@@ -71,8 +73,6 @@ function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
         }
       });
     }
-
-
   }
 
   return (
@@ -113,7 +113,7 @@ function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
                       required
                       select
                       onChange={(e) => {
-                        setJurisdiction(JSON.parse(e.target.value).id);
+                        setJurisdiction(e.target.value);
                       }}
                       id="outlined-required"
                       label="Jurisdiction"
@@ -121,13 +121,7 @@ function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
                       value={jurisdiction}
                     >
                       {allJurisdictions?.map((el) => (
-                        <MenuItem
-                          value={JSON.stringify({
-                            name: el.name,
-                            id: el._id
-                          })}
-                          key={el.name}
-                        >
+                        <MenuItem value={el._id} key={el.name}>
                           {el.name}
                         </MenuItem>
                       ))}

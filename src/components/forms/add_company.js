@@ -109,7 +109,10 @@ function AddCompany({
   );
 
   const [establishmentCardNo, setEstablishmentCardNo] = useState(
-    data ? data.establishmentCardNo : null
+    data
+      ? data?.establishmentCard[data.establishmentCard.length - 1]
+          ?.establishmentCardNo
+      : null
   );
   const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(
     data ? data.expiryDateTradeLicense : null
@@ -134,11 +137,24 @@ function AddCompany({
   const [
     establismentDateEstablismentCard,
     setEstablismentDateEstablismentCard
-  ] = useState(null);
-  const [issueDateEstablismentCard, setIssueDateEstablismentCard] =
-    useState(null);
-  const [expiryDateEstablismentCard, setExpiryDateEstablismentCard] =
-    useState(null);
+  ] = useState(
+    data
+      ? data?.establishmentCard[data.establishmentCard.length - 1]
+          ?.establismentDateEstablismentCard
+      : null
+  );
+  const [issueDateEstablismentCard, setIssueDateEstablismentCard] = useState(
+    data
+      ? data?.establishmentCard[data.establishmentCard.length - 1]
+          ?.issueDateEstablismentCard
+      : null
+  );
+  const [expiryDateEstablismentCard, setExpiryDateEstablismentCard] = useState(
+    data
+      ? data?.establishmentCard[data.establishmentCard.length - 1]
+          ?.expiryDateEstablismentCard
+      : null
+  );
   const [officeLease, setOfficeLease] = useState(
     data ? data.officeLeaseAgreement : []
   );
