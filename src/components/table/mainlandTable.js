@@ -133,7 +133,7 @@ const MainlandTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((el) => (
+            {data && data.map((el) => (
               <TableRow hover>
                 <TableCell>
                   <Typography
@@ -165,7 +165,7 @@ const MainlandTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.emirates_id.name}
+                    {el.emirates_id?.name}
                   </Typography>
                 </TableCell>
 

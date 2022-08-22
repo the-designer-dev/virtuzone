@@ -18,11 +18,12 @@ import {
 } from '@mui/material';
 
 function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
-  const [activity, setActivity] = useState(data ? data.activity : null);
+  const [activity, setActivity] = useState(data ? data.name : null);
   const [jurisdiction, setJurisdiction] = useState(data ? data.mainland : null);
   const [allJurisdictions, setAllJurisdictions] = useState([]);
   const [notify, setNotify] = useState(false);
   useEffect(() => {
+    console.log(data)
     axios({
       method: 'GET',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
@@ -37,21 +38,41 @@ function AddActivity({ shouldUpdate, setShouldUpdate, edit, data }) {
   function onSubmit(e) {
     e.preventDefault();
 
-    axios({
-      method: 'POST',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity`,
-      headers: {
-        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-      },
-      data: {
-        name: activity,
-        mainland_id: jurisdiction
-      }
-    }).then((res) => {
-      if (res.status === 200) {
-        setShouldUpdate(!shouldUpdate);
-      }
-    });
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          name: activity,
+          mainland_id: jurisdiction
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/activity?id=${data._id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: {
+          name: activity,
+          mainland_id: jurisdiction
+        }
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    }
+
+
   }
 
   return (

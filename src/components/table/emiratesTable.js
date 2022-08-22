@@ -58,10 +58,10 @@ const EmiratesTable = ({
     status: null
   });
 
-  const deleteRecord = (id) => {
+  const deleteRecord = (ids) => {
     axios({
       method: 'DELETE',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates?id=${id}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/emirates?id=${ids}`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
@@ -130,7 +130,7 @@ const EmiratesTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((el) => (
+            {data && data.map((el) => (
               <TableRow hover>
                 <TableCell>
                   <Typography

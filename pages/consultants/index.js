@@ -30,12 +30,12 @@ function Consultants() {
 
     axios({
       method: 'GET',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/consultant`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
     }).then((res) => {
-      SetAllData(res.data.company);
+      SetAllData(res.data.consultant);
     });
   }, [shouldUpdate]);
   return (
@@ -75,6 +75,7 @@ function Consultants() {
             <ConsultantsTable
               data={allData}
               setEdit={setEdit}
+              setImage={setImage}
               setId={setUser}
               setData={setData}
               setShouldUpdate={setShouldUpdate}

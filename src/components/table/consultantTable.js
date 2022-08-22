@@ -131,7 +131,7 @@ const ConsultantsTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((el) => (
+            {data && data.map((el) => (
               <TableRow hover>
                 <TableCell align="center">
                   <Typography
@@ -160,16 +160,14 @@ const ConsultantsTable = ({
                     gutterBottom
                     noWrap
                   >
-                    {el.languages}
+                    {el.language}
                   </Typography>
                 </TableCell>
 
                 <TableCell align="center">
                   <Tooltip title={'View Picture'} arrow>
                     <Button
-                      onClick={() => {
-                        // router.push(`/${buttonURL}/${el._id}`);
-                      }}
+                      onClick={() => setImage(el.picture)}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >

@@ -24,23 +24,14 @@ import ReactFlagsSelect from 'react-flags-select';
 import dynamic from 'next/dynamic';
 const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 
-function AddConsultant({ shouldUpdate, setShouldUpdate, edit, id, data }) {
+function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [firstName, setFirstName] = useState(data ? data.firstName : null);
   const [lastName, setLastName] = useState(data ? data.lastName : null);
-  const [email, setEmail] = useState(data ? data.email : null);
-  const [countryCode, setCountryCode] = useState(data ? data.countryCode : []);
-  const [dialCode, setDialCode] = useState(null);
-  const [mobile, setMobile] = useState(data ? data.mobile : []);
-  const [nationality, setNationality] = useState(data ? data.nationality : []);
-  const [dateOfBirth, setDateOfBirth] = useState(
-    data ? data.dateOfBirth : null
-  );
-  const [passportDetails, setPassportDetails] = useState(
-    data ? data.passportDetails : 'sasd'
-  );
+  const [file, setFile] = useState(null);
+  const [language, setlanguage] = useState(data ? data.language : null);
+
   const [notify, setNotify] = useState(false);
 
-  const [languages, setLanguages] = useState(null);
   const [value, setValue] = useState(null);
 
   const LANGUAGES = [
@@ -87,26 +78,23 @@ function AddConsultant({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   function onSubmit(e) {
     e.preventDefault();
 
+    const form = new FormData();
+
+    form.append('picture', file);
+    form.append('firstName', firstName);
+    form.append('lastName', lastName);
+    form.append('language', language);
+
+
     if (edit !== true) {
       axios({
         method: 'POST',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/consultant`,
         headers: {
+          'Content-Type': 'multipart/form-data',
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
-        data: {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          countryCode: countryCode,
-          dialCode: dialCode,
-          mobile: mobile,
-          nationality: nationality,
-          dateOfBirth: dateOfBirth,
-          isVerified: false,
-          passportDetails: passportDetails,
-          role: 'owner'
-        }
+        data: form
       })
         .then((res) => {
           console.log(res);
@@ -119,22 +107,11 @@ function AddConsultant({ shouldUpdate, setShouldUpdate, edit, id, data }) {
     } else {
       axios({
         method: 'PUT',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/consultant?id=${id}`,
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
-        data: {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          countryCode: countryCode,
-          mobile: mobile,
-          nationality: nationality,
-          dateOfBirth: dateOfBirth,
-          passportDetails: passportDetails,
-          isVerified: false,
-          role: 'owner'
-        }
+        data: form
       })
         .then((res) => {
           console.log(res);
@@ -192,7 +169,7 @@ function AddConsultant({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       label="Last Name"
                       placeholder="Last Name"
                       value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      onChange={(e) => { setLastName(e.target.value); }}
                     />
 
                     <Select
@@ -201,9 +178,9 @@ function AddConsultant({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       id="outlined-read-only"
                       label="Languages"
                       placeholder="Languages"
-                      value={languages}
+                      value={language}
                       maxWidth
-                      onChange={(e) => setLanguages(e.target.value)}
+                      onChange={(e) => setlanguage(e.target.value)}
                     >
                       {LANGUAGES.map((el) => (
                         <MenuItem value={el}>
@@ -218,8 +195,7 @@ function AddConsultant({ shouldUpdate, setShouldUpdate, edit, id, data }) {
                       id="outlined-read-only"
                       label="Picture"
                       placeholder="Picture"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      onChange={(e) => setFile(e.target.files[0])}
                     />
 
                     <Box
