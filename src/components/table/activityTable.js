@@ -129,7 +129,7 @@ const Activity = ({ data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.name}
+                    {el?.name}
                   </Typography>
                 </TableCell>
 
@@ -141,7 +141,7 @@ const Activity = ({ data }) => {
                     gutterBottom
                     noWrap
                   >
-                    {el.mainland_id.name}
+                    {el.mainland_id?.name}
                   </Typography>
                 </TableCell>
 
