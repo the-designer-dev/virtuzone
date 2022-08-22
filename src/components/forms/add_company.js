@@ -623,8 +623,8 @@ function AddCompany({
                         />
                         <DatePicker
                           label="Establishment Date"
-                          onChange={(e) =>
-                            establismentDateEstablismentCard(e.target.value)
+                          onChange={(newValue) =>
+                            setEstablismentDateEstablismentCard(newValue)
                           }
                           value={establismentDateEstablismentCard}
                           renderInput={(params) => <TextField {...params} />}
@@ -632,16 +632,16 @@ function AddCompany({
                         <DatePicker
                           label="Date of issue"
                           value={issueDateEstablismentCard}
-                          onChange={(e) =>
-                            issueDateEstablismentCard(e.target.value)
+                          onChange={(newValue) =>
+                            setIssueDateEstablismentCard(newValue)
                           }
                           renderInput={(params) => <TextField {...params} />}
                         />
                         <DatePicker
                           label="Expiry Date"
                           value={expiryDateEstablismentCard}
-                          onChange={(e) =>
-                            expiryDateEstablismentCard(e.target.value)
+                          onChange={(newValue) =>
+                            setExpiryDateEstablismentCard(newValue)
                           }
                           renderInput={(params) => <TextField {...params} />}
                         />
