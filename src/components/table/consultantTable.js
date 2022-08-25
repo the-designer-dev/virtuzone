@@ -133,96 +133,97 @@ const ConsultantsTable = ({
               <TableCell align="center">#</TableCell>
               <TableCell align="center">Client Name</TableCell>
               <TableCell align="center">Languages</TableCell>
-              {buttonName && <TableCell align="center">View</TableCell>}
+              <TableCell align="center">View</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.map((el) => (
-              <TableRow hover>
-                <TableCell align="center">
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {++i}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.firstName} {el.lastName}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.language}
-                  </Typography>
-                </TableCell>
+            {data &&
+              data.map((el) => (
+                <TableRow hover>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {++i}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.firstName} {el.lastName}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.language}
+                    </Typography>
+                  </TableCell>
 
-                <TableCell align="center">
-                  <Tooltip title={'View Picture'} arrow>
-                    <Button
-                      onClick={() => setImage(el.picture)}
-                      sx={{ margin: 1 }}
-                      variant="contained"
-                    >
-                      View
-                    </Button>
-                  </Tooltip>
-                </TableCell>
+                  <TableCell align="center">
+                    <Tooltip title={'View Picture'} arrow>
+                      <Button
+                        onClick={() => setImage(el.picture)}
+                        sx={{ margin: 1 }}
+                        variant="contained"
+                      >
+                        View
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
 
-                <TableCell align="right">
-                  <Tooltip title="Edit" arrow>
-                    <IconButton
-                      sx={{
-                        '&:hover': {
-                          background: theme.colors.primary.lighter
-                        },
-                        color: theme.palette.error.main
-                      }}
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setEdit(true);
-                        setId(el._id);
-                        setData(el);
-                      }}
-                    >
-                      <EditTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete" arrow>
-                    <IconButton
-                      sx={{
-                        '&:hover': { background: theme.colors.error.lighter },
-                        color: theme.palette.error.main
-                      }}
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setShowModal(true)
-                        setID(el._id)
-                        // deleteRecord(el._id);
-                      }}
-                    >
-                      <DeleteTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell align="right">
+                    <Tooltip title="Edit" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': {
+                            background: theme.colors.primary.lighter
+                          },
+                          color: theme.palette.error.main
+                        }}
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setEdit(true);
+                          setId(el._id);
+                          setData(el);
+                        }}
+                      >
+                        <EditTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': { background: theme.colors.error.lighter },
+                          color: theme.palette.error.main
+                        }}
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setShowModal(true);
+                          setID(el._id);
+                          // deleteRecord(el._id);
+                        }}
+                      >
+                        <DeleteTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -241,7 +242,10 @@ const ConsultantsTable = ({
         setOpen={setShowModal}
         open={showModal}
         children={
-          <ConfirmationModal executeFunction={() => deleteRecord(id)} setShowModal={setShowModal} />
+          <ConfirmationModal
+            executeFunction={() => deleteRecord(id)}
+            setShowModal={setShowModal}
+          />
         }
       />
     </Card>
