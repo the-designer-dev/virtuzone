@@ -91,6 +91,7 @@ function AddCompany({
 }) {
   const [ShowLoader, setShowLoader] = useState(false);
   const [open, setOpen] = useState(false);
+  const [ShowSuccessUpdateModal, setShowSuccessUpdateModal] = useState(false);
   const [ShowSuccessModal, setShowSuccessModal] = useState(false);
   const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
@@ -337,7 +338,7 @@ function AddCompany({
       }).then((res) => {
         if (res.status === 200) {
           setShowLoader(false)
-          setShowSuccessModal(true)
+          setShowSuccessUpdateModal(true)
         }
       }).catch((err) => {
         setShowLoader(false)
@@ -355,7 +356,7 @@ function AddCompany({
       }).then((res) => {
         setShowLoader(false)
         if (res.status === 200) {
-          setShowSuccessModal(true)
+          setShowSuccessUpdateModal(true)
         }
       }).catch((err) => {
         setShowLoader(false)
@@ -1420,6 +1421,7 @@ function AddCompany({
           </Grid>
         </Grid>
       </Container>
+
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
@@ -1427,8 +1429,16 @@ function AddCompany({
         setData={() => { }}
       >
         <SuccessModal executeFunction={() => { }} setShowSuccessModal={setShowSuccessModal} />
+      </ModalNoClose>
 
 
+      <ModalNoClose
+        setOpen={setShowSuccessUpdateModal}
+        open={ShowSuccessUpdateModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate) }} setShowSuccessModal={setShowSuccessModal} />
       </ModalNoClose>
 
       <ModalNoClose
