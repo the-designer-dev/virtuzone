@@ -77,7 +77,6 @@ function a11yProps(index) {
   };
 }
 
-
 function AddCompany({
   comp,
   shouldUpdate,
@@ -220,8 +219,6 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        console.log('user =' + id)
-        console.log('ccs =' + comp)
         setFirstName(res.data.user.firstName);
         setLastName(res.data.user.lastName);
       });
@@ -351,9 +348,7 @@ function AddCompany({
         }
       });
     }
-
   }
-
 
   function onSubmit1(e) {
     e.preventDefault();
@@ -459,14 +454,13 @@ function AddCompany({
         data: form
       }).then((res) => {
         if (res.status === 200) {
-          setShowSuccessModal(true)
+          setShowSuccessModal(true);
         }
       })
         .catch((err) => {
           console.log("failsed")
         });
     }
-
   }
 
   function onJudiciaryChange(e) {
