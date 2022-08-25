@@ -17,6 +17,7 @@ function Consultants() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
+  const [imageTitle, setImageTitle] = useState(null);
   const [shouldUpdate, setShouldUpdate] = useState(null);
   const router = useRouter();
   const [edit, setEdit] = useState(null);
@@ -76,6 +77,7 @@ function Consultants() {
               data={allData}
               setEdit={setEdit}
               setImage={setImage}
+              setImageTitle={setImageTitle}
               setId={setUser}
               setData={setData}
               setShouldUpdate={setShouldUpdate}
@@ -103,7 +105,8 @@ function Consultants() {
             <ImageModal
               image={image}
               setImage={setImage}
-              children={<DisplayImage image={image} />}
+              setImageTitle={setImageTitle}
+              children={<DisplayImage image={image} title={imageTitle} />}
             />
           </Grid>
         </Grid>

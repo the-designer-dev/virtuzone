@@ -45,6 +45,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
 
 const ConsultantsTable = ({
   setImage,
+  setImageTitle,
   data,
   buttonName,
   buttonURL,
@@ -176,7 +177,10 @@ const ConsultantsTable = ({
                   <TableCell align="center">
                     <Tooltip title={'View Picture'} arrow>
                       <Button
-                        onClick={() => setImage(el.picture)}
+                        onClick={() => {
+                          setImage(el.picture)
+                          setImageTitle('Profile Picture - ' + el.firstName + ' ' + el.lastName)
+                        }}
                         sx={{ margin: 1 }}
                         variant="contained"
                       >

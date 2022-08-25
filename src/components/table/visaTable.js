@@ -42,7 +42,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const VisaTable = ({ setImage, data, setEdit, setData, shouldUpdate, setShouldUpdate }) => {
+const VisaTable = ({ setImage, setImageTitle, data, setEdit, setData, shouldUpdate, setShouldUpdate }) => {
   var i = 0;
   const [id, setID] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -242,7 +242,10 @@ const VisaTable = ({ setImage, data, setEdit, setData, shouldUpdate, setShouldUp
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
                     <Button
-                      onClick={() => setImage(el.passport)}
+                      onClick={() => {
+                        setImage(el.passport)
+                        setImageTitle('Passport - ' + el.firstName + ' ' + el.lastName)
+                      }}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >
@@ -253,7 +256,10 @@ const VisaTable = ({ setImage, data, setEdit, setData, shouldUpdate, setShouldUp
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
                     <Button
-                      onClick={() => setImage(el.entryPermit)}
+                      onClick={() => {
+                        setImage(el.entryPermit)
+                        setImageTitle('Entry Permit - ' + el.firstName + ' ' + el.lastName)
+                      }}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >
@@ -264,7 +270,10 @@ const VisaTable = ({ setImage, data, setEdit, setData, shouldUpdate, setShouldUp
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
                     <Button
-                      onClick={() => setImage(el.residencyVisa)}
+                      onClick={() => {
+                        setImage(el.residencyVisa)
+                        setImageTitle('Residency Visa - ' + el.firstName + ' ' + el.lastName)
+                      }}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >
@@ -275,7 +284,10 @@ const VisaTable = ({ setImage, data, setEdit, setData, shouldUpdate, setShouldUp
                 <TableCell align="center">
                   <Tooltip title="View Issued License" arrow>
                     <Button
-                      onClick={() => setImage(el.emiratesId)}
+                      onClick={() => {
+                        setImage(el.emiratesId)
+                        setImageTitle('Emirates Id - ' + el.firstName + ' ' + el.lastName)
+                      }}
                       sx={{ margin: 1 }}
                       variant="contained"
                     >

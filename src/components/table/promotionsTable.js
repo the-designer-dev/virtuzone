@@ -47,6 +47,7 @@ const applyPagination = (cryptoOrders, page, limit) => {
 
 const PromotionsTable = ({
   setImage,
+  setImageTitle,
   data,
   buttonName,
   buttonURL,
@@ -182,7 +183,10 @@ const PromotionsTable = ({
                   <Tooltip title="View Promotion" arrow>
                     <Button
                       sx={{ margin: 1 }}
-                      onClick={() => setImage(el.image)}
+                      onClick={() => {
+                        setImage(el.image)
+                        setImageTitle('Promotion - ' + el.link)
+                      }}
                       variant="contained"
                     >
                       View

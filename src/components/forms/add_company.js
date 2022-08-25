@@ -87,7 +87,8 @@ function AddCompany({
   edit,
   id,
   data,
-  setImage
+  setImage,
+  setImageTitle
 }) {
   const [ShowLoader, setShowLoader] = useState(false);
   const [open, setOpen] = useState(false);
@@ -688,6 +689,8 @@ function AddCompany({
                                   data?.tradeLicense.length - 1
                                 ]?.file
                               );
+
+                              setImageTitle("Trade License - " + data.name)
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -826,6 +829,7 @@ function AddCompany({
                                   data?.establishmentCard.length - 1
                                 ]?.file
                               );
+                              setImageTitle("Establishment Card - " + data.name)
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -902,6 +906,8 @@ function AddCompany({
                                   data?.officeLeaseAgreement.length - 1
                                 ]?.file
                               );
+
+                              setImageTitle("Office Lease Agreement - " + data.name)
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -966,6 +972,8 @@ function AddCompany({
                                   data?.articleOfIncoporation.length - 1
                                 ]?.file
                               );
+
+                              setImageTitle("Article Of Incorporation - " + data.name)
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1034,6 +1042,8 @@ function AddCompany({
                                   data?.incorporationCertificate.length - 1
                                 ]?.file
                               );
+
+                              setImageTitle("Incorporation Certificate - " + data.name)
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1097,6 +1107,8 @@ function AddCompany({
                                   data?.shareCertificate.length - 1
                                 ]?.file
                               );
+
+                              setImageTitle("Share Certificate - " + data.name)
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1178,6 +1190,7 @@ function AddCompany({
                                   data?.immigrationCard.length - 1
                                 ]?.file
                               );
+                              setImageTitle("Immigration Card - " + data.name)
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={

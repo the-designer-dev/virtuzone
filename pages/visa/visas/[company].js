@@ -13,6 +13,7 @@ import ImageModal from 'src/components/modal/imageModal';
 import DisplayImage from 'src/components/displayImage/displayImage';
 import { useRouter } from 'next/router';
 function Visa() {
+  const [imageTitle, setImageTitle] = useState(null);
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
@@ -75,6 +76,7 @@ function Visa() {
           <Grid item xs={12}>
             <VisaTable
               setImage={setImage}
+              setImageTitle={setImageTitle}
               data={allData}
               setEdit={setEdit}
               setId={setId}
@@ -102,7 +104,8 @@ function Visa() {
             <ImageModal
               image={image}
               setImage={setImage}
-              children={<DisplayImage image={image} />}
+              setImageTitle={setImageTitle}
+              children={<DisplayImage image={image} title={imageTitle} />}
             />
           </Grid>
         </Grid>

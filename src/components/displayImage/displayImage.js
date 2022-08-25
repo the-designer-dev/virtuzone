@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from '../../css/imageModal.module.css';
-export default function DisplayImage({ image }) {
+export default function DisplayImage({ image, title }) {
   const [viewImg, setViewImg] = useState([]);
   const [mimeType, setMimeType] = useState([]);
 
@@ -59,7 +59,7 @@ export default function DisplayImage({ image }) {
   return (
     <Box>
       <Card>
-        <CardHeader title={image} />
+        <CardHeader title={title ? title : image} />
         <Divider />
         <CardContent>
           {viewImg !== false && isArray(viewImg) ? (

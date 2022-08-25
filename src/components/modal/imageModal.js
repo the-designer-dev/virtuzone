@@ -24,13 +24,16 @@ const styleBtn = {
   boxShadow: 100
 };
 
-export default function ImageModal({ image, setImage, children }) {
+export default function ImageModal({ image, setImage, children, setImageTitle }) {
   return (
     <div>
 
       <Modal
         open={image !== null}
-        onClose={() => setImage(null)}
+        onClose={() => {
+          setImage(null)
+          setImageTitle(null)
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -39,14 +42,16 @@ export default function ImageModal({ image, setImage, children }) {
           sx={style}>
           <IconButton
             aria-label="close"
-            onClick={() => setImage(null)}
+            onClick={() => {
+              setImage(null)
+              setImageTitle(null)
+            }}
             sx={{
               position: 'absolute',
               margin: '20px',
               right: -50,
               top: -50,
               color: 'red',
-              //         color: (theme) => theme.palette.grey[500],
             }}
           >
             <CloseIcon />
@@ -56,6 +61,6 @@ export default function ImageModal({ image, setImage, children }) {
         </Box>
 
       </Modal>
-    </div>
+    </div >
   );
 }

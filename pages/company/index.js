@@ -17,6 +17,7 @@ function Company() {
   const [open, setOpen] = useState(false);
   const [allData, SetAllData] = useState([]);
   const [image, setImage] = useState(null);
+  const [imageTitle, setImageTitle] = useState(null);
   const [shouldUpdate, setShouldUpdate] = useState(null);
   const router = useRouter();
   const [edit, setEdit] = useState(null);
@@ -90,6 +91,7 @@ function Company() {
               children={
                 <AddCompany
                   setImage={setImage}
+                  setImageTitle={setImageTitle}
                   edit={edit}
                   comp={id}
                   id={user}
@@ -100,10 +102,10 @@ function Company() {
               }
             />
             <ImageModal
-              disableBackdropClick
               image={image}
               setImage={setImage}
-              children={<DisplayImage image={image} />}
+              setImageTitle={setImageTitle}
+              children={<DisplayImage image={image} title={imageTitle} />}
             />
           </Grid>
         </Grid>

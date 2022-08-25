@@ -20,6 +20,7 @@ function Promotions() {
   const [id, setId] = useState(null);
   const [data, setData] = useState(null);
   const [image, setImage] = useState(null);
+  const [imageTitle, setImageTitle] = useState(null);
   useEffect(() => {
     setOpen(false);
     setEdit(false);
@@ -73,6 +74,7 @@ function Promotions() {
               setEdit={setEdit}
               setId={setId}
               setImage={setImage}
+              setImageTitle={setImageTitle}
               setData={setData}
               setShouldUpdate={setShouldUpdate}
               shouldUpdate={shouldUpdate}
@@ -97,8 +99,10 @@ function Promotions() {
             />
             <ImageModal
               image={image}
+
               setImage={setImage}
-              children={<DisplayImage image={image} />}
+              setImageTitle={setImageTitle}
+              children={<DisplayImage image={image} title={imageTitle} />}
             />
           </Grid>
         </Grid>
