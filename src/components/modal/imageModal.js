@@ -46,7 +46,7 @@ export default function ImageModal({ image, setImage, children }) {
               right: -50,
               top: -50,
               color: 'red',
-              color: (theme) => theme.palette.grey[500],
+              //         color: (theme) => theme.palette.grey[500],
             }}
           >
             <CloseIcon />

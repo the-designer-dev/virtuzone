@@ -147,7 +147,6 @@ const CompanyTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-
             {data && data.map((el) => (
               <TableRow hover>
                 <TableCell>
@@ -322,6 +321,7 @@ const CompanyTable = ({
                         color="inherit"
                         size="small"
                         onClick={() => {
+                          console.log(el)
                           setEdit(true);
                           setId(el._id);
                           setData(el);

@@ -40,6 +40,8 @@ import moment from 'moment';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
+import SuccessModal from '../successBox';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -85,6 +87,7 @@ function AddCompany({
   setImage
 }) {
   const [open, setOpen] = useState(false);
+  const [ShowSuccessModal, setShowSuccessModal] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
 
@@ -216,7 +219,8 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        console.log(res)
+        console.log('user =' + id)
+        console.log('ccs =' + comp)
         setFirstName(res.data.user.firstName);
         setLastName(res.data.user.lastName);
       });
@@ -454,7 +458,7 @@ function AddCompany({
         data: form
       }).then((res) => {
         if (res.status === 200) {
-          alert("Changes saved")
+          setShowSuccessModal(true)
         }
       });
     }
@@ -1396,6 +1400,15 @@ function AddCompany({
           </Grid>
         </Grid>
       </Container>
+      <Modal
+        setOpen={setShowSuccessModal}
+        open={ShowSuccessModal}
+
+      >
+        <SuccessModal setShowSuccessModal={setShowSuccessModal} />
+
+
+      </Modal>
     </>
   );
 }
