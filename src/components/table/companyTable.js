@@ -147,7 +147,7 @@ const CompanyTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((el) => (
+            {data && data.map((el) => (
               <TableRow hover>
                 <TableCell>
                   <Typography
