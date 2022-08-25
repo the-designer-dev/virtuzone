@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Typography, Grid, Card, Container, CardContent, Divider, CardHeader } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-const SuccessModal = ({ setShowSuccessModal, executeFunction }) => {
+const SuccessModal = ({ setShowSuccessModal, }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        await executeFunction()
+
         setShowSuccessModal(false)
     }
     return (
@@ -22,7 +22,7 @@ const SuccessModal = ({ setShowSuccessModal, executeFunction }) => {
             >
                 <Grid item xs={12}>
                     <Card>
-                        <CardHeader title="Success" />
+                        <CardHeader title="Confirmation" />
                         <Divider />
                         <CardContent>
                             {/* <Box sx={{ width: '100px', margin: 'auto' }}>
@@ -37,14 +37,14 @@ const SuccessModal = ({ setShowSuccessModal, executeFunction }) => {
                                 noValidate
                                 autoComplete="off"
                             >
-                                <img alt="Success" width={210} height={180} src="/static/images/icons/success.png" />
+                                <img alt="Success" width={210} height={180} src="/static/images/icons/failure.png" />
 
                                 <Typography variant='h4' sx={{ display: 'flex', justifyContent: "center", margin: "20px 0", color: 'green' }}>
-                                    Success
+                                    Failed
                                 </Typography>
 
                                 <Typography sx={{ fontSize: 15, fontWeight: 500, display: 'flex', justifyContent: "center", margin: "0px 0" }}>
-                                    Details have been saved successfully.
+                                    Make sure to fill all required feilds.
                                 </Typography>
 
                                 <div>
@@ -56,7 +56,8 @@ const SuccessModal = ({ setShowSuccessModal, executeFunction }) => {
                                         }}
                                         component={'div'}
                                     >
-                                        <Button type='submit' sx={{ margin: 1, backgroundColor: '#cf3339', color: '#fff' }}>Ok</Button>
+                                        <Button onClick={() => setShowSuccessModal(false)} type='button' sx={{ margin: 1, backgroundColor: '#cf3339', color: '#fff' }}>Ok</Button>
+
                                     </Box>
                                 </div>
                             </Box>

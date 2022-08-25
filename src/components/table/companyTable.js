@@ -18,7 +18,8 @@ import {
   Typography,
   useTheme,
   CardHeader,
-  Button
+  Button,
+  Modal
 } from '@mui/material';
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
@@ -26,6 +27,8 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import ConfirmationModal from '../confirmationBox';
+import BasicModal from '../modal';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -58,6 +61,8 @@ const CompanyTable = ({
   shouldUpdate
 }) => {
   var i = 0;
+  const [id, setID] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [filters, setFilters] = useState({
@@ -101,7 +106,6 @@ const CompanyTable = ({
   const filteredData = applyFilters(data, filters);
   const paginatedData = applyPagination(filteredData, page, limit);
   const theme = useTheme();
-
   return (
     <Card>
       <CardHeader
@@ -336,7 +340,11 @@ const CompanyTable = ({
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
                         }}
-                        onClick={() => deleteRecord(el._id)}
+                        onClick={() => {
+                          setShowModal(true)
+                          setID(el._id)
+                          // deleteRecord(el._id);
+                        }}
                         color="inherit"
                         size="small"
                       >
@@ -361,6 +369,14 @@ const CompanyTable = ({
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
+      <BasicModal
+        sx={{ display: 'flex', alignItems: 'center' }}
+        setOpen={setShowModal}
+        open={showModal}
+        children={
+          <ConfirmationModal executeFunction={() => deleteRecord(id)} setShowModal={setShowModal} />
+        }
+      />
     </Card>
   );
 };

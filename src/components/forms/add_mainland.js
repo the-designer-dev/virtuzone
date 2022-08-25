@@ -14,13 +14,16 @@ import {
   Checkbox,
   FormControlLabel,
   Button,
-  MenuItem
+  MenuItem,
 } from '@mui/material';
+import BasicModal from '../modal';
+import SuccessModal from '../successBox';
 
 function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
   const [mainland, setMainland] = useState(data ? data.name : null);
   const [emirates, setEmirates] = useState(data ? data.emirates_id._id : null);
   const [allEmirates, setAllEmirates] = useState([]);
+  const [ShowSuccessModal, setShowSuccessModal] = useState(false);
   const [notify, setNotify] = useState(false);
 
   useEffect(() => {
@@ -53,7 +56,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
         }
       }).then((res) => {
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
+          setShowSuccessModal(true)
         }
       });
     } else {
@@ -69,7 +72,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
         }
       }).then((res) => {
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
+          setShowSuccessModal(true)
         }
       });
     }
@@ -151,6 +154,17 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
           </Grid>
         </Grid>
       </Container>
+      <BasicModal
+
+        setOpen={setShowSuccessModal}
+        open={ShowSuccessModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate); }} setShowSuccessModal={setShowSuccessModal} />
+
+
+      </BasicModal>
     </>
   );
 }

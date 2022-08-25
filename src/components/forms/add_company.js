@@ -41,6 +41,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 import SuccessModal from '../successBox';
+import BasicModal from '../../components/modal';
 
 
 function TabPanel(props) {
@@ -460,7 +461,10 @@ function AddCompany({
         if (res.status === 200) {
           setShowSuccessModal(true)
         }
-      });
+      })
+        .catch((err) => {
+          console.log("failsed")
+        });
     }
 
   }
@@ -1400,15 +1404,16 @@ function AddCompany({
           </Grid>
         </Grid>
       </Container>
-      <Modal
+      <BasicModal
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-
+        setEdit={() => { }}
+        setData={() => { }}
       >
-        <SuccessModal setShowSuccessModal={setShowSuccessModal} />
+        <SuccessModal executeFunction={() => { }} setShowSuccessModal={setShowSuccessModal} />
 
 
-      </Modal>
+      </BasicModal>
     </>
   );
 }

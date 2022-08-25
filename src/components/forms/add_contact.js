@@ -28,7 +28,7 @@ function AddClient({ data }) {
   const [id, setId] = useState(data ? data._id : null);
   const [address, setAddress] = useState(data ? data.address : null);
   const [email, setEmail] = useState(data ? data.email : null);
-  const [mobile, setMobile] = useState(data ? data.phoneNumber : null);
+  const [mobile, setMobile] = useState(data ? data.mobile : null);
   console.log(data)
   function onSubmit(e) {
     e.preventDefault();
@@ -42,7 +42,7 @@ function AddClient({ data }) {
       data: {
         address: address,
         email: email,
-        phoneNumber: mobile
+        mobile: mobile
       }
     })
       .then((res) => {
@@ -58,7 +58,7 @@ function AddClient({ data }) {
   useEffect(() => {
     setAddress(data?.address);
     setEmail(data?.email);
-    setMobile(data?.phoneNumber);
+    setMobile(data?.mobile);
   }, [data]);
 
   return (

@@ -23,6 +23,7 @@ export default function BasicModal({
   setEdit,
   setData
 }) {
+  console.log(setEdit)
   return (
     <div>
       <Modal
