@@ -216,6 +216,7 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
+        console.log(res);
         setFirstName(res.data.user.firstName);
         setLastName(res.data.user.lastName);
       });
