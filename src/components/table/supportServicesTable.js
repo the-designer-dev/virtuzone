@@ -26,6 +26,8 @@ import { useRouter } from 'next/router';
 import countries from '../../data/countries.json';
 import moment from 'moment';
 import axios from 'axios';
+import BasicModal from '../modal';
+import ConfirmationModal from '../confirmationBox';
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
   //     let matches = true;
@@ -53,6 +55,8 @@ const SupportServicesTable = ({
   shouldUpdate
 }) => {
   var i = 0;
+  const [id, setID] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [filters, setFilters] = useState({
@@ -62,12 +66,15 @@ const SupportServicesTable = ({
   const router = useRouter();
 
   const deleteRecord = (id) => {
-    // axios({
-    //   method: 'DELETE',
-    //   url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`
-    // }).then((res) => {
-    //   setShouldUpdate(!shouldUpdate);
-    // });
+    axios({
+      method: 'DELETE',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/supportServices?id=${id}`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      }
+    }).then((res) => {
+      setShouldUpdate(!shouldUpdate);
+    });
   };
   const handleStatusChange = (e) => {
     let value = null;
@@ -131,7 +138,7 @@ const SupportServicesTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((el) => (
+            {data && data.map((el) => (
               <TableRow hover>
                 <TableCell align="center">
                   <Typography
@@ -207,7 +214,9 @@ const SupportServicesTable = ({
                       color="inherit"
                       size="small"
                       onClick={() => {
-                        deleteRecord(el._id);
+                        setShowModal(true)
+                        setID(el._id)
+                        // deleteRecord(el._id);
                       }}
                     >
                       <DeleteTwoToneIcon fontSize="small" />
@@ -230,6 +239,13 @@ const SupportServicesTable = ({
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
+      <BasicModal
+        setOpen={setShowModal}
+        open={showModal}
+        children={
+          <ConfirmationModal executeFunction={() => deleteRecord(id)} setShowModal={setShowModal} />
+        }
+      />
     </Card>
   );
 };

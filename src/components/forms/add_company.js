@@ -74,6 +74,7 @@ function a11yProps(index) {
   };
 }
 
+
 function AddCompany({
   comp,
   shouldUpdate,
@@ -111,7 +112,7 @@ function AddCompany({
   const [establishmentCardNo, setEstablishmentCardNo] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.establishmentCardNo
+        ?.establishmentCardNo
       : null
   );
   const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(
@@ -140,19 +141,19 @@ function AddCompany({
   ] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.establismentDateEstablismentCard
+        ?.establismentDateEstablismentCard
       : null
   );
   const [issueDateEstablismentCard, setIssueDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.issueDateEstablismentCard
+        ?.issueDateEstablismentCard
       : null
   );
   const [expiryDateEstablismentCard, setExpiryDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.expiryDateEstablismentCard
+        ?.expiryDateEstablismentCard
       : null
   );
   const [officeLease, setOfficeLease] = useState(
@@ -192,7 +193,6 @@ function AddCompany({
   };
 
   useEffect(() => {
-    console.log(data);
     if (data?.judiciary) {
       axios({
         method: 'GET',
@@ -216,6 +216,7 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
+        console.log(res)
         setFirstName(res.data.user.firstName);
         setLastName(res.data.user.lastName);
       });
@@ -345,6 +346,119 @@ function AddCompany({
         }
       });
     }
+
+  }
+
+
+  function onSubmit1(e) {
+    e.preventDefault();
+    const form = new FormData();
+    form.append('owner', id);
+    form.append('name', name);
+    form.append('licenseNo', licenseNo);
+    form.append('licenseCode', licenseCode);
+    form.append('judiciary', judiciary);
+    form.append('establishmentDate', establishmentDate);
+    form.append('establishmentCardNo', establishmentCardNo);
+    form.append(
+      'establismentDateEstablismentCard',
+      establismentDateEstablismentCard
+    );
+    form.append('issueDateEstablismentCard', issueDateEstablismentCard);
+    form.append('expiryDateEstablismentCard', expiryDateEstablismentCard);
+    form.append('issueDate', issueDate);
+    form.append('expiryDate', expiryDate);
+    form.append('activities', activity);
+    form.append('code', code);
+    form.append('dateOfIssue', issueDate);
+
+    if (tradeLicense.length > 0 && tradeLicense[0] instanceof File) {
+      for (const key of Object.keys(tradeLicense)) {
+        form.append('tradelicense', tradeLicense[key]);
+      }
+    }
+
+    if (officeLease.length > 0 && officeLease[0] instanceof File) {
+      for (const key of Object.keys(officeLease)) {
+        form.append('officeLease', officeLease[key]);
+      }
+    }
+
+    if (shareCertificate.length > 0 && shareCertificate[0] instanceof File) {
+      for (const key of Object.keys(shareCertificate)) {
+        form.append('shareCertificate', shareCertificate[key]);
+      }
+    }
+
+    if (
+      articleOfIncorporation.length > 0 &&
+      articleOfIncorporation[0] instanceof File
+    ) {
+      for (const key of Object.keys(articleOfIncorporation)) {
+        form.append('articleOfIncorporation', articleOfIncorporation[key]);
+      }
+    }
+
+    if (
+      incorporationCertificate.length > 0 &&
+      incorporationCertificate[0] instanceof File
+    ) {
+      for (const key of Object.keys(incorporationCertificate)) {
+        form.append('incorporationCertificate', incorporationCertificate[key]);
+      }
+    }
+    console.log(establishmentCard);
+    if (establishmentCard.length > 0 && establishmentCard[0] instanceof File) {
+      for (const key of Object.keys(establishmentCard)) {
+        form.append('establishmentCard', establishmentCard[key]);
+      }
+    }
+
+    if (immigrationCard.length > 0 && immigrationCard[0] instanceof File) {
+      for (const key of Object.keys(immigrationCard)) {
+        form.append('immigrationCard', immigrationCard[key]);
+      }
+    }
+
+    form.append('officeLeaseIssue', issueDate);
+
+    form.append('officeLeaseExpiry', expiryDate);
+
+    form.append('shareHolder', JSON.stringify(shareHolders));
+
+    form.append('message', message);
+
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: form
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      console.log(data);
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${data._id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: form
+      }).then((res) => {
+        if (res.status === 200) {
+          alert("Changes saved")
+        }
+      });
+    }
+
   }
 
   function onJudiciaryChange(e) {
@@ -612,7 +726,7 @@ function AddCompany({
                             setEstablishmentCardNo(e.currentTarget.value)
                           }
                           placeholder="Establishment Card Number"
-                          // type={'number'}
+                        // type={'number'}
                         />
                         <TextField
                           required
@@ -1172,9 +1286,9 @@ function AddCompany({
                                             (ele) => ele.name === el.nationality
                                           )
                                             ? countries.find(
-                                                (ele) =>
-                                                  ele.name === el.nationality
-                                              ).image
+                                              (ele) =>
+                                                ele.name === el.nationality
+                                            ).image
                                             : ''
                                         }
                                       />
@@ -1271,8 +1385,11 @@ function AddCompany({
                 }}
                 component={'div'}
               >
+                <Button onClick={(e) => onSubmit1(e)} sx={{ margin: 1 }}>
+                  Save
+                </Button>
                 <Button onClick={(e) => onSubmit(e)} sx={{ margin: 1 }}>
-                  Submit
+                  Save & Close
                 </Button>
               </Box>
             </Card>

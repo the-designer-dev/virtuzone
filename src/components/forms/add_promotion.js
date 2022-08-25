@@ -46,11 +46,11 @@ function AddPromotion({
       });
     } else {
       const form = new FormData();
-      form.append('image', image);
+      form.append('promotion', image);
       form.append('link', link);
       axios({
         method: 'PUT',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/updatePromotions?id=${data._id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/Promotions?id=${data._id}`,
         headers: {
           'Content-Type': 'multipart/form-data',
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT

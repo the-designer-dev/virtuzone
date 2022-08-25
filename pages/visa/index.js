@@ -82,6 +82,7 @@ function Company() {
               edit={edit}
               children={
                 <AddVisa
+                  setOpen={setOpen}
                   edit={edit}
                   data={data}
                   company={company}
