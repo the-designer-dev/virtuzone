@@ -22,7 +22,6 @@ const SuccessModal = ({ setShowSuccessModal, executeFunction }) => {
             >
                 <Grid item xs={12}>
                     <Card>
-                        <CardHeader title="Success" />
                         <Divider />
                         <CardContent>
                             {/* <Box sx={{ width: '100px', margin: 'auto' }}>
@@ -32,7 +31,7 @@ const SuccessModal = ({ setShowSuccessModal, executeFunction }) => {
                                 onSubmit={(e) => onSubmit(e)}
                                 component="form"
                                 sx={{
-                                    '& .MuiTextField-root': { m: 1, width: '25ch' }, display: 'flex', flexDirection: "column", alignItems: "center"
+                                    '& .MuiTextField-root': { m: 1, width: '25ch' }, display: 'flex', flexDirection: "column", alignItems: "center", padding: '20px'
                                 }}
                                 noValidate
                                 autoComplete="off"
@@ -56,7 +55,7 @@ const SuccessModal = ({ setShowSuccessModal, executeFunction }) => {
                                         }}
                                         component={'div'}
                                     >
-                                        <Button type='submit' sx={{ margin: 1, backgroundColor: '#cf3339', color: '#fff' }}>Ok</Button>
+                                        <Button type='submit' sx={{ margin: 1, backgroundColor: '#cf3339', color: '#fff' }}>Close</Button>
                                     </Box>
                                 </div>
                             </Box>

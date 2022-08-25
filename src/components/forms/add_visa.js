@@ -11,7 +11,8 @@ import {
   MenuItem,
   Checkbox,
   FormControlLabel,
-  Button
+  Button,
+  CircularProgress
 } from '@mui/material';
 import { CompanyContext } from 'src/contexts/CompanyContext';
 
@@ -23,6 +24,9 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import ReactFlagsSelect from 'react-flags-select';
 import countries from '../../data/countries.json';
+import ModalNoClose from '../modal/modalNoClose';
+import SuccessModal from '../successBox';
+import FailureModal from '../failureBox';
 function AddVisa({
   setOpen,
   shouldUpdate,
@@ -31,6 +35,9 @@ function AddVisa({
   data,
   edit
 }) {
+  const [ShowLoader, setShowLoader] = useState(false);
+  const [ShowSuccessModal, setShowSuccessModal] = useState(false);
+  const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [firstName, setFirstName] = useState(data ? data.firstName : null);
   const [lastName, setLastName] = useState(data ? data.lastName : null);
   const [passportNo, setPassportNo] = useState(data ? data.passportNo : null);
@@ -105,6 +112,7 @@ function AddVisa({
     form.append('emiratesIdIssued', emiratesIdIssued);
     // form.append('employee', employee);
     if (!edit) {
+      setShowLoader(true)
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa`,
@@ -114,12 +122,16 @@ function AddVisa({
         },
         data: form
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-          setOpen(false);
+          setShowSuccessModal(true)
         }
+      }).catch((err) => {
+        setShowLoader(false)
+        setShowFailureModal(true)
       });
     } else {
+      setShowLoader(true)
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa?id=${data._id}`,
@@ -129,10 +141,14 @@ function AddVisa({
         },
         data: form
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
+          setShowSuccessModal(true)
           setOpen(false);
         }
+      }).catch((err) => {
+        setShowLoader(false)
+        setShowFailureModal(true)
       });
     }
   }
@@ -347,6 +363,32 @@ function AddVisa({
           </Grid>
         </Grid>
       </Container>
+      <ModalNoClose
+        setOpen={setShowSuccessModal}
+        open={ShowSuccessModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate); setOpen(false) }} setShowSuccessModal={setShowSuccessModal} />
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={setShowFailureModal}
+        open={ShowFailureModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <FailureModal setShowFailureModal={setShowFailureModal} />
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={() => { }}
+        open={ShowLoader}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <CircularProgress />
+      </ModalNoClose>
     </>
   );
 }

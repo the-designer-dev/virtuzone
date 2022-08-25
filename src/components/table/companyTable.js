@@ -29,6 +29,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import ConfirmationModal from '../confirmationBox';
 import BasicModal from '../modal';
+import ModalNoClose from '../modal/modalNoClose';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -343,7 +344,11 @@ const CompanyTable = ({
                             },
                             color: theme.palette.error.main
                           }}
-                          onClick={() => deleteRecord(el._id)}
+                          onClick={() => {
+                            setShowModal(true)
+                            setID(el._id)
+                            // deleteRecord(el._id);
+                          }}
                           color="inherit"
                           size="small"
                         >
@@ -368,7 +373,7 @@ const CompanyTable = ({
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
-      <BasicModal
+      <ModalNoClose
         sx={{ display: 'flex', alignItems: 'center' }}
         setOpen={setShowModal}
         open={showModal}

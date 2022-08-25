@@ -28,6 +28,7 @@ import moment from 'moment';
 import axios from 'axios';
 import BasicModal from '../modal';
 import ConfirmationModal from '../confirmationBox';
+import ModalNoClose from '../modal/modalNoClose';
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
   //     let matches = true;
@@ -239,7 +240,7 @@ const SupportServicesTable = ({
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
-      <BasicModal
+      <ModalNoClose
         setOpen={setShowModal}
         open={showModal}
         children={

@@ -28,6 +28,7 @@ import moment from 'moment';
 import axios from 'axios';
 import Modal from '../modal'
 import ConfirmationModal from '../confirmationBox';
+import ModalNoClose from '../modal/modalNoClose';
 
 
 const applyFilters = (cryptoOrders, filters) => {
@@ -242,7 +243,7 @@ const PromotionsTable = ({
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
-      <Modal
+      <ModalNoClose
         setOpen={setShowModal}
         open={showModal}
         children={

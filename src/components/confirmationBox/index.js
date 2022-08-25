@@ -21,7 +21,6 @@ const ConfirmationModal = ({ setShowModal, executeFunction }) => {
             >
                 <Grid item xs={12}>
                     <Card>
-                        <CardHeader title="Confirmation" />
                         <Divider />
                         <CardContent>
                             {/* <Box sx={{ width: '100px', margin: 'auto' }}>

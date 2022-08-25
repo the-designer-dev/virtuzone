@@ -24,7 +24,8 @@ import {
   TableBody,
   Tooltip,
   IconButton,
-  Select
+  Select,
+  CircularProgress
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import PropTypes from 'prop-types';
@@ -42,6 +43,8 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 import SuccessModal from '../successBox';
 import BasicModal from '../../components/modal';
+import ModalNoClose from '../modal/modalNoClose';
+import FailureModal from '../failureBox';
 
 
 function TabPanel(props) {
@@ -86,8 +89,10 @@ function AddCompany({
   data,
   setImage
 }) {
+  const [ShowLoader, setShowLoader] = useState(false);
   const [open, setOpen] = useState(false);
   const [ShowSuccessModal, setShowSuccessModal] = useState(false);
+  const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
 
@@ -169,10 +174,10 @@ function AddCompany({
     data ? data.incorporationCertificate : []
   );
   const [shareCertificate, setShareCertificate] = useState(
-    data ? data.shareCertificate : null
+    data ? data.shareCertificate : []
   );
   const [immigrationCard, setImmigrationCard] = useState(
-    data ? data.immigrationCard : null
+    data ? data.immigrationCard : []
   );
 
   const theme = useTheme();
@@ -319,6 +324,7 @@ function AddCompany({
     form.append('message', message);
 
     if (edit !== true) {
+      setShowLoader(true)
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
@@ -330,11 +336,15 @@ function AddCompany({
         data: form
       }).then((res) => {
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
+          setShowLoader(false)
+          setShowSuccessModal(true)
         }
+      }).catch((err) => {
+        setShowLoader(false)
+        setShowFailureModal(true)
       });
     } else {
-      console.log(data);
+      setShowLoader(true)
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${data._id}`,
@@ -343,9 +353,13 @@ function AddCompany({
         },
         data: form
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
+          setShowSuccessModal(true)
         }
+      }).catch((err) => {
+        setShowLoader(false)
+        setShowFailureModal(true)
       });
     }
   }
@@ -429,6 +443,7 @@ function AddCompany({
     form.append('message', message);
 
     if (edit !== true) {
+      setShowLoader(true)
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
@@ -439,11 +454,16 @@ function AddCompany({
         },
         data: form
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
+          setShowSuccessModal(true)
         }
+      }).catch((err) => {
+        setShowLoader(false)
+        setShowFailureModal(true)
       });
     } else {
+      setShowLoader(true)
       console.log(data);
       axios({
         method: 'PUT',
@@ -454,11 +474,13 @@ function AddCompany({
         data: form
       }).then((res) => {
         if (res.status === 200) {
+          setShowLoader(false)
           setShowSuccessModal(true);
         }
       })
         .catch((err) => {
-          console.log("failsed")
+          setShowLoader(false)
+          setShowFailureModal(true)
         });
     }
   }
@@ -1398,7 +1420,7 @@ function AddCompany({
           </Grid>
         </Grid>
       </Container>
-      <BasicModal
+      <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
         setEdit={() => { }}
@@ -1407,7 +1429,26 @@ function AddCompany({
         <SuccessModal executeFunction={() => { }} setShowSuccessModal={setShowSuccessModal} />
 
 
-      </BasicModal>
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={setShowFailureModal}
+        open={ShowFailureModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <FailureModal setShowFailureModal={setShowFailureModal} />
+      </ModalNoClose>
+
+
+      <ModalNoClose
+        setOpen={() => { }}
+        open={ShowLoader}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <CircularProgress />
+      </ModalNoClose>
     </>
   );
 }

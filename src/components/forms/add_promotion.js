@@ -10,8 +10,12 @@ import {
   CardContent,
   Box,
   TextField,
-  Button
+  Button,
+  CircularProgress
 } from '@mui/material';
+import ModalNoClose from '../modal/modalNoClose';
+import FailureModal from '../failureBox';
+import SuccessModal from '../successBox';
 function AddPromotion({
   setOpen,
   setEdit,
@@ -20,6 +24,9 @@ function AddPromotion({
   setShouldUpdate,
   shouldUpdate
 }) {
+  const [ShowLoader, setShowLoader] = useState(false);
+  const [ShowSuccessModal, setShowSuccessModal] = useState(false);
+  const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [image, setImage] = useState(data ? data.image : null);
   const [link, setLink] = useState(data ? data.link : null);
 
@@ -27,9 +34,11 @@ function AddPromotion({
     e.preventDefault();
     console.log(edit);
     if (edit !== true) {
+      setShowLoader(true)
       const form = new FormData();
       form.append('promotion', image);
       form.append('link', link);
+
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/Promotions`,
@@ -39,12 +48,16 @@ function AddPromotion({
         },
         data: form
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-          setOpen(false);
+          setShowSuccessModal(true)
         }
+      }).catch((err) => {
+        setShowLoader(false)
+        setShowFailureModal(true)
       });
     } else {
+      setShowLoader(true)
       const form = new FormData();
       form.append('promotion', image);
       form.append('link', link);
@@ -57,11 +70,13 @@ function AddPromotion({
         },
         data: form
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
-          setShouldUpdate(!shouldUpdate);
-          setEdit(false);
-          setOpen(false);
+          setShowSuccessModal(true)
         }
+      }).catch((err) => {
+        setShowLoader(false)
+        setShowFailureModal(true)
       });
     }
   }
@@ -134,6 +149,35 @@ function AddPromotion({
           </Grid>
         </Grid>
       </Container>
+      <ModalNoClose
+
+        setOpen={setShowSuccessModal}
+        open={ShowSuccessModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate); setOpen(false); setEdit(false) }} setShowSuccessModal={setShowSuccessModal} />
+
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={setShowFailureModal}
+        open={ShowFailureModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <FailureModal setShowFailureModal={setShowFailureModal} />
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={() => { }}
+        open={ShowLoader}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <CircularProgress />
+      </ModalNoClose>
+
     </>
   );
 }

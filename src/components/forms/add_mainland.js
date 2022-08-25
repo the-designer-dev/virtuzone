@@ -15,15 +15,20 @@ import {
   FormControlLabel,
   Button,
   MenuItem,
+  CircularProgress,
 } from '@mui/material';
 import BasicModal from '../modal';
 import SuccessModal from '../successBox';
+import FailureModal from '../failureBox';
+import ModalNoClose from '../modal/modalNoClose';
 
 function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
+  const [ShowLoader, setShowLoader] = useState(false);
   const [mainland, setMainland] = useState(data ? data.name : null);
   const [emirates, setEmirates] = useState(data ? data.emirates_id._id : null);
   const [allEmirates, setAllEmirates] = useState([]);
   const [ShowSuccessModal, setShowSuccessModal] = useState(false);
+  const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [notify, setNotify] = useState(false);
 
   useEffect(() => {
@@ -44,6 +49,7 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
     e.preventDefault();
 
     if (edit !== true) {
+      setShowLoader(true)
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland`,
@@ -55,11 +61,17 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
           emirates_id: emirates
         }
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
           setShowSuccessModal(true)
         }
-      });
+      })
+        .catch((err) => {
+          setShowLoader(false)
+          setShowFailureModal(true)
+        });
     } else {
+      setShowLoader(true)
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/mainland?id=${data._id}`,
@@ -71,10 +83,15 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
           emirates_id: emirates
         }
       }).then((res) => {
+        setShowLoader(false)
         if (res.status === 200) {
           setShowSuccessModal(true)
         }
-      });
+      })
+        .catch((err) => {
+          setShowLoader(false)
+          setShowFailureModal(true)
+        });
     }
   }
 
@@ -154,17 +171,33 @@ function AddMainland({ shouldUpdate, setShouldUpdate, edit, data }) {
           </Grid>
         </Grid>
       </Container>
-      <BasicModal
-
+      <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
         setEdit={() => { }}
         setData={() => { }}
       >
         <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate); }} setShowSuccessModal={setShowSuccessModal} />
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={setShowFailureModal}
+        open={ShowFailureModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <FailureModal setShowFailureModal={setShowFailureModal} />
+      </ModalNoClose>
 
 
-      </BasicModal>
+      <ModalNoClose
+        setOpen={() => { }}
+        open={ShowLoader}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <CircularProgress />
+      </ModalNoClose>
     </>
   );
 }

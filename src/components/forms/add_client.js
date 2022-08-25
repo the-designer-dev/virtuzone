@@ -17,14 +17,21 @@ import {
   FormControlLabel,
   Button,
   MenuItem,
-  Typography
+  Typography,
+  CircularProgress
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import ReactFlagsSelect from 'react-flags-select';
 import dynamic from 'next/dynamic';
+import ModalNoClose from '../modal/modalNoClose';
+import SuccessModal from '../successBox';
+import FailureModal from '../failureBox';
 const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 
 function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
+  const [ShowLoader, setShowLoader] = useState(false);
+  const [ShowSuccessModal, setShowSuccessModal] = useState(false);
+  const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [firstName, setFirstName] = useState(data ? data.firstName : null);
   const [lastName, setLastName] = useState(data ? data.lastName : null);
   const [email, setEmail] = useState(data ? data.email : null);
@@ -62,6 +69,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
     e.preventDefault();
 
     if (edit !== true) {
+      setShowLoader(true)
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/user`,
@@ -83,15 +91,17 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
         }
       })
         .then((res) => {
-          console.log(res);
-          alert(res.data.message);
-          window.location = "/company";
-          setShouldUpdate(!shouldUpdate);
+          if (res.status === 200) {
+            setShowLoader(false)
+            setShowSuccessModal(true)
+          }
         })
         .catch((err) => {
-          err.response ? alert(err.response?.data?.message) : console.log(err);
+          setShowLoader(false)
+          setShowFailureModal(true)
         });
     } else {
+      setShowLoader(true)
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`,
@@ -112,13 +122,14 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
         }
       })
         .then((res) => {
-          console.log(res);
-          alert(res.data.message);
-          setShouldUpdate(!shouldUpdate);
+          if (res.status === 200) {
+            setShowLoader(false)
+            setShowSuccessModal(true)
+          }
         })
         .catch((err) => {
-          console.log(err);
-          alert(err);
+          setShowLoader(false)
+          setShowFailureModal(true)
         });
     }
   }
@@ -302,6 +313,34 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           </Grid>
         </Grid>
       </Container>
+      <ModalNoClose
+        setOpen={setShowSuccessModal}
+        open={ShowSuccessModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <SuccessModal executeFunction={() => {
+          window.location = "/company";
+        }} setShowSuccessModal={setShowSuccessModal} />
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={setShowFailureModal}
+        open={ShowFailureModal}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <FailureModal setShowFailureModal={setShowFailureModal} />
+      </ModalNoClose>
+
+      <ModalNoClose
+        setOpen={() => { }}
+        open={ShowLoader}
+        setEdit={() => { }}
+        setData={() => { }}
+      >
+        <CircularProgress />
+      </ModalNoClose>
     </>
   );
 }

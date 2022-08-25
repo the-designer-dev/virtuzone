@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Button, Typography, Grid, Card, Container, CardContent, Divider, CardHeader } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-const SuccessModal = ({ setShowSuccessModal, }) => {
+const FailureModal = ({ setShowFailureModal, }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-
-        setShowSuccessModal(false)
+        setShowFailureModal(false)
     }
     return (
 
@@ -22,7 +21,7 @@ const SuccessModal = ({ setShowSuccessModal, }) => {
             >
                 <Grid item xs={12}>
                     <Card>
-                        <CardHeader title="Confirmation" />
+
                         <Divider />
                         <CardContent>
                             {/* <Box sx={{ width: '100px', margin: 'auto' }}>
@@ -32,15 +31,15 @@ const SuccessModal = ({ setShowSuccessModal, }) => {
                                 onSubmit={(e) => onSubmit(e)}
                                 component="form"
                                 sx={{
-                                    '& .MuiTextField-root': { m: 1, width: '25ch' }, display: 'flex', flexDirection: "column", alignItems: "center"
+                                    '& .MuiTextField-root': { m: 1, width: '25ch' }, display: 'flex', flexDirection: "column", alignItems: "center", padding: '20px'
                                 }}
                                 noValidate
                                 autoComplete="off"
                             >
-                                <img alt="Success" width={210} height={180} src="/static/images/icons/failure.png" />
+                                <img alt="Failed!" width={180} height={180} src="/static/images/icons/failure.png" />
 
-                                <Typography variant='h4' sx={{ display: 'flex', justifyContent: "center", margin: "20px 0", color: 'green' }}>
-                                    Failed
+                                <Typography variant='h3' sx={{ display: 'flex', justifyContent: "center", margin: "20px 0", color: 'red' }}>
+                                    Failed!
                                 </Typography>
 
                                 <Typography sx={{ fontSize: 15, fontWeight: 500, display: 'flex', justifyContent: "center", margin: "0px 0" }}>
@@ -56,7 +55,7 @@ const SuccessModal = ({ setShowSuccessModal, }) => {
                                         }}
                                         component={'div'}
                                     >
-                                        <Button onClick={() => setShowSuccessModal(false)} type='button' sx={{ margin: 1, backgroundColor: '#cf3339', color: '#fff' }}>Ok</Button>
+                                        <Button onClick={() => setShowFailureModal(false)} type='button' sx={{ margin: 1, backgroundColor: '#000000', color: '#fff' }}>Close</Button>
 
                                     </Box>
                                 </div>
@@ -71,4 +70,4 @@ const SuccessModal = ({ setShowSuccessModal, }) => {
 
 
 
-export default SuccessModal;
+export default FailureModal;

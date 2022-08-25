@@ -25,6 +25,8 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import moment from 'moment';
 import axios from 'axios';
+import ModalNoClose from '../modal/modalNoClose';
+import ConfirmationModal from '../confirmationBox';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -40,8 +42,10 @@ const applyPagination = (cryptoOrders, page, limit) => {
   //   return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
-const VisaTable = ({ setImage, data, setEdit, setData }) => {
+const VisaTable = ({ setImage, data, setEdit, setData, shouldUpdate, setShouldUpdate }) => {
   var i = 0;
+  const [id, setID] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
   const [filters, setFilters] = useState({
@@ -304,7 +308,11 @@ const VisaTable = ({ setImage, data, setEdit, setData }) => {
                         '&:hover': { background: theme.colors.error.lighter },
                         color: theme.palette.error.main
                       }}
-                      onClick={() => deleteRecord(el._id)}
+                      onClick={() => {
+                        setShowModal(true);
+                        setID(el._id);
+                        // deleteRecord(el._id);
+                      }}
                       color="inherit"
                       size="small"
                     >
@@ -328,6 +336,16 @@ const VisaTable = ({ setImage, data, setEdit, setData }) => {
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
       </Box>
+      <ModalNoClose
+        setOpen={setShowModal}
+        open={showModal}
+        children={
+          <ConfirmationModal
+            executeFunction={() => deleteRecord(id)}
+            setShowModal={setShowModal}
+          />
+        }
+      />
     </Card>
   );
 };

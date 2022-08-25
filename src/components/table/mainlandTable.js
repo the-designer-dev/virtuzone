@@ -26,6 +26,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BasicModal from '../modal';
 import ConfirmationModal from '../confirmationBox';
 import axios from 'axios';
+import ModalNoClose from '../modal/modalNoClose';
 
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
@@ -224,7 +225,7 @@ const MainlandTable = ({
         />
       </Box>
 
-      <BasicModal
+      <ModalNoClose
         setOpen={setShowModal}
         open={showModal}
         children={
