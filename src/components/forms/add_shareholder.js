@@ -54,15 +54,15 @@ function AddShareHolder({
     } else {
       var stakeHoldersArr = shareHolders;
       stakeHoldersArr[stakeHoldersArr.findIndex((el) => el._id === data._id)] =
-        {
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          countryCode: countryCode,
-          mobile: mobile,
-          nationality: nationality,
-          dateOfBirth: dateOfBirth
-        };
+      {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        countryCode: countryCode,
+        mobile: mobile,
+        nationality: nationality,
+        dateOfBirth: dateOfBirth
+      };
       setShareHolders(stakeHoldersArr);
       setEdit(false);
       setOpen(false);

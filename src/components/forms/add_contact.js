@@ -24,23 +24,25 @@ import ReactFlagsSelect from 'react-flags-select';
 import dynamic from 'next/dynamic';
 
 function AddClient({ data }) {
+
+  const [id, setId] = useState(data ? data._id : null);
   const [address, setAddress] = useState(data ? data.address : null);
   const [email, setEmail] = useState(data ? data.email : null);
-  const [mobile, setMobile] = useState(data ? data.mobile : null);
-
+  const [mobile, setMobile] = useState(data ? data.phoneNumber : null);
+  console.log(data)
   function onSubmit(e) {
     e.preventDefault();
 
     axios({
       method: 'PUT',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/contact`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/contact?id=${data._id}`,
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       },
       data: {
         address: address,
         email: email,
-        mobile: mobile
+        phoneNumber: mobile
       }
     })
       .then((res) => {
@@ -56,7 +58,7 @@ function AddClient({ data }) {
   useEffect(() => {
     setAddress(data?.address);
     setEmail(data?.email);
-    setMobile(data?.mobile);
+    setMobile(data?.phoneNumber);
   }, [data]);
 
   return (

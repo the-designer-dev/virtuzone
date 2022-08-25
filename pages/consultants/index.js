@@ -58,7 +58,7 @@ function Consultants() {
               variant="contained"
               startIcon={<AddTwoToneIcon fontSize="small" />}
             >
-              Add Company
+              Add Consultant
             </Button>
           </Grid>
         </Grid>

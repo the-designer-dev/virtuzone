@@ -40,6 +40,7 @@ import moment from 'moment';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
+import SuccessModal from '../successBox';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -84,6 +85,7 @@ function AddCompany({
   setImage
 }) {
   const [open, setOpen] = useState(false);
+  const [ShowSuccessModal, setShowSuccessModal] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
 
@@ -192,7 +194,6 @@ function AddCompany({
   };
 
   useEffect(() => {
-    console.log(data);
     if (data?.judiciary) {
       axios({
         method: 'GET',
@@ -216,7 +217,6 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
       }).then((res) => {
-        console.log(res);
         setFirstName(res.data.user.firstName);
         setLastName(res.data.user.lastName);
       });
@@ -343,6 +343,116 @@ function AddCompany({
       }).then((res) => {
         if (res.status === 200) {
           setShouldUpdate(!shouldUpdate);
+        }
+      });
+    }
+  }
+
+  function onSubmit1(e) {
+    e.preventDefault();
+    const form = new FormData();
+    form.append('owner', id);
+    form.append('name', name);
+    form.append('licenseNo', licenseNo);
+    form.append('licenseCode', licenseCode);
+    form.append('judiciary', judiciary);
+    form.append('establishmentDate', establishmentDate);
+    form.append('establishmentCardNo', establishmentCardNo);
+    form.append(
+      'establismentDateEstablismentCard',
+      establismentDateEstablismentCard
+    );
+    form.append('issueDateEstablismentCard', issueDateEstablismentCard);
+    form.append('expiryDateEstablismentCard', expiryDateEstablismentCard);
+    form.append('issueDate', issueDate);
+    form.append('expiryDate', expiryDate);
+    form.append('activities', activity);
+    form.append('code', code);
+    form.append('dateOfIssue', issueDate);
+
+    if (tradeLicense.length > 0 && tradeLicense[0] instanceof File) {
+      for (const key of Object.keys(tradeLicense)) {
+        form.append('tradelicense', tradeLicense[key]);
+      }
+    }
+
+    if (officeLease.length > 0 && officeLease[0] instanceof File) {
+      for (const key of Object.keys(officeLease)) {
+        form.append('officeLease', officeLease[key]);
+      }
+    }
+
+    if (shareCertificate.length > 0 && shareCertificate[0] instanceof File) {
+      for (const key of Object.keys(shareCertificate)) {
+        form.append('shareCertificate', shareCertificate[key]);
+      }
+    }
+
+    if (
+      articleOfIncorporation.length > 0 &&
+      articleOfIncorporation[0] instanceof File
+    ) {
+      for (const key of Object.keys(articleOfIncorporation)) {
+        form.append('articleOfIncorporation', articleOfIncorporation[key]);
+      }
+    }
+
+    if (
+      incorporationCertificate.length > 0 &&
+      incorporationCertificate[0] instanceof File
+    ) {
+      for (const key of Object.keys(incorporationCertificate)) {
+        form.append('incorporationCertificate', incorporationCertificate[key]);
+      }
+    }
+    console.log(establishmentCard);
+    if (establishmentCard.length > 0 && establishmentCard[0] instanceof File) {
+      for (const key of Object.keys(establishmentCard)) {
+        form.append('establishmentCard', establishmentCard[key]);
+      }
+    }
+
+    if (immigrationCard.length > 0 && immigrationCard[0] instanceof File) {
+      for (const key of Object.keys(immigrationCard)) {
+        form.append('immigrationCard', immigrationCard[key]);
+      }
+    }
+
+    form.append('officeLeaseIssue', issueDate);
+
+    form.append('officeLeaseExpiry', expiryDate);
+
+    form.append('shareHolder', JSON.stringify(shareHolders));
+
+    form.append('message', message);
+
+    if (edit !== true) {
+      axios({
+        method: 'POST',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: form
+      }).then((res) => {
+        if (res.status === 200) {
+          setShouldUpdate(!shouldUpdate);
+        }
+      });
+    } else {
+      console.log(data);
+      axios({
+        method: 'PUT',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${data._id}`,
+        headers: {
+          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+        },
+        data: form
+      }).then((res) => {
+        if (res.status === 200) {
+          setShowSuccessModal(true);
         }
       });
     }
@@ -1272,14 +1382,20 @@ function AddCompany({
                 }}
                 component={'div'}
               >
+                <Button onClick={(e) => onSubmit1(e)} sx={{ margin: 1 }}>
+                  Save
+                </Button>
                 <Button onClick={(e) => onSubmit(e)} sx={{ margin: 1 }}>
-                  Submit
+                  Save & Close
                 </Button>
               </Box>
             </Card>
           </Grid>
         </Grid>
       </Container>
+      <Modal setOpen={setShowSuccessModal} open={ShowSuccessModal}>
+        <SuccessModal setShowSuccessModal={setShowSuccessModal} />
+      </Modal>
     </>
   );
 }

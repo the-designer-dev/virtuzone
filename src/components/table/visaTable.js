@@ -132,7 +132,7 @@ const VisaTable = ({ setImage, data, setEdit, setData }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((el) => (
+            {data && data.map((el) => (
               <TableRow hover>
                 <TableCell>
                   <Typography

@@ -29,6 +29,7 @@ import axios from 'axios';
 import Modal from '../modal'
 import ConfirmationModal from '../confirmationBox';
 
+
 const applyFilters = (cryptoOrders, filters) => {
   //   return cryptoOrders.filter((cryptoOrder) => {
   //     let matches = true;
@@ -248,6 +249,8 @@ const PromotionsTable = ({
           <ConfirmationModal executeFunction={() => deleteRecord(id)} setShowModal={setShowModal} />
         }
       />
+
+
     </Card>
   );
 };

@@ -85,6 +85,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
         .then((res) => {
           console.log(res);
           alert(res.data.message);
+          window.location = "/company";
           setShouldUpdate(!shouldUpdate);
         })
         .catch((err) => {

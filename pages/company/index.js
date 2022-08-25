@@ -100,6 +100,7 @@ function Company() {
               }
             />
             <ImageModal
+              disableBackdropClick
               image={image}
               setImage={setImage}
               children={<DisplayImage image={image} />}

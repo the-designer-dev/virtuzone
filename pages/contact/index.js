@@ -25,7 +25,7 @@ function Client() {
       }
     }).then((res) => {
       SetAllData(res.data.contact);
-      setData(res.data.contact.length > 0 ? res.data.contact[0] : null);
+      setData(res.data.contact?.length > 0 ? res.data.contact[0] : null);
     });
   }, [shouldUpdate]);
   return (

@@ -147,206 +147,209 @@ const CompanyTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.map((el) => (
-              <TableRow hover>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {++i}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.owner.firstName} {el.owner.lastName}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.name}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.licenseNo}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.licenseCode}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.judiciary?.name}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.establishmentDate &&
-                      moment(el.establishmentDate).format('DD MMMM YYYY')}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.issueDate &&
-                      moment(el.issueDate).format('DD MMMM YYYY')}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.expiryDate &&
-                      moment(el.expiryDate).format('DD MMMM YYYY')}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.activities &&
-                      el.activities.map((activity, index) => {
-                        return (
-                          <p key={activity.id}>
-                            {activity.name}{' '}
-                            {index < el.activities.length - 1 ? ', ' : ''}
-                          </p>
-                        );
-                      })}
-                  </Typography>
-                </TableCell>
+            {data &&
+              data.map((el) => (
+                <TableRow hover>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {++i}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.owner.firstName} {el.owner.lastName}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.name}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.licenseNo}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.licenseCode}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.judiciary?.name}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.establishmentDate &&
+                        moment(el.establishmentDate).format('DD MMMM YYYY')}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.issueDate &&
+                        moment(el.issueDate).format('DD MMMM YYYY')}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.expiryDate &&
+                        moment(el.expiryDate).format('DD MMMM YYYY')}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.activities &&
+                        el.activities.map((activity, index) => {
+                          return (
+                            <p key={activity.id}>
+                              {activity.name}{' '}
+                              {index < el.activities.length - 1 ? ', ' : ''}
+                            </p>
+                          );
+                        })}
+                    </Typography>
+                  </TableCell>
 
-                {!buttonName && (
-                  <TableCell align="center">
-                    <Tooltip title={'Add New Company'} arrow>
-                      <Button
-                        onClick={() => {
-                          setOpen(true);
-                          setId(el.owner._id);
-                        }}
-                        sx={{ margin: 1 }}
-                        variant="contained"
-                      >
-                        New Company
-                      </Button>
-                    </Tooltip>
-                  </TableCell>
-                )}
-                {buttonName && (
-                  <TableCell align="center">
-                    <Tooltip title={buttonPurpose} arrow>
-                      <Button
-                        onClick={() => {
-                          router.push(`/${buttonURL}/${el._id}`);
-                        }}
-                        sx={{ margin: 1 }}
-                        variant="contained"
-                      >
-                        {buttonName}
-                      </Button>
-                    </Tooltip>
-                  </TableCell>
-                )}
-                {buttonName2 && (
-                  <TableCell align="center">
-                    <Tooltip title={buttonPurpose2} arrow>
-                      <Button
-                        onClick={() => {
-                          setCompany(el._id);
-                          setOpen(true);
-                        }}
-                        sx={{ margin: 1 }}
-                        variant="contained"
-                      >
-                        {buttonName2}
-                      </Button>
-                    </Tooltip>
-                  </TableCell>
-                )}
-                {!actions && (
-                  <TableCell align="right">
-                    <Tooltip title="Edit" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                        onClick={() => {
-                          console.log(el);
-                          setEdit(true);
-                          setId(el.owner._id);
-                          setData(el);
-                        }}
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main
-                        }}
-                        onClick={() => deleteRecord(el._id)}
-                        color="inherit"
-                        size="small"
-                      >
-                        <DeleteTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </TableCell>
-                )}
-              </TableRow>
-            ))}
+                  {!buttonName && (
+                    <TableCell align="center">
+                      <Tooltip title={'Add New Company'} arrow>
+                        <Button
+                          onClick={() => {
+                            setOpen(true);
+                            setId(el.owner._id);
+                          }}
+                          sx={{ margin: 1 }}
+                          variant="contained"
+                        >
+                          New Company
+                        </Button>
+                      </Tooltip>
+                    </TableCell>
+                  )}
+                  {buttonName && (
+                    <TableCell align="center">
+                      <Tooltip title={buttonPurpose} arrow>
+                        <Button
+                          onClick={() => {
+                            router.push(`/${buttonURL}/${el._id}`);
+                          }}
+                          sx={{ margin: 1 }}
+                          variant="contained"
+                        >
+                          {buttonName}
+                        </Button>
+                      </Tooltip>
+                    </TableCell>
+                  )}
+                  {buttonName2 && (
+                    <TableCell align="center">
+                      <Tooltip title={buttonPurpose2} arrow>
+                        <Button
+                          onClick={() => {
+                            setCompany(el._id);
+                            setOpen(true);
+                          }}
+                          sx={{ margin: 1 }}
+                          variant="contained"
+                        >
+                          {buttonName2}
+                        </Button>
+                      </Tooltip>
+                    </TableCell>
+                  )}
+                  {!actions && (
+                    <TableCell align="right">
+                      <Tooltip title="Edit" arrow>
+                        <IconButton
+                          sx={{
+                            '&:hover': {
+                              background: theme.colors.primary.lighter
+                            },
+                            color: theme.palette.primary.main
+                          }}
+                          color="inherit"
+                          size="small"
+                          onClick={() => {
+                            console.log(el);
+                            setEdit(true);
+                            setId(el.owner._id);
+                            setData(el);
+                          }}
+                        >
+                          <EditTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete" arrow>
+                        <IconButton
+                          sx={{
+                            '&:hover': {
+                              background: theme.colors.error.lighter
+                            },
+                            color: theme.palette.error.main
+                          }}
+                          onClick={() => deleteRecord(el._id)}
+                          color="inherit"
+                          size="small"
+                        >
+                          <DeleteTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  )}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

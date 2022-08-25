@@ -176,8 +176,9 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
                       select
                       required
                       id="outlined-read-only"
-                      label="Languages"
-                      placeholder="Languages"
+                      input={<TextField label="Language" />}
+                      label="Language"
+                      placeholder={'Language'}
                       value={language}
                       maxWidth
                       onChange={(e) => setlanguage(e.target.value)}
@@ -195,6 +196,9 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
                       id="outlined-read-only"
                       label="Picture"
                       placeholder="Picture"
+                      InputLabelProps={{
+                        shrink: true
+                      }}
                       onChange={(e) => setFile(e.target.files[0])}
                     />
 
@@ -206,15 +210,7 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
                       }}
                       component={'div'}
                     >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={notify}
-                            onChange={(e) => setNotify(e.target.checked)}
-                          />
-                        }
-                        label="Notify"
-                      />
+
                       <Button type="submit" sx={{ margin: 1 }}>
                         Submit
                       </Button>

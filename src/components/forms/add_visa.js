@@ -18,8 +18,11 @@ import { CompanyContext } from 'src/contexts/CompanyContext';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
 import axios from 'axios';
+import styles from '../../css/addClient.module.css';
 import { useEffect } from 'react';
 import { useContext } from 'react';
+import ReactFlagsSelect from 'react-flags-select';
+import countries from '../../data/countries.json';
 function AddVisa({
   setOpen,
   shouldUpdate,
@@ -40,15 +43,20 @@ function AddVisa({
   const [passportCountry, setPassportCountry] = useState(
     data ? data.passportCountry : null
   );
+
+  const [countryCode, setCountryCode] = useState(
+    data ? data.countryCode : null
+  );
+
   const [entryPermitIssued, setEntryPermitIssued] = useState(
-    data ? data.entryPermitIssued : null
+    data ? data.entryPermitIssued : false
   );
   const [visaUID, setVisaUID] = useState(data ? data.visaUID : null);
   const [residencyVisaIssued, setResidencyVisaIssued] = useState(
-    data ? data.residencyVisaIssued : null
+    data ? data.residencyVisaIssued : false
   );
   const [emiratesIdIssued, setEmiratesIdIssued] = useState(
-    data ? data.emiratesIdIssued : null
+    data ? data.emiratesIdIssued : false
   );
   const [emiratesId, setEmiratesId] = useState(data ? data.emiratesId : null);
   const [passport, setPassport] = useState(data ? data.passport : null);
@@ -90,6 +98,7 @@ function AddVisa({
     form.append('passportIssue', passportIssue);
     form.append('passportExpiry', passportExpiry);
     form.append('passportCountry', passportCountry);
+    form.append('countryCode', countryCode);
     form.append('entryPermitIssued', entryPermitIssued);
     form.append('visaUID', visaUID);
     form.append('residencyVisaIssued', residencyVisaIssued);
@@ -195,7 +204,7 @@ function AddVisa({
                       renderInput={(params) => <TextField {...params} />}
                     />
 
-                    <TextField
+                    {/* <TextField
                       required
                       id="outlined-required"
                       label="Passport Country"
@@ -204,6 +213,22 @@ function AddVisa({
                         setPassportCountry(e.target.value);
                       }}
                       placeholder="Passport Country"
+                    /> */}
+
+                    <ReactFlagsSelect
+                      className={styles.country_dropdown}
+                      searchable
+                      placeholder={'Passport Country'}
+                      searchPlaceholder="Passport Country"
+                      selected={countryCode}
+                      fullWidth={false}
+                      onSelect={(code) => {
+                        setPassportCountry(
+                          countries.find((el) => el.code === code).name
+                        );
+                        setCountryCode(code);
+                        console.log(countries.find((el) => el.code === code));
+                      }}
                     />
 
                     <TextField
