@@ -20,6 +20,7 @@ import activities from 'public/static/images/Icons/activities-.png';
 import expressacconting from 'public/static/images/Icons/expressacconting.png';
 import termsconditions from 'public/static/images/Icons/terms&conditions.png';
 import bookanappoitnment from 'public/static/images/Icons/bookanappoitnment.png';
+import notification from 'public/static/images/Icons/notification.png';
 import trade from 'public/static/images/Icons/trade.png';
 import visa from 'public/static/images/Icons/visa.png';
 import contact from 'public/static/images/Icons/contact.png';
@@ -148,9 +149,9 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-                  'transform',
-                  'opacity'
-                ])};
+    'transform',
+    'opacity'
+  ])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -478,6 +479,27 @@ function SidebarMenu() {
             </List>
           </SubMenuWrapper>
         </List>
+
+        <List component="div">
+          <SubMenuWrapper>
+            <List component="div">
+              <ListItem component="div">
+                <NextLink href="/notification_request" passHref>
+                  <Button
+                    className={currentRoute === '/notificationRequest' ? 'active' : ''}
+                    disableRipple
+                    component="a"
+                    onClick={closeSidebar}
+                    startIcon={<img src={notification.src} />}
+                  >
+                    Notification Requests
+                  </Button>
+                </NextLink>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
+        </List>
+
         <List component="div">
           <SubMenuWrapper>
             <List component="div">
@@ -510,6 +532,7 @@ function SidebarMenu() {
             </List>
           </SubMenuWrapper>
         </List>
+
       </MenuWrapper>
     </>
   );
