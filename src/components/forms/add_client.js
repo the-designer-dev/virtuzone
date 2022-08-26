@@ -48,6 +48,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [notify, setNotify] = useState(false);
 
   const [value, setValue] = useState(null);
+  const [message, setMessage] = useState(null);
 
   const handleOnChange = (value) => {
     setValue(value);
@@ -87,6 +88,8 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           dateOfBirth: dateOfBirth,
           isVerified: false,
           passportDetails: passportDetails,
+          notify:notify,
+          message:message,
           role: 'owner'
         }
       })

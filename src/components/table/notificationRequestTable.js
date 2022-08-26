@@ -72,7 +72,7 @@ const NotificationRequestTable = ({
     const deleteRecord = (id) => {
         axios({
             method: 'DELETE',
-            url: `${process.env.NEXT_PUBLIC_BASE_URL}/deletePromotions?id=${id}`
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}/allRequests?id=${id}`
         }).then((res) => {
             setShouldUpdate(!shouldUpdate);
         });
