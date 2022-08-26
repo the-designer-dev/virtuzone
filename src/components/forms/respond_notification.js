@@ -34,11 +34,6 @@ function RespondNotification({
     const [image, setImage] = useState(data ? data.image : null);
     const [link, setLink] = useState(data ? data.link : null);
     const [email, setEmail] = useState(data ? data.user.email : null);
-
-
-
-
-
     const [value, setValue] = useState(null);
 
     const handleOnChange = (value) => {

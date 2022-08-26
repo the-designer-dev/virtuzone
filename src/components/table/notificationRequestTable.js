@@ -160,7 +160,7 @@ const NotificationRequestTable = ({
                                         gutterBottom
                                         noWrap
                                     >
-                                        {el.user?.firstName + ' ' + el.user?.firstName}
+                                        {el.user?.firstName + ' ' + el.user?.lastName}
                                     </Typography>
                                 </TableCell>
 
