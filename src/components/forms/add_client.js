@@ -89,7 +89,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           isVerified: false,
           passportDetails: passportDetails,
           notify: notify,
-          message: message,
+          message: value.toString('html').toString(),
           role: 'owner'
         }
       })

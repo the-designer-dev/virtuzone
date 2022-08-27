@@ -34,8 +34,8 @@ function RespondNotification({
   const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [image, setImage] = useState(data ? data.image : null);
   const [link, setLink] = useState(data ? data.link : null);
-  const [email, setEmail] = useState(data ? data.user.email : null);
-  const [user, setUser] = useState(data ? data.user._id : null);
+  const [email, setEmail] = useState(data ? data.user?.email : null);
+  const [user, setUser] = useState(data ? data.user?._id : null);
 
   const [value, setValue] = useState(null);
 
