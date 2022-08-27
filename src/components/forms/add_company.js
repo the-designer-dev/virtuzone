@@ -46,7 +46,6 @@ import BasicModal from '../../components/modal';
 import ModalNoClose from '../modal/modalNoClose';
 import FailureModal from '../failureBox';
 
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -97,6 +96,15 @@ function AddCompany({
   const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
+  const [establishmentCardNotify, setEstablishmentCardNotify] = useState(false);
+  const [officeLeaseAgreementNotify, setOfficeLeaseAgreementNotify] =
+    useState(false);
+  const [articleOfIncorporationNotify, setArticleOfIncorporationNotify] =
+    useState(false);
+  const [incorporationCertificateNotify, setIncorporationCertificateNotify] =
+    useState(false);
+  const [shareCertificateNotify, setShareCertificateNotify] = useState(false);
+  const [immigrationCardNotify, setImmigrationCardNotify] = useState(false);
 
   const [firstName, setFirstName] = useState(
     data ? data.owner.firstName : null
@@ -122,7 +130,7 @@ function AddCompany({
   const [establishmentCardNo, setEstablishmentCardNo] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-        ?.establishmentCardNo
+          ?.establishmentCardNo
       : null
   );
   const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(
@@ -151,19 +159,19 @@ function AddCompany({
   ] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-        ?.establismentDateEstablismentCard
+          ?.establismentDateEstablismentCard
       : null
   );
   const [issueDateEstablismentCard, setIssueDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-        ?.issueDateEstablismentCard
+          ?.issueDateEstablismentCard
       : null
   );
   const [expiryDateEstablismentCard, setExpiryDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-        ?.expiryDateEstablismentCard
+          ?.expiryDateEstablismentCard
       : null
   );
   const [officeLease, setOfficeLease] = useState(
@@ -185,13 +193,40 @@ function AddCompany({
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
   const [value, setValue] = useState(null);
+  const [establishmentCardMessage, setEstablishmentCardMessage] =
+    useState(null);
+  const [officeLeaseMessage, setOfficeLeaseMessage] = useState(null);
+  const [articleMessage, setArticleMessage] = useState(null);
+  const [incorporationMessage, setIncorporatiionMessage] = useState(null);
+  const [shareCertificateMessage, setShareCertificateMessage] = useState(null);
+  const [immigrationCardMessage, setImmigrationCardMessage] = useState(null);
 
   const handleOnChange = (value) => {
     setValue(value);
-    if (event.onChange) {
-      onChange(value.toString('html'));
-    }
-    setMessage(value.toString('html'));
+  };
+
+  const handleEstablishmentOnChange = (value) => {
+    setEstablishmentCardMessage(value);
+  };
+
+  const handleOfficeLeaseOnChange = (value) => {
+    setOfficeLeaseMessage(value);
+  };
+
+  const handleArticleOfIncorporationOnChange = (value) => {
+    setArticleMessage(value);
+  };
+
+  const handleIncorporationCertificateOnChange = (value) => {
+    setIncorporatiionMessage(value);
+  };
+
+  const handleShareCertificateOnChange = (value) => {
+    setShareCertificateMessage(value);
+  };
+
+  const handleImmigrationCardOnChange = (value) => {
+    setImmigrationCardMessage(value);
   };
 
   const handleChange = (event, newValue) => {
@@ -242,9 +277,40 @@ function AddCompany({
 
     const importModule = async () => {
       const mod = await import('react-rte');
-      setValue(mod.createEmptyValue());
+      setEstablishmentCardMessage(mod.createEmptyValue());
     };
+
+    const importModule1 = async () => {
+      const mod = await import('react-rte');
+      setOfficeLeaseMessage(mod.createEmptyValue());
+    };
+
+    const importModule2 = async () => {
+      const mod = await import('react-rte');
+      setArticleMessage(mod.createEmptyValue());
+    };
+
+    const importModule3 = async () => {
+      const mod = await import('react-rte');
+      setIncorporatiionMessage(mod.createEmptyValue());
+    };
+
+    const importModule4 = async () => {
+      const mod = await import('react-rte');
+      setShareCertificateMessage(mod.createEmptyValue());
+    };
+
+    const importModule5 = async () => {
+      const mod = await import('react-rte');
+      setImmigrationCardMessage(mod.createEmptyValue());
+    };
+
     importModule();
+    importModule1();
+    importModule2();
+    importModule3();
+    importModule4();
+    importModule5();
   }, [id]);
 
   function onSubmit(e) {
@@ -325,8 +391,40 @@ function AddCompany({
 
     form.append('message', message);
 
+    form.append('establishmentCardNotify', establishmentCardNotify);
+    form.append('officeLeaseAgreementNotify', officeLeaseAgreementNotify);
+    form.append('articleOfIncorporationNotify', articleOfIncorporationNotify);
+    form.append(
+      'incorporationCertificateNotify',
+      incorporationCertificateNotify
+    );
+    form.append('shareCertificateNotify', shareCertificateNotify);
+    form.append('immigrationCardNotify', immigrationCardNotify);
+    form.append('immigrationCardNotify', immigrationCardNotify);
+    form.append(
+      'establishmentCardMessage',
+      establishmentCardMessage.toString('html').toString()
+    );
+    form.append(
+      'officeLeaseMessage',
+      officeLeaseMessage.toString('html').toString()
+    );
+    form.append('articleMessage', articleMessage.toString('html').toString());
+    form.append(
+      'incorporationMessage',
+      incorporationMessage.toString('html').toString()
+    );
+    form.append(
+      'shareCertificateMessage',
+      shareCertificateMessage.toString('html').toString()
+    );
+    form.append(
+      'immigrationCardMessage',
+      immigrationCardMessage.toString('html').toString()
+    );
+
     if (edit !== true) {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
@@ -336,17 +434,19 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
         data: form
-      }).then((res) => {
-        if (res.status === 200) {
-          setShowLoader(false)
-          setShowSuccessUpdateModal(true)
-        }
-      }).catch((err) => {
-        setShowLoader(false)
-        setShowFailureModal(true)
-      });
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            setShowLoader(false);
+            setShowSuccessUpdateModal(true);
+          }
+        })
+        .catch((err) => {
+          setShowLoader(false);
+          setShowFailureModal(true);
+        });
     } else {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${data._id}`,
@@ -354,15 +454,17 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
         data: form
-      }).then((res) => {
-        setShowLoader(false)
-        if (res.status === 200) {
-          setShowSuccessUpdateModal(true)
-        }
-      }).catch((err) => {
-        setShowLoader(false)
-        setShowFailureModal(true)
-      });
+      })
+        .then((res) => {
+          setShowLoader(false);
+          if (res.status === 200) {
+            setShowSuccessUpdateModal(true);
+          }
+        })
+        .catch((err) => {
+          setShowLoader(false);
+          setShowFailureModal(true);
+        });
     }
   }
 
@@ -444,8 +546,39 @@ function AddCompany({
 
     form.append('message', message);
 
+    form.append('establishmentCardNotify', establishmentCardNotify);
+    form.append('officeLeaseAgreementNotify', officeLeaseAgreementNotify);
+    form.append('articleOfIncorporationNotify', articleOfIncorporationNotify);
+    form.append(
+      'incorporationCertificateNotify',
+      incorporationCertificateNotify
+    );
+    form.append('shareCertificateNotify', shareCertificateNotify);
+    form.append('immigrationCardNotify', immigrationCardNotify);
+    form.append(
+      'establishmentCardMessage',
+      establishmentCardMessage.toString('html').toString()
+    );
+    form.append(
+      'officeLeaseMessage',
+      officeLeaseMessage.toString('html').toString()
+    );
+    form.append('articleMessage', articleMessage.toString('html').toString());
+    form.append(
+      'incorporationMessage',
+      incorporationMessage.toString('html').toString()
+    );
+    form.append(
+      'shareCertificateMessage',
+      shareCertificateMessage.toString('html').toString()
+    );
+    form.append(
+      'immigrationCardMessage',
+      immigrationCardMessage.toString('html').toString()
+    );
+
     if (edit !== true) {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/company`,
@@ -455,17 +588,19 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
         data: form
-      }).then((res) => {
-        setShowLoader(false)
-        if (res.status === 200) {
-          setShowSuccessModal(true)
-        }
-      }).catch((err) => {
-        setShowLoader(false)
-        setShowFailureModal(true)
-      });
+      })
+        .then((res) => {
+          setShowLoader(false);
+          if (res.status === 200) {
+            setShowSuccessModal(true);
+          }
+        })
+        .catch((err) => {
+          setShowLoader(false);
+          setShowFailureModal(true);
+        });
     } else {
-      setShowLoader(true)
+      setShowLoader(true);
       console.log(data);
       axios({
         method: 'PUT',
@@ -474,15 +609,16 @@ function AddCompany({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
         data: form
-      }).then((res) => {
-        if (res.status === 200) {
-          setShowLoader(false)
-          setShowSuccessModal(true);
-        }
       })
+        .then((res) => {
+          if (res.status === 200) {
+            setShowLoader(false);
+            setShowSuccessModal(true);
+          }
+        })
         .catch((err) => {
-          setShowLoader(false)
-          setShowFailureModal(true)
+          setShowLoader(false);
+          setShowFailureModal(true);
         });
     }
   }
@@ -690,7 +826,7 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle("Trade License - " + data.name)
+                              setImageTitle('Trade License - ' + data.name);
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -754,7 +890,7 @@ function AddCompany({
                             setEstablishmentCardNo(e.currentTarget.value)
                           }
                           placeholder="Establishment Card Number"
-                        // type={'number'}
+                          // type={'number'}
                         />
                         <TextField
                           required
@@ -829,7 +965,9 @@ function AddCompany({
                                   data?.establishmentCard.length - 1
                                 ]?.file
                               );
-                              setImageTitle("Establishment Card - " + data.name)
+                              setImageTitle(
+                                'Establishment Card - ' + data.name
+                              );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -843,18 +981,37 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+
+                        <Box>
+                          {establishmentCardNotify && (
+                            <RichTextEditor
+                              value={establishmentCardMessage}
+                              onChange={handleEstablishmentOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={establishmentCardNotify}
+                                  onChange={(e) =>
+                                    setEstablishmentCardNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -907,7 +1064,9 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle("Office Lease Agreement - " + data.name)
+                              setImageTitle(
+                                'Office Lease Agreement - ' + data.name
+                              );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -922,18 +1081,38 @@ function AddCompany({
                           </Button>
                         </Tooltip>
 
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+                        <Box>
+                          {officeLeaseAgreementNotify && (
+                            <RichTextEditor
+                              value={officeLeaseMessage}
+                              onChange={handleOfficeLeaseOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={officeLeaseAgreementNotify}
+                                  onChange={(e) =>
+                                    setOfficeLeaseAgreementNotify(
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -973,7 +1152,9 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle("Article Of Incorporation - " + data.name)
+                              setImageTitle(
+                                'Article Of Incorporation - ' + data.name
+                              );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -988,22 +1169,38 @@ function AddCompany({
                           </Button>
                         </Tooltip>
 
-                        <RichTextEditor
-                          value={value}
-                          onChange={handleOnChange}
-                        />
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+                        <Box>
+                          {articleOfIncorporationNotify && (
+                            <RichTextEditor
+                              value={articleMessage}
+                              onChange={handleArticleOfIncorporationOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={articleOfIncorporationNotify}
+                                  onChange={(e) =>
+                                    setArticleOfIncorporationNotify(
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -1043,7 +1240,9 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle("Incorporation Certificate - " + data.name)
+                              setImageTitle(
+                                'Incorporation Certificate - ' + data.name
+                              );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1057,18 +1256,39 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+
+                        <Box>
+                          {incorporationCertificateNotify && (
+                            <RichTextEditor
+                              value={incorporationMessage}
+                              onChange={handleIncorporationCertificateOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={incorporationCertificateNotify}
+                                  onChange={(e) =>
+                                    setIncorporationCertificateNotify(
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -1108,7 +1328,7 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle("Share Certificate - " + data.name)
+                              setImageTitle('Share Certificate - ' + data.name);
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1122,18 +1342,37 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+
+                        <Box>
+                          {shareCertificateNotify && (
+                            <RichTextEditor
+                              value={shareCertificateMessage}
+                              onChange={handleShareCertificateOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={shareCertificateNotify}
+                                  onChange={(e) =>
+                                    setShareCertificateNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -1190,7 +1429,7 @@ function AddCompany({
                                   data?.immigrationCard.length - 1
                                 ]?.file
                               );
-                              setImageTitle("Immigration Card - " + data.name)
+                              setImageTitle('Immigration Card - ' + data.name);
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1205,18 +1444,36 @@ function AddCompany({
                           </Button>
                         </Tooltip>
 
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+                        <Box>
+                          {immigrationCardNotify && (
+                            <RichTextEditor
+                              value={immigrationCardMessage}
+                              onChange={handleImmigrationCardOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={immigrationCardNotify}
+                                  onChange={(e) =>
+                                    setImmigrationCardNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -1324,9 +1581,9 @@ function AddCompany({
                                             (ele) => ele.name === el.nationality
                                           )
                                             ? countries.find(
-                                              (ele) =>
-                                                ele.name === el.nationality
-                                            ).image
+                                                (ele) =>
+                                                  ele.name === el.nationality
+                                              ).image
                                             : ''
                                         }
                                       />
@@ -1438,37 +1695,43 @@ function AddCompany({
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
-        <SuccessModal executeFunction={() => { }} setShowSuccessModal={setShowSuccessModal} />
+        <SuccessModal
+          executeFunction={() => {}}
+          setShowSuccessModal={setShowSuccessModal}
+        />
       </ModalNoClose>
-
 
       <ModalNoClose
         setOpen={setShowSuccessUpdateModal}
         open={ShowSuccessUpdateModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
-        <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate) }} setShowSuccessModal={setShowSuccessModal} />
+        <SuccessModal
+          executeFunction={() => {
+            setShouldUpdate(!shouldUpdate);
+          }}
+          setShowSuccessModal={setShowSuccessModal}
+        />
       </ModalNoClose>
 
       <ModalNoClose
         setOpen={setShowFailureModal}
         open={ShowFailureModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <FailureModal setShowFailureModal={setShowFailureModal} />
       </ModalNoClose>
 
-
       <ModalNoClose
-        setOpen={() => { }}
+        setOpen={() => {}}
         open={ShowLoader}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <CircularProgress />
       </ModalNoClose>

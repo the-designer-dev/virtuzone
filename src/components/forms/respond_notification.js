@@ -26,6 +26,7 @@ function RespondNotification({
   data,
   setId,
   setShouldUpdate,
+
   shouldUpdate
 }) {
   const [ShowLoader, setShowLoader] = useState(false);
@@ -40,8 +41,6 @@ function RespondNotification({
 
   const handleOnChange = (value) => {
     setValue(value);
-   
-      
   };
 
   useEffect(() => {
@@ -55,33 +54,32 @@ function RespondNotification({
   function onSubmit(e) {
     e.preventDefault();
     console.log(edit);
- 
-      setShowLoader(true);
-    console.log(value.toString('html').toString())
 
-      axios({
-        method: 'POST',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/notification`,
-        headers: {
-          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-        },
-        data: {
-            user: user,
-            email: email,
-            message:value.toString('html').toString()
-          }
+    setShowLoader(true);
+    console.log(value.toString('html').toString());
+
+    axios({
+      method: 'POST',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/notification`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      },
+      data: {
+        user: user,
+        email: email,
+        message: value.toString('html').toString()
+      }
+    })
+      .then((res) => {
+        setShowLoader(false);
+        if (res.status === 200) {
+          setShowSuccessModal(true);
+        }
       })
-        .then((res) => {
-          setShowLoader(false);
-          if (res.status === 200) {
-            setShowSuccessModal(true);
-          }
-        })
-        .catch((err) => {
-          setShowLoader(false);
-          setShowFailureModal(true);
-        });
-    
+      .catch((err) => {
+        setShowLoader(false);
+        setShowFailureModal(true);
+      });
   }
 
   return (

@@ -70,7 +70,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
     e.preventDefault();
 
     if (edit !== true) {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/user`,
@@ -88,23 +88,23 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           dateOfBirth: dateOfBirth,
           isVerified: false,
           passportDetails: passportDetails,
-          notify:notify,
-          message:message,
+          notify: notify,
+          message: message,
           role: 'owner'
         }
       })
         .then((res) => {
           if (res.status === 200) {
-            setShowLoader(false)
-            setShowSuccessModal(true)
+            setShowLoader(false);
+            setShowSuccessModal(true);
           }
         })
         .catch((err) => {
-          setShowLoader(false)
-          setShowFailureModal(true)
+          setShowLoader(false);
+          setShowFailureModal(true);
         });
     } else {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/user?id=${id}`,
@@ -126,13 +126,13 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
       })
         .then((res) => {
           if (res.status === 200) {
-            setShowLoader(false)
-            setShowSuccessModal(true)
+            setShowLoader(false);
+            setShowSuccessModal(true);
           }
         })
         .catch((err) => {
-          setShowLoader(false)
-          setShowFailureModal(true)
+          setShowLoader(false);
+          setShowFailureModal(true);
         });
     }
   }
@@ -319,28 +319,31 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
-        <SuccessModal executeFunction={() => {
-          window.location = "/company";
-        }} setShowSuccessModal={setShowSuccessModal} />
+        <SuccessModal
+          executeFunction={() => {
+            window.location = '/company';
+          }}
+          setShowSuccessModal={setShowSuccessModal}
+        />
       </ModalNoClose>
 
       <ModalNoClose
         setOpen={setShowFailureModal}
         open={ShowFailureModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <FailureModal setShowFailureModal={setShowFailureModal} />
       </ModalNoClose>
 
       <ModalNoClose
-        setOpen={() => { }}
+        setOpen={() => {}}
         open={ShowLoader}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <CircularProgress />
       </ModalNoClose>
