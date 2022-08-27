@@ -96,6 +96,7 @@ function AddCompany({
   const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
+  const [tradeLicenseNotify, setTradeLicenseNotify] = useState(false);
   const [establishmentCardNotify, setEstablishmentCardNotify] = useState(false);
   const [officeLeaseAgreementNotify, setOfficeLeaseAgreementNotify] =
     useState(false);
@@ -193,6 +194,7 @@ function AddCompany({
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
   const [value, setValue] = useState(null);
+  const [tradeLicenseMessage, setTradeLicenseMessage] = useState(null);
   const [establishmentCardMessage, setEstablishmentCardMessage] =
     useState(null);
   const [officeLeaseMessage, setOfficeLeaseMessage] = useState(null);
@@ -203,6 +205,10 @@ function AddCompany({
 
   const handleOnChange = (value) => {
     setValue(value);
+  };
+
+  const handleTradeLicenseOnChange = (value) => {
+    setTradeLicenseMessage(value);
   };
 
   const handleEstablishmentOnChange = (value) => {
@@ -278,39 +284,15 @@ function AddCompany({
     const importModule = async () => {
       const mod = await import('react-rte');
       setEstablishmentCardMessage(mod.createEmptyValue());
-    };
-
-    const importModule1 = async () => {
-      const mod = await import('react-rte');
       setOfficeLeaseMessage(mod.createEmptyValue());
-    };
-
-    const importModule2 = async () => {
-      const mod = await import('react-rte');
       setArticleMessage(mod.createEmptyValue());
-    };
-
-    const importModule3 = async () => {
-      const mod = await import('react-rte');
       setIncorporatiionMessage(mod.createEmptyValue());
-    };
-
-    const importModule4 = async () => {
-      const mod = await import('react-rte');
       setShareCertificateMessage(mod.createEmptyValue());
-    };
-
-    const importModule5 = async () => {
-      const mod = await import('react-rte');
       setImmigrationCardMessage(mod.createEmptyValue());
+      setTradeLicenseMessage(mod.createEmptyValue());
     };
 
     importModule();
-    importModule1();
-    importModule2();
-    importModule3();
-    importModule4();
-    importModule5();
   }, [id]);
 
   function onSubmit(e) {
@@ -391,6 +373,7 @@ function AddCompany({
 
     form.append('message', message);
 
+    form.append('tradeLicenseNotify', tradeLicenseNotify);
     form.append('establishmentCardNotify', establishmentCardNotify);
     form.append('officeLeaseAgreementNotify', officeLeaseAgreementNotify);
     form.append('articleOfIncorporationNotify', articleOfIncorporationNotify);
@@ -401,6 +384,10 @@ function AddCompany({
     form.append('shareCertificateNotify', shareCertificateNotify);
     form.append('immigrationCardNotify', immigrationCardNotify);
     form.append('immigrationCardNotify', immigrationCardNotify);
+    form.append(
+      'tradeLicenseMessage',
+      tradeLicenseMessage.toString('html').toString()
+    );
     form.append(
       'establishmentCardMessage',
       establishmentCardMessage.toString('html').toString()
@@ -546,6 +533,7 @@ function AddCompany({
 
     form.append('message', message);
 
+    form.append('tradeLicenseNotify', tradeLicenseNotify);
     form.append('establishmentCardNotify', establishmentCardNotify);
     form.append('officeLeaseAgreementNotify', officeLeaseAgreementNotify);
     form.append('articleOfIncorporationNotify', articleOfIncorporationNotify);
@@ -555,6 +543,11 @@ function AddCompany({
     );
     form.append('shareCertificateNotify', shareCertificateNotify);
     form.append('immigrationCardNotify', immigrationCardNotify);
+
+    form.append(
+      'tradeLicenseMessage',
+      tradeLicenseMessage.toString('html').toString()
+    );
     form.append(
       'establishmentCardMessage',
       establishmentCardMessage.toString('html').toString()
@@ -826,7 +819,7 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle('Trade License - ' + data.name);
+                              setImageTitle('Trade License - ' + data?.name);
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -839,14 +832,38 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        ></Box>
+
+                        <Box>
+                          {tradeLicenseNotify && tradeLicenseMessage && (
+                            <RichTextEditor
+                              value={tradeLicenseMessage}
+                              onChange={handleTradeLicenseOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={tradeLicenseNotify}
+                                  onChange={(e) =>
+                                    setTradeLicenseNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
+                        </Box>
                       </div>
                     </Box>
                   </CardContent>
@@ -966,7 +983,7 @@ function AddCompany({
                                 ]?.file
                               );
                               setImageTitle(
-                                'Establishment Card - ' + data.name
+                                'Establishment Card - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -983,12 +1000,13 @@ function AddCompany({
                         </Tooltip>
 
                         <Box>
-                          {establishmentCardNotify && (
-                            <RichTextEditor
-                              value={establishmentCardMessage}
-                              onChange={handleEstablishmentOnChange}
-                            />
-                          )}
+                          {establishmentCardNotify &&
+                            establishmentCardMessage && (
+                              <RichTextEditor
+                                value={establishmentCardMessage}
+                                onChange={handleEstablishmentOnChange}
+                              />
+                            )}
                           <Box
                             sx={{
                               margin: '9px',
@@ -1065,7 +1083,7 @@ function AddCompany({
                               );
 
                               setImageTitle(
-                                'Office Lease Agreement - ' + data.name
+                                'Office Lease Agreement - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -1082,7 +1100,7 @@ function AddCompany({
                         </Tooltip>
 
                         <Box>
-                          {officeLeaseAgreementNotify && (
+                          {officeLeaseAgreementNotify && officeLeaseMessage && (
                             <RichTextEditor
                               value={officeLeaseMessage}
                               onChange={handleOfficeLeaseOnChange}
@@ -1153,7 +1171,7 @@ function AddCompany({
                               );
 
                               setImageTitle(
-                                'Article Of Incorporation - ' + data.name
+                                'Article Of Incorporation - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -1170,7 +1188,7 @@ function AddCompany({
                         </Tooltip>
 
                         <Box>
-                          {articleOfIncorporationNotify && (
+                          {articleOfIncorporationNotify && articleMessage && (
                             <RichTextEditor
                               value={articleMessage}
                               onChange={handleArticleOfIncorporationOnChange}
@@ -1241,7 +1259,7 @@ function AddCompany({
                               );
 
                               setImageTitle(
-                                'Incorporation Certificate - ' + data.name
+                                'Incorporation Certificate - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -1258,12 +1276,15 @@ function AddCompany({
                         </Tooltip>
 
                         <Box>
-                          {incorporationCertificateNotify && (
-                            <RichTextEditor
-                              value={incorporationMessage}
-                              onChange={handleIncorporationCertificateOnChange}
-                            />
-                          )}
+                          {incorporationCertificateNotify &&
+                            incorporationMessage && (
+                              <RichTextEditor
+                                value={incorporationMessage}
+                                onChange={
+                                  handleIncorporationCertificateOnChange
+                                }
+                              />
+                            )}
                           <Box
                             sx={{
                               margin: '9px',
@@ -1328,7 +1349,9 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle('Share Certificate - ' + data.name);
+                              setImageTitle(
+                                'Share Certificate - ' + data?.name
+                              );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1344,12 +1367,13 @@ function AddCompany({
                         </Tooltip>
 
                         <Box>
-                          {shareCertificateNotify && (
-                            <RichTextEditor
-                              value={shareCertificateMessage}
-                              onChange={handleShareCertificateOnChange}
-                            />
-                          )}
+                          {shareCertificateNotify &&
+                            shareCertificateMessage && (
+                              <RichTextEditor
+                                value={shareCertificateMessage}
+                                onChange={handleShareCertificateOnChange}
+                              />
+                            )}
                           <Box
                             sx={{
                               margin: '9px',
@@ -1429,7 +1453,7 @@ function AddCompany({
                                   data?.immigrationCard.length - 1
                                 ]?.file
                               );
-                              setImageTitle('Immigration Card - ' + data.name);
+                              setImageTitle('Immigration Card - ' + data?.name);
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1445,7 +1469,7 @@ function AddCompany({
                         </Tooltip>
 
                         <Box>
-                          {immigrationCardNotify && (
+                          {immigrationCardNotify && immigrationCardMessage && (
                             <RichTextEditor
                               value={immigrationCardMessage}
                               onChange={handleImmigrationCardOnChange}

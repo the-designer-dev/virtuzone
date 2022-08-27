@@ -149,9 +149,9 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-    'transform',
-    'opacity'
-  ])};
+                  'transform',
+                  'opacity'
+                ])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -486,7 +486,9 @@ function SidebarMenu() {
               <ListItem component="div">
                 <NextLink href="/notification_request" passHref>
                   <Button
-                    className={currentRoute === '/notificationRequest' ? 'active' : ''}
+                    className={
+                      currentRoute === '/notification_request' ? 'active' : ''
+                    }
                     disableRipple
                     component="a"
                     onClick={closeSidebar}
@@ -532,7 +534,6 @@ function SidebarMenu() {
             </List>
           </SubMenuWrapper>
         </List>
-
       </MenuWrapper>
     </>
   );
