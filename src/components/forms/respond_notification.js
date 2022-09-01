@@ -26,6 +26,7 @@ function RespondNotification({
   data,
   setId,
   setShouldUpdate,
+
   shouldUpdate
 }) {
   const [ShowLoader, setShowLoader] = useState(false);
@@ -33,15 +34,13 @@ function RespondNotification({
   const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [image, setImage] = useState(data ? data.image : null);
   const [link, setLink] = useState(data ? data.link : null);
-  const [email, setEmail] = useState(data ? data.user.email : null);
+  const [email, setEmail] = useState(data ? data.user?.email : null);
+  const [user, setUser] = useState(data ? data.user?._id : null);
 
   const [value, setValue] = useState(null);
 
   const handleOnChange = (value) => {
     setValue(value);
-    if (event.onChange) {
-      onChange(value.toString('html'));
-    }
   };
 
   useEffect(() => {
@@ -55,56 +54,32 @@ function RespondNotification({
   function onSubmit(e) {
     e.preventDefault();
     console.log(edit);
-    if (edit !== true) {
-      setShowLoader(true);
-      const form = new FormData();
-      form.append('promotion', image);
-      form.append('link', link);
 
-      axios({
-        method: 'POST',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/Promotions`,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-        },
-        data: form
+    setShowLoader(true);
+    console.log(value.toString('html').toString());
+
+    axios({
+      method: 'POST',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/notification`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      },
+      data: {
+        user: user,
+        email: email,
+        message: value.toString('html').toString()
+      }
+    })
+      .then((res) => {
+        setShowLoader(false);
+        if (res.status === 200) {
+          setShowSuccessModal(true);
+        }
       })
-        .then((res) => {
-          setShowLoader(false);
-          if (res.status === 200) {
-            setShowSuccessModal(true);
-          }
-        })
-        .catch((err) => {
-          setShowLoader(false);
-          setShowFailureModal(true);
-        });
-    } else {
-      setShowLoader(true);
-      const form = new FormData();
-      form.append('promotion', image);
-      form.append('link', link);
-      axios({
-        method: 'PUT',
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/Promotions?id=${data._id}`,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
-        },
-        data: form
-      })
-        .then((res) => {
-          setShowLoader(false);
-          if (res.status === 200) {
-            setShowSuccessModal(true);
-          }
-        })
-        .catch((err) => {
-          setShowLoader(false);
-          setShowFailureModal(true);
-        });
-    }
+      .catch((err) => {
+        setShowLoader(false);
+        setShowFailureModal(true);
+      });
   }
 
   return (

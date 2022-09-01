@@ -96,6 +96,16 @@ function AddCompany({
   const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [shareholderEdit, setShareholderEdit] = useState(null);
   const [shareholderData, setShareholderData] = useState(null);
+  const [tradeLicenseNotify, setTradeLicenseNotify] = useState(false);
+  const [establishmentCardNotify, setEstablishmentCardNotify] = useState(false);
+  const [officeLeaseAgreementNotify, setOfficeLeaseAgreementNotify] =
+    useState(false);
+  const [articleOfIncorporationNotify, setArticleOfIncorporationNotify] =
+    useState(false);
+  const [incorporationCertificateNotify, setIncorporationCertificateNotify] =
+    useState(false);
+  const [shareCertificateNotify, setShareCertificateNotify] = useState(false);
+  const [immigrationCardNotify, setImmigrationCardNotify] = useState(false);
 
   const [firstName, setFirstName] = useState(
     data ? data.owner.firstName : null
@@ -184,13 +194,45 @@ function AddCompany({
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
   const [value, setValue] = useState(null);
+  const [tradeLicenseMessage, setTradeLicenseMessage] = useState(null);
+  const [establishmentCardMessage, setEstablishmentCardMessage] =
+    useState(null);
+  const [officeLeaseMessage, setOfficeLeaseMessage] = useState(null);
+  const [articleMessage, setArticleMessage] = useState(null);
+  const [incorporationMessage, setIncorporatiionMessage] = useState(null);
+  const [shareCertificateMessage, setShareCertificateMessage] = useState(null);
+  const [immigrationCardMessage, setImmigrationCardMessage] = useState(null);
 
   const handleOnChange = (value) => {
     setValue(value);
-    if (event.onChange) {
-      onChange(value.toString('html'));
-    }
-    setMessage(value.toString('html'));
+  };
+
+  const handleTradeLicenseOnChange = (value) => {
+    setTradeLicenseMessage(value);
+  };
+
+  const handleEstablishmentOnChange = (value) => {
+    setEstablishmentCardMessage(value);
+  };
+
+  const handleOfficeLeaseOnChange = (value) => {
+    setOfficeLeaseMessage(value);
+  };
+
+  const handleArticleOfIncorporationOnChange = (value) => {
+    setArticleMessage(value);
+  };
+
+  const handleIncorporationCertificateOnChange = (value) => {
+    setIncorporatiionMessage(value);
+  };
+
+  const handleShareCertificateOnChange = (value) => {
+    setShareCertificateMessage(value);
+  };
+
+  const handleImmigrationCardOnChange = (value) => {
+    setImmigrationCardMessage(value);
   };
 
   const handleChange = (event, newValue) => {
@@ -241,8 +283,15 @@ function AddCompany({
 
     const importModule = async () => {
       const mod = await import('react-rte');
-      setValue(mod.createEmptyValue());
+      setEstablishmentCardMessage(mod.createEmptyValue());
+      setOfficeLeaseMessage(mod.createEmptyValue());
+      setArticleMessage(mod.createEmptyValue());
+      setIncorporatiionMessage(mod.createEmptyValue());
+      setShareCertificateMessage(mod.createEmptyValue());
+      setImmigrationCardMessage(mod.createEmptyValue());
+      setTradeLicenseMessage(mod.createEmptyValue());
     };
+
     importModule();
   }, [id]);
 
@@ -323,6 +372,43 @@ function AddCompany({
     form.append('shareHolder', JSON.stringify(shareHolders));
 
     form.append('message', message);
+
+    form.append('tradeLicenseNotify', tradeLicenseNotify);
+    form.append('establishmentCardNotify', establishmentCardNotify);
+    form.append('officeLeaseAgreementNotify', officeLeaseAgreementNotify);
+    form.append('articleOfIncorporationNotify', articleOfIncorporationNotify);
+    form.append(
+      'incorporationCertificateNotify',
+      incorporationCertificateNotify
+    );
+    form.append('shareCertificateNotify', shareCertificateNotify);
+    form.append('immigrationCardNotify', immigrationCardNotify);
+    form.append('immigrationCardNotify', immigrationCardNotify);
+    form.append(
+      'tradeLicenseMessage',
+      tradeLicenseMessage.toString('html').toString()
+    );
+    form.append(
+      'establishmentCardMessage',
+      establishmentCardMessage.toString('html').toString()
+    );
+    form.append(
+      'officeLeaseMessage',
+      officeLeaseMessage.toString('html').toString()
+    );
+    form.append('articleMessage', articleMessage.toString('html').toString());
+    form.append(
+      'incorporationMessage',
+      incorporationMessage.toString('html').toString()
+    );
+    form.append(
+      'shareCertificateMessage',
+      shareCertificateMessage.toString('html').toString()
+    );
+    form.append(
+      'immigrationCardMessage',
+      immigrationCardMessage.toString('html').toString()
+    );
 
     if (edit !== true) {
       setShowLoader(true);
@@ -446,6 +532,43 @@ function AddCompany({
     form.append('shareHolder', JSON.stringify(shareHolders));
 
     form.append('message', message);
+
+    form.append('tradeLicenseNotify', tradeLicenseNotify);
+    form.append('establishmentCardNotify', establishmentCardNotify);
+    form.append('officeLeaseAgreementNotify', officeLeaseAgreementNotify);
+    form.append('articleOfIncorporationNotify', articleOfIncorporationNotify);
+    form.append(
+      'incorporationCertificateNotify',
+      incorporationCertificateNotify
+    );
+    form.append('shareCertificateNotify', shareCertificateNotify);
+    form.append('immigrationCardNotify', immigrationCardNotify);
+
+    form.append(
+      'tradeLicenseMessage',
+      tradeLicenseMessage.toString('html').toString()
+    );
+    form.append(
+      'establishmentCardMessage',
+      establishmentCardMessage.toString('html').toString()
+    );
+    form.append(
+      'officeLeaseMessage',
+      officeLeaseMessage.toString('html').toString()
+    );
+    form.append('articleMessage', articleMessage.toString('html').toString());
+    form.append(
+      'incorporationMessage',
+      incorporationMessage.toString('html').toString()
+    );
+    form.append(
+      'shareCertificateMessage',
+      shareCertificateMessage.toString('html').toString()
+    );
+    form.append(
+      'immigrationCardMessage',
+      immigrationCardMessage.toString('html').toString()
+    );
 
     if (edit !== true) {
       setShowLoader(true);
@@ -696,7 +819,7 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle('Trade License - ' + data.name);
+                              setImageTitle('Trade License - ' + data?.name);
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -709,14 +832,38 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        ></Box>
+
+                        <Box>
+                          {tradeLicenseNotify && tradeLicenseMessage && (
+                            <RichTextEditor
+                              value={tradeLicenseMessage}
+                              onChange={handleTradeLicenseOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={tradeLicenseNotify}
+                                  onChange={(e) =>
+                                    setTradeLicenseNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
+                        </Box>
                       </div>
                     </Box>
                   </CardContent>
@@ -760,7 +907,6 @@ function AddCompany({
                             setEstablishmentCardNo(e.currentTarget.value)
                           }
                           placeholder="Establishment Card Number"
-                          type={'text'}
                           // type={'number'}
                         />
                         <TextField
@@ -837,7 +983,7 @@ function AddCompany({
                                 ]?.file
                               );
                               setImageTitle(
-                                'Establishment Card - ' + data.name
+                                'Establishment Card - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -852,18 +998,38 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+
+                        <Box>
+                          {establishmentCardNotify &&
+                            establishmentCardMessage && (
+                              <RichTextEditor
+                                value={establishmentCardMessage}
+                                onChange={handleEstablishmentOnChange}
+                              />
+                            )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={establishmentCardNotify}
+                                  onChange={(e) =>
+                                    setEstablishmentCardNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -917,7 +1083,7 @@ function AddCompany({
                               );
 
                               setImageTitle(
-                                'Office Lease Agreement - ' + data.name
+                                'Office Lease Agreement - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -933,18 +1099,38 @@ function AddCompany({
                           </Button>
                         </Tooltip>
 
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+                        <Box>
+                          {officeLeaseAgreementNotify && officeLeaseMessage && (
+                            <RichTextEditor
+                              value={officeLeaseMessage}
+                              onChange={handleOfficeLeaseOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={officeLeaseAgreementNotify}
+                                  onChange={(e) =>
+                                    setOfficeLeaseAgreementNotify(
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -985,7 +1171,7 @@ function AddCompany({
                               );
 
                               setImageTitle(
-                                'Article Of Incorporation - ' + data.name
+                                'Article Of Incorporation - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -1001,22 +1187,38 @@ function AddCompany({
                           </Button>
                         </Tooltip>
 
-                        <RichTextEditor
-                          value={value}
-                          onChange={handleOnChange}
-                        />
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+                        <Box>
+                          {articleOfIncorporationNotify && articleMessage && (
+                            <RichTextEditor
+                              value={articleMessage}
+                              onChange={handleArticleOfIncorporationOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={articleOfIncorporationNotify}
+                                  onChange={(e) =>
+                                    setArticleOfIncorporationNotify(
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -1057,7 +1259,7 @@ function AddCompany({
                               );
 
                               setImageTitle(
-                                'Incorporation Certificate - ' + data.name
+                                'Incorporation Certificate - ' + data?.name
                               );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
@@ -1072,18 +1274,42 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+
+                        <Box>
+                          {incorporationCertificateNotify &&
+                            incorporationMessage && (
+                              <RichTextEditor
+                                value={incorporationMessage}
+                                onChange={
+                                  handleIncorporationCertificateOnChange
+                                }
+                              />
+                            )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={incorporationCertificateNotify}
+                                  onChange={(e) =>
+                                    setIncorporationCertificateNotify(
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -1123,7 +1349,9 @@ function AddCompany({
                                 ]?.file
                               );
 
-                              setImageTitle('Share Certificate - ' + data.name);
+                              setImageTitle(
+                                'Share Certificate - ' + data?.name
+                              );
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1137,18 +1365,38 @@ function AddCompany({
                             View File
                           </Button>
                         </Tooltip>
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+
+                        <Box>
+                          {shareCertificateNotify &&
+                            shareCertificateMessage && (
+                              <RichTextEditor
+                                value={shareCertificateMessage}
+                                onChange={handleShareCertificateOnChange}
+                              />
+                            )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={shareCertificateNotify}
+                                  onChange={(e) =>
+                                    setShareCertificateNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>
@@ -1205,7 +1453,7 @@ function AddCompany({
                                   data?.immigrationCard.length - 1
                                 ]?.file
                               );
-                              setImageTitle('Immigration Card - ' + data.name);
+                              setImageTitle('Immigration Card - ' + data?.name);
                             }}
                             sx={{ margin: 1, height: '53.5px' }}
                             disabled={
@@ -1220,18 +1468,36 @@ function AddCompany({
                           </Button>
                         </Tooltip>
 
-                        <Box
-                          sx={{
-                            margin: '9px',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                          }}
-                          component={'div'}
-                        >
-                          <FormControlLabel
-                            control={<Checkbox />}
-                            label="Notify"
-                          />
+                        <Box>
+                          {immigrationCardNotify && immigrationCardMessage && (
+                            <RichTextEditor
+                              value={immigrationCardMessage}
+                              onChange={handleImmigrationCardOnChange}
+                            />
+                          )}
+                          <Box
+                            sx={{
+                              margin: '9px',
+                              display: 'flex',
+                              justifyContent: 'flex-end'
+                            }}
+                            component={'div'}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={immigrationCardNotify}
+                                  onChange={(e) =>
+                                    setImmigrationCardNotify(e.target.checked)
+                                  }
+                                />
+                              }
+                              label="Notify"
+                            />
+                            <Button type="submit" sx={{ margin: 1 }}>
+                              Submit
+                            </Button>
+                          </Box>
                         </Box>
                       </div>
                     </Box>

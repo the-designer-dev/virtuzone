@@ -27,6 +27,8 @@ import countries from '../../data/countries.json';
 import ModalNoClose from '../modal/modalNoClose';
 import SuccessModal from '../successBox';
 import FailureModal from '../failureBox';
+import dynamic from 'next/dynamic';
+const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 function AddVisa({
   setOpen,
   shouldUpdate,
@@ -35,6 +37,10 @@ function AddVisa({
   data,
   edit
 }) {
+  const [notify, setNotify] = useState(false);
+
+  const [value, setValue] = useState(null);
+  const [message, setMessage] = useState(null);
   const [ShowLoader, setShowLoader] = useState(false);
   const [ShowSuccessModal, setShowSuccessModal] = useState(false);
   const [ShowFailureModal, setShowFailureModal] = useState(false);
@@ -74,6 +80,23 @@ function AddVisa({
     data ? data.residencyVisa : null
   );
   console.log(company);
+
+  const handleOnChange = (value) => {
+    setValue(value);
+    if (event.onChange) {
+      onChange(value.toString('html'));
+    }
+    setMessage(value.toString('html'));
+  };
+
+  useEffect(() => {
+    const importModule = async () => {
+      const mod = await import('react-rte');
+      setValue(mod.createEmptyValue());
+    };
+    importModule();
+  }, []);
+
   function onSubmit(e) {
     e.preventDefault();
     const form = new FormData();
@@ -110,9 +133,11 @@ function AddVisa({
     form.append('visaUID', visaUID);
     form.append('residencyVisaIssued', residencyVisaIssued);
     form.append('emiratesIdIssued', emiratesIdIssued);
+    form.append('notify', notify);
+    form.append('message', value.toString('html').toString());
     // form.append('employee', employee);
     if (!edit) {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa`,
@@ -121,17 +146,19 @@ function AddVisa({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
         data: form
-      }).then((res) => {
-        setShowLoader(false)
-        if (res.status === 200) {
-          setShowSuccessModal(true)
-        }
-      }).catch((err) => {
-        setShowLoader(false)
-        setShowFailureModal(true)
-      });
+      })
+        .then((res) => {
+          setShowLoader(false);
+          if (res.status === 200) {
+            setShowSuccessModal(true);
+          }
+        })
+        .catch((err) => {
+          setShowLoader(false);
+          setShowFailureModal(true);
+        });
     } else {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/visa?id=${data._id}`,
@@ -140,16 +167,18 @@ function AddVisa({
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         },
         data: form
-      }).then((res) => {
-        setShowLoader(false)
-        if (res.status === 200) {
-          setShowSuccessModal(true)
-          setOpen(false);
-        }
-      }).catch((err) => {
-        setShowLoader(false)
-        setShowFailureModal(true)
-      });
+      })
+        .then((res) => {
+          setShowLoader(false);
+          if (res.status === 200) {
+            setShowSuccessModal(true);
+            setOpen(false);
+          }
+        })
+        .catch((err) => {
+          setShowLoader(false);
+          setShowFailureModal(true);
+        });
     }
   }
 
@@ -343,18 +372,34 @@ function AddVisa({
                       label="Emirates Id Issued"
                     />
 
-                    <Box
-                      sx={{
-                        margin: '9px',
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                      }}
-                      component={'div'}
-                    >
-                      <FormControlLabel control={<Checkbox />} label="Notify" />
-                      <Button type="submit" sx={{ margin: 1 }}>
-                        Submit
-                      </Button>
+                    <Box>
+                      {notify && (
+                        <RichTextEditor
+                          value={value}
+                          onChange={handleOnChange}
+                        />
+                      )}
+                      <Box
+                        sx={{
+                          margin: '9px',
+                          display: 'flex',
+                          justifyContent: 'flex-end'
+                        }}
+                        component={'div'}
+                      >
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={notify}
+                              onChange={(e) => setNotify(e.target.checked)}
+                            />
+                          }
+                          label="Notify"
+                        />
+                        <Button type="submit" sx={{ margin: 1 }}>
+                          Submit
+                        </Button>
+                      </Box>
                     </Box>
                   </div>
                 </Box>
@@ -366,26 +411,32 @@ function AddVisa({
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
-        <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate); setOpen(false) }} setShowSuccessModal={setShowSuccessModal} />
+        <SuccessModal
+          executeFunction={() => {
+            setShouldUpdate(!shouldUpdate);
+            setOpen(false);
+          }}
+          setShowSuccessModal={setShowSuccessModal}
+        />
       </ModalNoClose>
 
       <ModalNoClose
         setOpen={setShowFailureModal}
         open={ShowFailureModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <FailureModal setShowFailureModal={setShowFailureModal} />
       </ModalNoClose>
 
       <ModalNoClose
-        setOpen={() => { }}
+        setOpen={() => {}}
         open={ShowLoader}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <CircularProgress />
       </ModalNoClose>
