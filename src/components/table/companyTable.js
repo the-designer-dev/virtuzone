@@ -345,8 +345,8 @@ const CompanyTable = ({
                             color: theme.palette.error.main
                           }}
                           onClick={() => {
-                            setShowModal(true)
-                            setID(el._id)
+                            setShowModal(true);
+                            setID(el._id);
                             // deleteRecord(el._id);
                           }}
                           color="inherit"
@@ -378,7 +378,10 @@ const CompanyTable = ({
         setOpen={setShowModal}
         open={showModal}
         children={
-          <ConfirmationModal executeFunction={() => deleteRecord(id)} setShowModal={setShowModal} />
+          <ConfirmationModal
+            executeFunction={() => deleteRecord(id)}
+            setShowModal={setShowModal}
+          />
         }
       />
     </Card>
