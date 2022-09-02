@@ -297,81 +297,108 @@ function AddVisa({
                       inputProps={{ multiple: true }}
                       type={'file'}
                     />
-                    {entryPermitIssued && (
-                      <TextField
-                        id="outlined-search"
-                        label="Entry Permit"
-                        onChange={(e) => setEntryPermit(e.target.files)}
-                        InputLabelProps={{
-                          shrink: true
+                    <Box sx={{ display: 'flex' }}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          width: 'fit-content'
                         }}
-                        inputProps={{ multiple: true }}
-                        type={'file'}
-                      />
-                    )}
-
-                    {residencyVisaIssued && (
-                      <TextField
-                        id="outlined-search"
-                        label="Residency Visa"
-                        onChange={(e) => setResidencyVisa(e.target.files)}
-                        InputLabelProps={{
-                          shrink: true
+                      >
+                        {entryPermitIssued && (
+                          <TextField
+                            id="outlined-search"
+                            label="Entry Permit"
+                            onChange={(e) => setEntryPermit(e.target.files)}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                            inputProps={{ multiple: true }}
+                            type={'file'}
+                          />
+                        )}
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={entryPermitIssued}
+                              onChange={(e) =>
+                                setEntryPermitIssued(e.target.checked)
+                              }
+                            />
+                          }
+                          label="Entry Permit Issued"
+                        />
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          width: 'fit-content'
                         }}
-                        inputProps={{ multiple: true }}
-                        type={'file'}
-                      />
-                    )}
+                      >
+                        {residencyVisaIssued && (
+                          <TextField
+                            id="outlined-search"
+                            label="Residency Visa"
+                            onChange={(e) => setResidencyVisa(e.target.files)}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                            inputProps={{ multiple: true }}
+                            type={'file'}
+                          />
+                        )}
 
-                    {emiratesIdIssued && (
-                      <TextField
-                        id="outlined-search"
-                        label="Emirates Id"
-                        onChange={(e) => setEmiratesId(e.target.files)}
-                        InputLabelProps={{
-                          shrink: true
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={residencyVisaIssued}
+                              onChange={(e) =>
+                                setResidencyVisaIssued(e.target.checked)
+                              }
+                            />
+                          }
+                          label="Residency Visa Issued"
+                        />
+                      </Box>
+
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          width: 'fit-content'
                         }}
-                        inputProps={{ multiple: true }}
-                        type={'file'}
-                      />
-                    )}
+                      >
+                        {emiratesIdIssued && (
+                          <TextField
+                            sx={{
+                              opacity: emiratesIdIssued ? '100%' : '0%',
+                              transition: 'opacity 0.5s'
+                            }}
+                            id="outlined-search"
+                            label="Emirates Id"
+                            onChange={(e) => setEmiratesId(e.target.files)}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                            inputProps={{ multiple: true }}
+                            type={'file'}
+                          />
+                        )}
 
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={entryPermitIssued}
-                          onChange={(e) =>
-                            setEntryPermitIssued(e.target.checked)
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={emiratesIdIssued}
+                              onChange={(e) =>
+                                setEmiratesIdIssued(e.target.checked)
+                              }
+                            />
                           }
+                          label="Emirates Id Issued"
                         />
-                      }
-                      label="Entry Permit Issued"
-                    />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={residencyVisaIssued}
-                          onChange={(e) =>
-                            setResidencyVisaIssued(e.target.checked)
-                          }
-                        />
-                      }
-                      label="Residency Visa Issued"
-                    />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={emiratesIdIssued}
-                          onChange={(e) =>
-                            setEmiratesIdIssued(e.target.checked)
-                          }
-                        />
-                      }
-                      label="Emirates Id Issued"
-                    />
-
+                      </Box>
+                    </Box>
                     <Box>
                       {notify && (
                         <RichTextEditor

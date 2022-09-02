@@ -139,6 +139,7 @@ const CompanyTable = ({
               <TableCell>#</TableCell>
               <TableCell>Owner</TableCell>
               <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
               <TableCell>License No </TableCell>
               <TableCell>License Code</TableCell>
               <TableCell>Jurisdiction</TableCell>
@@ -183,6 +184,16 @@ const CompanyTable = ({
                       noWrap
                     >
                       {el.name}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.owner.email}
                     </Typography>
                   </TableCell>
                   <TableCell>

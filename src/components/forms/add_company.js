@@ -119,10 +119,33 @@ function AddCompany({
   const [judiciaries, setJudiciaries] = useState(null);
   const [judiciary, setJudiciary] = useState(data ? data.judiciary?._id : null);
   const [establishmentDate, setEstablishmentDate] = useState(
-    data ? data.establishmentDate : null
+    data
+      ? data.establishmentDate !== undefined
+        ? data.establishmentDate
+        : null
+      : null
   );
-  const [issueDate, setIssueDate] = useState(data ? data.issueDate : null);
-  const [expiryDate, setExpiryDate] = useState(data ? data.expiryDate : null);
+  const [issueDate, setIssueDate] = useState(
+    data ? (data.issueDate !== undefined ? data.issueDate : null) : null
+  );
+  const [expiryDate, setExpiryDate] = useState(
+    data ? (data.expiryDate !== undefined ? data.expiryDate : null) : null
+  );
+
+  const [issueDateOfficeLease, setIssueDateOfficeLease] = useState(
+    data
+      ? data.officeLeaseIssue !== undefined
+        ? data.officeLeaseIssue
+        : null
+      : null
+  );
+  const [expiryDateOfficeLease, setExpiryDateOfficeLease] = useState(
+    data
+      ? data.officeLeaseExpiry !== undefined
+        ? data.officeLeaseExpiry
+        : null
+      : null
+  );
   const [activities, setActivities] = useState(null);
   const [activity, setActivity] = useState(
     data ? data.activities.map((el) => el._id) : null
@@ -160,19 +183,28 @@ function AddCompany({
   ] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.establismentDateEstablismentCard
+          ?.establismentDateEstablismentCard !== undefined
+        ? data?.establishmentCard[data.establishmentCard.length - 1]
+            ?.establismentDateEstablismentCard
+        : null
       : null
   );
   const [issueDateEstablismentCard, setIssueDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.issueDateEstablismentCard
+          ?.issueDateEstablismentCard !== undefined
+        ? data?.establishmentCard[data.establishmentCard.length - 1]
+            ?.issueDateEstablismentCard
+        : null
       : null
   );
   const [expiryDateEstablismentCard, setExpiryDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.expiryDateEstablismentCard
+          ?.expiryDateEstablismentCard !== undefined
+        ? data?.establishmentCard[data.establishmentCard.length - 1]
+            ?.expiryDateEstablismentCard
+        : null
       : null
   );
   const [officeLease, setOfficeLease] = useState(
@@ -202,6 +234,7 @@ function AddCompany({
   const [incorporationMessage, setIncorporatiionMessage] = useState(null);
   const [shareCertificateMessage, setShareCertificateMessage] = useState(null);
   const [immigrationCardMessage, setImmigrationCardMessage] = useState(null);
+  const [activityOpen, setActivityOpen] = useState(false);
 
   const handleOnChange = (value) => {
     setValue(value);
@@ -244,6 +277,11 @@ function AddCompany({
   };
 
   useEffect(() => {
+    // console.log('data');
+    console.log(
+      data?.establishmentCard[data.establishmentCard.length - 1]
+        ?.issueDateEstablismentCard === null
+    );
     if (data?.judiciary) {
       axios({
         method: 'GET',
@@ -365,9 +403,9 @@ function AddCompany({
       }
     }
 
-    form.append('officeLeaseIssue', issueDate);
+    form.append('officeLeaseIssue', issueDateOfficeLease);
 
-    form.append('officeLeaseExpiry', expiryDate);
+    form.append('officeLeaseExpiry', expiryDateOfficeLease);
 
     form.append('shareHolder', JSON.stringify(shareHolders));
 
@@ -471,6 +509,7 @@ function AddCompany({
     );
     form.append('issueDateEstablismentCard', issueDateEstablismentCard);
     form.append('expiryDateEstablismentCard', expiryDateEstablismentCard);
+
     form.append('issueDate', issueDate);
     form.append('expiryDate', expiryDate);
     form.append('activities', activity);
@@ -781,6 +820,9 @@ function AddCompany({
                           placeholder="Activities"
                           input={<TextField label="Activities" />}
                           value={activity}
+                          open={activityOpen}
+                          onClose={() => setActivityOpen(false)}
+                          onOpen={() => setActivityOpen(true)}
                           onChange={(e) => {
                             console.log(e.target.value);
                             setActivity(
@@ -790,6 +832,14 @@ function AddCompany({
                             );
                           }}
                         >
+                          <Button
+                            onClick={() => {
+                              setActivityOpen(false);
+                            }}
+                            sx={{ width: '100%' }}
+                          >
+                            Close
+                          </Button>
                           {activities &&
                             activities.map((el) => (
                               <MenuItem value={el._id} key={el.name}>
@@ -859,9 +909,9 @@ function AddCompany({
                               }
                               label="Notify"
                             />
-                            <Button type="submit" sx={{ margin: 1 }}>
+                            {/* <Button type="submit" sx={{ margin: 1 }}>
                               Submit
-                            </Button>
+                            </Button> */}
                           </Box>
                         </Box>
                       </div>
@@ -1026,9 +1076,9 @@ function AddCompany({
                               }
                               label="Notify"
                             />
-                            <Button type="submit" sx={{ margin: 1 }}>
+                            {/* <Button type="submit" sx={{ margin: 1 }}>
                               Submit
-                            </Button>
+                            </Button> */}
                           </Box>
                         </Box>
                       </div>
@@ -1049,14 +1099,18 @@ function AddCompany({
                       <div>
                         <DatePicker
                           label="Date of issue"
-                          value={issueDate}
-                          readOnly={true}
+                          value={issueDateOfficeLease}
+                          onChange={(newValue) =>
+                            setIssueDateOfficeLease(newValue)
+                          }
                           renderInput={(params) => <TextField {...params} />}
                         />
                         <DatePicker
                           label="Expiry Date"
-                          value={expiryDate}
-                          readOnly={true}
+                          value={expiryDateOfficeLease}
+                          onChange={(newValue) =>
+                            setExpiryDateOfficeLease(newValue)
+                          }
                           renderInput={(params) => <TextField {...params} />}
                         />
 
@@ -1127,9 +1181,9 @@ function AddCompany({
                               }
                               label="Notify"
                             />
-                            <Button type="submit" sx={{ margin: 1 }}>
+                            {/* <Button type="submit" sx={{ margin: 1 }}>
                               Submit
-                            </Button>
+                            </Button> */}
                           </Box>
                         </Box>
                       </div>
@@ -1215,9 +1269,9 @@ function AddCompany({
                               }
                               label="Notify"
                             />
-                            <Button type="submit" sx={{ margin: 1 }}>
+                            {/* <Button type="submit" sx={{ margin: 1 }}>
                               Submit
-                            </Button>
+                            </Button> */}
                           </Box>
                         </Box>
                       </div>
@@ -1306,9 +1360,9 @@ function AddCompany({
                               }
                               label="Notify"
                             />
-                            <Button type="submit" sx={{ margin: 1 }}>
+                            {/* <Button type="submit" sx={{ margin: 1 }}>
                               Submit
-                            </Button>
+                            </Button> */}
                           </Box>
                         </Box>
                       </div>
@@ -1393,9 +1447,9 @@ function AddCompany({
                               }
                               label="Notify"
                             />
-                            <Button type="submit" sx={{ margin: 1 }}>
+                            {/* <Button type="submit" sx={{ margin: 1 }}>
                               Submit
-                            </Button>
+                            </Button> */}
                           </Box>
                         </Box>
                       </div>
@@ -1494,9 +1548,9 @@ function AddCompany({
                               }
                               label="Notify"
                             />
-                            <Button type="submit" sx={{ margin: 1 }}>
+                            {/* <Button type="submit" sx={{ margin: 1 }}>
                               Submit
-                            </Button>
+                            </Button> */}
                           </Box>
                         </Box>
                       </div>

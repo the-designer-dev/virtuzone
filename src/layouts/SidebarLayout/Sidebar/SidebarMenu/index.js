@@ -394,7 +394,7 @@ function SidebarMenu() {
                   </Button>
                 </NextLink>
               </ListItem>
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <NextLink href="/contact" passHref>
                   <Button
                     className={currentRoute === '/contact' ? 'active' : ''}
@@ -406,7 +406,7 @@ function SidebarMenu() {
                     Contact
                   </Button>
                 </NextLink>
-              </ListItem>
+              </ListItem> */}
               <ListItem component="div">
                 <NextLink href="/jurisdictions" passHref>
                   <Button
