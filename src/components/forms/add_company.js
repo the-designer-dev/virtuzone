@@ -995,7 +995,7 @@ function AddCompany({
                           renderInput={(params) => <TextField {...params} />}
                         />
                         <DatePicker
-                          label="Date of issue"
+                          label="Establishment Card Issue Date "
                           value={issueDateEstablismentCard}
                           onChange={(newValue) =>
                             setIssueDateEstablismentCard(newValue)
@@ -1003,7 +1003,7 @@ function AddCompany({
                           renderInput={(params) => <TextField {...params} />}
                         />
                         <DatePicker
-                          label="Expiry Date"
+                          label="Establishment Card Expiry Date"
                           value={expiryDateEstablismentCard}
                           onChange={(newValue) =>
                             setExpiryDateEstablismentCard(newValue)
