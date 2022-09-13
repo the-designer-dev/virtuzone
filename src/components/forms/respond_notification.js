@@ -36,6 +36,8 @@ function RespondNotification({
   const [link, setLink] = useState(data ? data.link : null);
   const [email, setEmail] = useState(data ? data.user?.email : null);
   const [user, setUser] = useState(data ? data.user?._id : null);
+  const [firstName, setFirstName] = useState(data ? data.user?.firstName : null);
+  const [lastName, setLastName] = useState(data ? data.user?.lastName : null);
 
   const [value, setValue] = useState(null);
 
@@ -47,16 +49,12 @@ function RespondNotification({
   useEffect(() => {
     const importModule = async () => {
       const mod = await import('react-rte');
+      console.log(data.user)
       setValue(
         mod.createValueFromString(
           `   
-          <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Lorem, ipsum dolor.</h1>
-          <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia ipsum a nesciunt officia error beatae rem, possimus accusantium corporis similique eligendi veniam eveniet harum inventore nihil itaque iure eum adipisci.</p>
-          <div style="text-align: center; margin: 80px 0;">
-              <button style="background-color: #cf3339; padding:5px 25px; border: solid #cf3339; border-radius: 8px; color:#fff">6666</button>
-          </div>
-          <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia ipsum a nesciunt officia error beatae rem, possimus accusantium corporis similique eligendi veniam eveniet harum inventore nihil itaque iure eum adipisci.</p>
-    `,
+          <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        `,
           'html'
         )
       );
@@ -106,17 +104,17 @@ ${value.toString('html')}
                         <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
                     </div>
 
-                            <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
-                        <div style="    display: flex;align-items: center;justify-content: center;">
-                            <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
-                        </div>
-                        <div style="    display: flex;align-items: center;justify-content: center;">
-                            <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
-                        </div>
-                        <div style="display: flex;align-items: center;justify-content: center;">
-                            <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
-                        </div>
-                    </div>
+                    <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                          <div style=" display: flex;align-items: center;justify-content: center; padding: 0 15px">
+                              <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                          </div>
+                          <div style="    display: flex;align-items: center;justify-content: center;  padding: 0 15px">
+                              <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                          </div>
+                          <div style="display: flex;align-items: center;justify-content: center;  padding: 0 15px">
+                              <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                          </div>
+                      </div>
                     <p style="font-size: 12px; color:#999;">580 California St., Suite 400,</p>
                     <p style="font-size: 12px; color:#999;">San Francisco, CA, 94104</p>
                     <p style="font-size: 12px; color:#999;">Unsubscribe   Privacy Policy   Terms of Service</p>
@@ -211,8 +209,8 @@ ${value.toString('html')}
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <SuccessModal
           executeFunction={() => {
@@ -227,17 +225,17 @@ ${value.toString('html')}
       <ModalNoClose
         setOpen={setShowFailureModal}
         open={ShowFailureModal}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <FailureModal setShowFailureModal={setShowFailureModal} />
       </ModalNoClose>
 
       <ModalNoClose
-        setOpen={() => {}}
+        setOpen={() => { }}
         open={ShowLoader}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <CircularProgress />
       </ModalNoClose>
