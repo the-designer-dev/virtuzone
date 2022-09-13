@@ -304,9 +304,13 @@ function AddCompany({
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
-      }).then((res) => {
+      }).then(async (res) => {
         setFirstName(res.data.user.firstName);
         setLastName(res.data.user.lastName);
+
+        importModule(res.data.user.firstName, res.data.user.lastName);
+
+
       });
     }
     axios({
@@ -319,7 +323,7 @@ function AddCompany({
       setJudiciaries(res.data.mainland);
     });
 
-    const importModule = async () => {
+    const importModule = async (firstName, lastName) => {
       const mod = await import('react-rte');
       setEstablishmentCardMessage(mod.createValueFromString(
         `   
@@ -393,7 +397,6 @@ function AddCompany({
       ));
     };
 
-    importModule();
   }, [id]);
 
   function onSubmit(e) {
