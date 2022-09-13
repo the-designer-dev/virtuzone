@@ -148,7 +148,7 @@ function AddCompany({
   );
   const [activities, setActivities] = useState(null);
   const [activity, setActivity] = useState(
-    data ? data.activities.map((el) => el._id) : null
+    data ? data.activities.map((el) => el._id) : []
   );
 
   const [establishmentCardNo, setEstablishmentCardNo] = useState(
@@ -1585,7 +1585,8 @@ ${articleMessage.toString('html').toString()}
                             disabled={
                               data?.tradeLicense.length === 0 ||
                               data?.tradeLicense[data?.tradeLicense.length - 1]
-                                ?.file.length === 0
+                                ?.file.length === 0 ||
+                              data === null
                             }
                             variant="contained"
                           >
@@ -1751,7 +1752,8 @@ ${articleMessage.toString('html').toString()}
                               data?.establishmentCard.length === 0 ||
                               data?.establishmentCard[
                                 data?.establishmentCard.length - 1
-                              ]?.file.length === 0
+                              ]?.file.length === 0 ||
+                              data === null
                             }
                             variant="contained"
                           >
@@ -1855,7 +1857,8 @@ ${articleMessage.toString('html').toString()}
                               data?.officeLeaseAgreement.length === 0 ||
                               data?.officeLeaseAgreement[
                                 data?.officeLeaseAgreement.length - 1
-                              ]?.file.length === 0
+                              ]?.file.length === 0 ||
+                              data === null
                             }
                             variant="contained"
                           >
@@ -1943,7 +1946,8 @@ ${articleMessage.toString('html').toString()}
                               data?.articleOfIncoporation.length === 0 ||
                               data?.articleOfIncoporation[
                                 data?.articleOfIncoporation.length - 1
-                              ]?.file.length === 0
+                              ]?.file.length === 0 ||
+                              data === null
                             }
                             variant="contained"
                           >
@@ -2031,7 +2035,8 @@ ${articleMessage.toString('html').toString()}
                               data?.incorporationCertificate.length === 0 ||
                               data?.incorporationCertificate[
                                 data?.incorporationCertificate.length - 1
-                              ]?.file.length === 0
+                              ]?.file.length === 0 ||
+                              data === null
                             }
                             variant="contained"
                           >
@@ -2122,7 +2127,8 @@ ${articleMessage.toString('html').toString()}
                               data?.shareCertificate.length === 0 ||
                               data?.shareCertificate[
                                 data?.shareCertificate.length - 1
-                              ]?.file.length === 0
+                              ]?.file.length === 0 ||
+                              data === null
                             }
                             variant="contained"
                           >
@@ -2224,7 +2230,8 @@ ${articleMessage.toString('html').toString()}
                               data?.immigrationCard.length === 0 ||
                               data?.immigrationCard[
                                 data?.immigrationCard.length - 1
-                              ]?.file.length === 0
+                              ]?.file.length === 0 ||
+                              data === null
                             }
                             variant="contained"
                           >
