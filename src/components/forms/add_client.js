@@ -581,7 +581,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
           nationality: nationality,
           dateOfBirth: dateOfBirth,
           passportDetails: passportDetails,
-          isVerified: false,
+          isVerified: true,
           role: 'owner'
         }
       })

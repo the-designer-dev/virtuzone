@@ -24,12 +24,11 @@ import ReactFlagsSelect from 'react-flags-select';
 import dynamic from 'next/dynamic';
 
 function AddClient({ data }) {
-
   const [id, setId] = useState(data ? data._id : null);
   const [address, setAddress] = useState(data ? data.address : null);
   const [email, setEmail] = useState(data ? data.email : null);
   const [mobile, setMobile] = useState(data ? data.mobile : null);
-  console.log(data)
+  console.log(data);
   function onSubmit(e) {
     e.preventDefault();
 
