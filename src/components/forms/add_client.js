@@ -118,7 +118,7 @@ function AddClient({ shouldUpdate, setShouldUpdate, edit, id, data }) {
           mobile: mobile,
           nationality: nationality,
           dateOfBirth: dateOfBirth,
-          isVerified: false,
+          isVerified: true,
           passportDetails: passportDetails,
           notify: notify,
           message: `
