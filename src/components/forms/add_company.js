@@ -154,7 +154,7 @@ function AddCompany({
   const [establishmentCardNo, setEstablishmentCardNo] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.establishmentCardNo
+        ?.establishmentCardNo
       : null
   );
   const [expiryDateTradeLicense, setExpiryDateTradeLicense] = useState(
@@ -183,27 +183,27 @@ function AddCompany({
   ] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.establismentDateEstablismentCard !== undefined
+        ?.establismentDateEstablismentCard !== undefined
         ? data?.establishmentCard[data.establishmentCard.length - 1]
-            ?.establismentDateEstablismentCard
+          ?.establismentDateEstablismentCard
         : null
       : null
   );
   const [issueDateEstablismentCard, setIssueDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.issueDateEstablismentCard !== undefined
+        ?.issueDateEstablismentCard !== undefined
         ? data?.establishmentCard[data.establishmentCard.length - 1]
-            ?.issueDateEstablismentCard
+          ?.issueDateEstablismentCard
         : null
       : null
   );
   const [expiryDateEstablismentCard, setExpiryDateEstablismentCard] = useState(
     data
       ? data?.establishmentCard[data.establishmentCard.length - 1]
-          ?.expiryDateEstablismentCard !== undefined
+        ?.expiryDateEstablismentCard !== undefined
         ? data?.establishmentCard[data.establishmentCard.length - 1]
-            ?.expiryDateEstablismentCard
+          ?.expiryDateEstablismentCard
         : null
       : null
   );
@@ -304,9 +304,13 @@ function AddCompany({
         headers: {
           'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
         }
-      }).then((res) => {
+      }).then(async (res) => {
         setFirstName(res.data.user.firstName);
         setLastName(res.data.user.lastName);
+
+        importModule(res.data.user.firstName, res.data.user.lastName);
+
+
       });
     }
     axios({
@@ -319,18 +323,80 @@ function AddCompany({
       setJudiciaries(res.data.mainland);
     });
 
-    const importModule = async () => {
+    const importModule = async (firstName, lastName) => {
       const mod = await import('react-rte');
-      setEstablishmentCardMessage(mod.createEmptyValue());
-      setOfficeLeaseMessage(mod.createEmptyValue());
-      setArticleMessage(mod.createEmptyValue());
-      setIncorporatiionMessage(mod.createEmptyValue());
-      setShareCertificateMessage(mod.createEmptyValue());
-      setImmigrationCardMessage(mod.createEmptyValue());
-      setTradeLicenseMessage(mod.createEmptyValue());
+      setEstablishmentCardMessage(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your establishment card anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started. 
+
+        </p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
+      setOfficeLeaseMessage(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your office lease agreement anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started. </p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
+      setArticleMessage(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your article of incorporation anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started. 
+        </p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
+      setIncorporatiionMessage(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your incorporation certificate anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started. 
+        </p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
+      setShareCertificateMessage(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your share certificate anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started. 
+        </p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
+      setImmigrationCardMessage(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your immigration card anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started. 
+        </p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
+      setTradeLicenseMessage(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your trade license anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started. 
+        </p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
     };
 
-    importModule();
   }, [id]);
 
   function onSubmit(e) {
@@ -422,30 +488,355 @@ function AddCompany({
     form.append('shareCertificateNotify', shareCertificateNotify);
     form.append('immigrationCardNotify', immigrationCardNotify);
     form.append('immigrationCardNotify', immigrationCardNotify);
+
+
     form.append(
       'tradeLicenseMessage',
-      tradeLicenseMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+
+${tradeLicenseMessage.toString('html').toString()}
+
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+
+
+`.toString()
     );
     form.append(
       'establishmentCardMessage',
-      establishmentCardMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+
+${establishmentCardMessage.toString('html').toString()}
+
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+
+
+`.toString()
     );
     form.append(
-      'officeLeaseMessage',
-      officeLeaseMessage.toString('html').toString()
+      'officeLeaseMessage', `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+
+${officeLeaseMessage.toString('html').toString()}
+
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+
+
+`.toString()
+
     );
-    form.append('articleMessage', articleMessage.toString('html').toString());
+    form.append('articleMessage', `
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            <div style="max-width: 600px; margin:auto">
+                <div style="text-align:center; margin-bottom: 70px;">
+                    <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                </div>
+                <hr>
+
+${articleMessage.toString('html').toString()}
+
+             
+            </div>
+            
+            <footer style="max-width: 600px; margin:auto; text-align: center;">
+            <hr>
+            <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+            </div>
+
+            <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                </div>
+                <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                </div>
+                <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                </div>
+            </div>
+            <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+
+
+        </footer>
+        </body>
+    </html>
+
+
+`.toString()
+    );
     form.append(
       'incorporationMessage',
-      incorporationMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+  
+  ${incorporationMessage.toString('html').toString()}
+  
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+  
+  
+  `.toString()
     );
     form.append(
       'shareCertificateMessage',
-      shareCertificateMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+  
+  ${shareCertificateMessage.toString('html').toString()}
+  
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+  
+  
+  `.toString()
     );
     form.append(
       'immigrationCardMessage',
-      immigrationCardMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+  
+  ${immigrationCardMessage.toString('html').toString()}
+  
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+  
+  
+  `.toString()
     );
 
     if (edit !== true) {
@@ -585,28 +976,350 @@ function AddCompany({
 
     form.append(
       'tradeLicenseMessage',
-      tradeLicenseMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+
+${tradeLicenseMessage.toString('html').toString()}
+
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+
+
+`.toString()
     );
     form.append(
       'establishmentCardMessage',
-      establishmentCardMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+
+${establishmentCardMessage.toString('html').toString()}
+
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+
+
+`.toString()
     );
     form.append(
-      'officeLeaseMessage',
-      officeLeaseMessage.toString('html').toString()
+      'officeLeaseMessage', `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+
+${officeLeaseMessage.toString('html').toString()}
+
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+
+
+`.toString()
+
     );
-    form.append('articleMessage', articleMessage.toString('html').toString());
+    form.append('articleMessage', `
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            <div style="max-width: 600px; margin:auto">
+                <div style="text-align:center; margin-bottom: 70px;">
+                    <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                </div>
+                <hr>
+
+${articleMessage.toString('html').toString()}
+
+             
+            </div>
+            
+            <footer style="max-width: 600px; margin:auto; text-align: center;">
+            <hr>
+            <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+            </div>
+
+            <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                </div>
+                <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                </div>
+                <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                </div>
+            </div>
+            <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+
+
+        </footer>
+        </body>
+    </html>
+
+
+`.toString()
+    );
     form.append(
       'incorporationMessage',
-      incorporationMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+  
+  ${incorporationMessage.toString('html').toString()}
+  
+               
+              </div>
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+  
+  
+  `.toString()
     );
     form.append(
       'shareCertificateMessage',
-      shareCertificateMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+  
+  ${shareCertificateMessage.toString('html').toString()}
+  
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+  
+  
+  `.toString()
     );
     form.append(
       'immigrationCardMessage',
-      immigrationCardMessage.toString('html').toString()
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          </head>
+          <body>
+              <div style="max-width: 600px; margin:auto">
+                  <div style="text-align:center; margin-bottom: 70px;">
+                      <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                  </div>
+                  <hr>
+  
+  ${immigrationCardMessage.toString('html').toString()}
+  
+               
+              </div>
+              
+              <footer style="max-width: 600px; margin:auto; text-align: center;">
+              <hr>
+              <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                  <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+              </div>
+  
+              <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                  </div>
+                  <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                      <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                  </div>
+              </div>
+              <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+  
+  
+          </footer>
+          </body>
+      </html>
+  
+  
+  `.toString()
     );
 
     if (edit !== true) {
@@ -958,7 +1671,7 @@ function AddCompany({
                             setEstablishmentCardNo(e.currentTarget.value)
                           }
                           placeholder="Establishment Card Number"
-                          // type={'number'}
+                        // type={'number'}
                         />
                         <TextField
                           required
@@ -1666,9 +2379,9 @@ function AddCompany({
                                             (ele) => ele.name === el.nationality
                                           )
                                             ? countries.find(
-                                                (ele) =>
-                                                  ele.name === el.nationality
-                                              ).image
+                                              (ele) =>
+                                                ele.name === el.nationality
+                                            ).image
                                             : ''
                                         }
                                       />
@@ -1780,11 +2493,11 @@ function AddCompany({
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <SuccessModal
-          executeFunction={() => {}}
+          executeFunction={() => { }}
           setShowSuccessModal={setShowSuccessModal}
         />
       </ModalNoClose>
@@ -1792,8 +2505,8 @@ function AddCompany({
       <ModalNoClose
         setOpen={setShowSuccessUpdateModal}
         open={ShowSuccessUpdateModal}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <SuccessModal
           executeFunction={() => {
@@ -1806,17 +2519,17 @@ function AddCompany({
       <ModalNoClose
         setOpen={setShowFailureModal}
         open={ShowFailureModal}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <FailureModal setShowFailureModal={setShowFailureModal} />
       </ModalNoClose>
 
       <ModalNoClose
-        setOpen={() => {}}
+        setOpen={() => { }}
         open={ShowLoader}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <CircularProgress />
       </ModalNoClose>

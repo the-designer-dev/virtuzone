@@ -37,6 +37,7 @@ function AddVisa({
   data,
   edit
 }) {
+  console.log(data)
   const [notify, setNotify] = useState(false);
 
   const [value, setValue] = useState(null);
@@ -92,7 +93,15 @@ function AddVisa({
   useEffect(() => {
     const importModule = async () => {
       const mod = await import('react-rte');
-      setValue(mod.createEmptyValue());
+      setValue(mod.createValueFromString(
+        `   
+        <h1 style="font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">Dear ${firstName} ${lastName}</h1>
+        <p style="font-size: 17px; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;">You can now access, view and share your UAE visa anywhere and anytime with just a touch on your smartphone. Head over to the VZ Mobile App and log in to get started.</p>
+        
+       <p style="font-size: 17px; font-weight: 600; color:#777; font-family:Roboto Slab,Helvetica,Arial,sans-serif ;"> <strong>Kind regards, <br>The Virtuzone Team </strong></p> 
+  `,
+        'html'
+      ));
     };
     importModule();
   }, []);
@@ -134,7 +143,54 @@ function AddVisa({
     form.append('residencyVisaIssued', residencyVisaIssued);
     form.append('emiratesIdIssued', emiratesIdIssued);
     form.append('notify', notify);
-    form.append('message', value.toString('html').toString());
+    form.append('message', `
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+        </head>
+        <body>
+            <div style="max-width: 600px; margin:auto">
+                <div style="text-align:center; margin-bottom: 70px;">
+                    <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+                </div>
+                <hr>
+
+${value.toString('html').toString()}
+
+             
+            </div>
+            
+            <footer style="max-width: 600px; margin:auto; text-align: center;">
+            <hr>
+            <div style="text-align:center; margin-bottom: 15px; margin-top: 70px;">
+                <img style="width: 50%;" src="https://housing.designer-dev.com/image-10.png" alt="VIRTUZONE">
+            </div>
+
+            <div style="display: flex; justify-content:space-around; max-width:300px; margin: auto; gap:30px">
+                <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/App-Store-icon.png" alt="VIRTUZONE">
+                </div>
+                <div style="    display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/Playstore-icon.png" alt="VIRTUZONE">
+                </div>
+                <div style="display: flex;align-items: center;justify-content: center; padding: 0 15px;">
+                    <img style="width: 100%;" src="https://housing.designer-dev.com/webicon.png" alt="VIRTUZONE">
+                </div>
+            </div>
+            <p style="font-size: 12px; color:#999;">VIRTUZONE LLC UAE FZ | 2022</p>
+
+
+        </footer>
+        </body>
+    </html>
+
+
+`.toString()
+    );
     // form.append('employee', employee);
     if (!edit) {
       setShowLoader(true);
@@ -438,8 +494,8 @@ function AddVisa({
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <SuccessModal
           executeFunction={() => {
@@ -453,17 +509,17 @@ function AddVisa({
       <ModalNoClose
         setOpen={setShowFailureModal}
         open={ShowFailureModal}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <FailureModal setShowFailureModal={setShowFailureModal} />
       </ModalNoClose>
 
       <ModalNoClose
-        setOpen={() => {}}
+        setOpen={() => { }}
         open={ShowLoader}
-        setEdit={() => {}}
-        setData={() => {}}
+        setEdit={() => { }}
+        setData={() => { }}
       >
         <CircularProgress />
       </ModalNoClose>
