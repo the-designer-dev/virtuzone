@@ -9,6 +9,8 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import SupportServicesTable from '../../src/components/table/supportServicesTable';
 import { useEffect } from 'react';
 import axios from 'axios';
+import DisplayImage from '../../src/components/displayImage/displayImage';
+import ImageModal from '../../src/components/modal/imageModal';
 
 function SupportServices() {
   const [open, setOpen] = useState(false);
@@ -17,6 +19,8 @@ function SupportServices() {
   const [edit, setEdit] = useState(null);
   const [id, setId] = useState(null);
   const [data, setData] = useState(null);
+  const [image, setImage] = useState(null);
+  const [imageTitle, setImageTitle] = useState(null);
   useEffect(() => {
     setOpen(false);
     setEdit(false);
@@ -73,7 +77,9 @@ function SupportServices() {
               buttonPurpose={'View requests for this support service'}
               setEdit={setEdit}
               setId={setId}
+              setImageTitle={setImageTitle}
               setData={setData}
+              setImage={setImage}
               setShouldUpdate={setShouldUpdate}
               shouldUpdate={shouldUpdate}
             />
@@ -92,6 +98,12 @@ function SupportServices() {
                   setShouldUpdate={setShouldUpdate}
                 />
               }
+            />
+            <ImageModal
+              image={image}
+              setImage={setImage}
+              setImageTitle={setImageTitle}
+              children={<DisplayImage image={image} title={imageTitle} />}
             />
           </Grid>
         </Grid>

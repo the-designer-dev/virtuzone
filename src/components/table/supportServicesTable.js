@@ -49,6 +49,7 @@ const SupportServicesTable = ({
   buttonName,
   buttonURL,
   buttonPurpose,
+  setImageTitle,
   setEdit,
   setId,
   setData,
@@ -134,98 +135,139 @@ const SupportServicesTable = ({
               <TableCell align="center">#</TableCell>
               <TableCell align="center">Service Name</TableCell>
               <TableCell align="center">Service Description</TableCell>
-              <TableCell align="center">View Requests</TableCell>
+              <TableCell align="center">Circle Color</TableCell>
+              <TableCell align="center">Card Color</TableCell>
+              <TableCell align="center">View Icon</TableCell>
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data && data.map((el) => (
-              <TableRow hover>
-                <TableCell align="center">
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {++i}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.name}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <Typography
-                    variant="body1"
-                    fontWeight="bold"
-                    gutterBottom
-                    noWrap
-                  >
-                    {el.description}
-                  </Typography>
-                </TableCell>
+            {data &&
+              data.map((el) => (
+                <TableRow hover>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {++i}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography
+                        variant="body1"
+                        fontWeight="bold"
+                        gutterBottom
+                        noWrap
+                      >
+                        {el.name1}
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        fontWeight="400"
+                        gutterBottom
+                        noWrap
+                        sx={{ paddingLeft: '5px' }}
+                      >
+                        {el.name2}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      gutterBottom
+                      noWrap
+                    >
+                      {el.description}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Tooltip title={`color = ${el.circleColor}`} arrow>
+                      <Box
+                        sx={{
+                          height: '40px',
+                          width: '40px',
+                          borderRadius: '100%',
+                          backgroundColor: el.circleColor,
+                          margin: 'auto'
+                        }}
+                      ></Box>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Tooltip title={`color = ${el.cardColor}`} arrow>
+                      <Box
+                        sx={{
+                          height: '40px',
+                          width: '40px',
+                          borderRadius: '100%',
+                          backgroundColor: el.cardColor,
+                          margin: 'auto'
+                        }}
+                      ></Box>
+                    </Tooltip>
+                  </TableCell>
 
-                <TableCell align="center">
-                  <Tooltip title={buttonPurpose} arrow>
-                    <Button
-                      onClick={() => {
-                        router.push(`/${buttonURL}/${el._id}`);
-                      }}
-                      sx={{ margin: 1 }}
-                      variant="contained"
-                    >
-                      {buttonName}
-                    </Button>
-                  </Tooltip>
-                </TableCell>
+                  <TableCell align="center">
+                    <Tooltip title="View icon" arrow>
+                      <Button
+                        sx={{ margin: 1 }}
+                        onClick={() => {
+                          setImage(el.image);
+                          setImageTitle('Support Service');
+                        }}
+                        variant="contained"
+                      >
+                        View
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
 
-                <TableCell align="right">
-                  <Tooltip title="Edit" arrow>
-                    <IconButton
-                      sx={{
-                        '&:hover': {
-                          background: theme.colors.primary.lighter
-                        },
-                        color: theme.palette.error.main
-                      }}
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setEdit(true);
-                        setId(el._id);
-                        setData(el);
-                      }}
-                    >
-                      <EditTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Delete" arrow>
-                    <IconButton
-                      sx={{
-                        '&:hover': { background: theme.colors.error.lighter },
-                        color: theme.palette.error.main
-                      }}
-                      color="inherit"
-                      size="small"
-                      onClick={() => {
-                        setShowModal(true)
-                        setID(el._id)
-                        // deleteRecord(el._id);
-                      }}
-                    >
-                      <DeleteTwoToneIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell align="right">
+                    <Tooltip title="Edit" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': {
+                            background: theme.colors.primary.lighter
+                          },
+                          color: theme.palette.error.main
+                        }}
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setEdit(true);
+                          setId(el._id);
+                          setData(el);
+                        }}
+                      >
+                        <EditTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete" arrow>
+                      <IconButton
+                        sx={{
+                          '&:hover': { background: theme.colors.error.lighter },
+                          color: theme.palette.error.main
+                        }}
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setShowModal(true);
+                          setID(el._id);
+                          // deleteRecord(el._id);
+                        }}
+                      >
+                        <DeleteTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -244,7 +286,10 @@ const SupportServicesTable = ({
         setOpen={setShowModal}
         open={showModal}
         children={
-          <ConfirmationModal executeFunction={() => deleteRecord(id)} setShowModal={setShowModal} />
+          <ConfirmationModal
+            executeFunction={() => deleteRecord(id)}
+            setShowModal={setShowModal}
+          />
         }
       />
     </Card>
