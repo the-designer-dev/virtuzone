@@ -19,7 +19,11 @@ import {
   useTheme,
   CardHeader,
   Button,
-  Modal
+  Modal,
+  Container,
+  CardContent,
+  TextField,
+  Grid
 } from '@mui/material';
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
@@ -64,8 +68,12 @@ const CompanyTable = ({
   var i = 0;
   const [id, setID] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const [resetEmail, setEmail] = useState('');
+  const [resetPassword, setPassword] = useState('');
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [newPassword, setNewPassword] = useState(null);
   const [filters, setFilters] = useState({
     status: null
   });
@@ -95,6 +103,23 @@ const CompanyTable = ({
     axios({
       method: 'DELETE',
       url: `${process.env.NEXT_PUBLIC_BASE_URL}/company?id=${id}`,
+      headers: {
+        'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
+      }
+    }).then((res) => {
+      setShouldUpdate(!shouldUpdate);
+    });
+  };
+
+  const resetPasswordFunc = (e) => {
+    e.preventDefault();
+    axios({
+      method: 'POST',
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/resetPassword`,
+      data: {
+        email: resetEmail,
+        password: newPassword
+      },
       headers: {
         'x-auth-token': process.env.NEXT_PUBLIC_ADMIN_JWT
       }
@@ -327,6 +352,24 @@ const CompanyTable = ({
                   )}
                   {!actions && (
                     <TableCell align="right">
+                      <Tooltip title="Reset Password" placement="top" arrow>
+                        <IconButton
+                          sx={{
+                            '&:hover': {
+                              background: theme.colors.primary.lighter
+                            },
+                            color: theme.palette.error.main
+                          }}
+                          color="inherit"
+                          size="small"
+                          onClick={() => {
+                            setEmail(el.owner.email);
+                            setShowModal2(true);
+                          }}
+                        >
+                          Reset
+                        </IconButton>
+                      </Tooltip>
                       <Tooltip title="Edit" arrow>
                         <IconButton
                           sx={{
@@ -395,6 +438,82 @@ const CompanyTable = ({
           />
         }
       />
+      <ModalNoClose
+        sx={{ display: 'flex', alignItems: 'center' }}
+        setOpen={setShowModal2}
+        open={showModal2}
+      >
+        <Container sx={{ mt: 2 }} maxWidth="lg">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="stretch"
+            spacing={3}
+          >
+            <Grid item xs={12}>
+              <Card>
+                <Divider />
+                <CardContent>
+                  <Box
+                    onSubmit={(e) => resetPasswordFunc(e)}
+                    component="form"
+                    sx={{
+                      '& .MuiTextField-root': { m: 1, width: '25ch' }
+                    }}
+                    noValidate
+                    autoComplete="off"
+                  >
+                    <Typography variant="h3">
+                      Please set the new password
+                    </Typography>
+                    <div>
+                      <Box
+                        sx={{
+                          margin: '9px',
+                          display: 'flex'
+                        }}
+                        component={'div'}
+                      >
+                        <TextField
+                          id="outlined-password-input"
+                          label="New Password"
+                          fullWidth
+                          sx={{ '&.MuiTextField-root': { width: '100%' } }}
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          placeholder="New Password"
+                        />
+                      </Box>
+                    </div>
+                    <div>
+                      <Box
+                        sx={{
+                          margin: '9px',
+                          display: 'flex',
+                          justifyContent: 'flex-end'
+                        }}
+                        component={'div'}
+                      >
+                        <Button
+                          onClick={() => setShowModal2(false)}
+                          type="button"
+                          sx={{ margin: 1 }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button type="submit" sx={{ margin: 1 }}>
+                          Reset
+                        </Button>
+                      </Box>
+                    </div>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
+      </ModalNoClose>
     </Card>
   );
 };

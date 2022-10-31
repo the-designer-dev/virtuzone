@@ -24,8 +24,10 @@ function AddSupportService({ shouldUpdate, setShouldUpdate, edit, id, data }) {
   const [ShowLoader, setShowLoader] = useState(false);
   const [name1, setName1] = useState(data ? data.name1 : null);
   const [name2, setName2] = useState(data ? data.name2 : null);
-  const [circleColor, setCircleColor] = useState(data ? data.color : '#000');
-  const [cardColor, setCardColor] = useState(data ? data.color : '#000');
+  const [circleColor, setCircleColor] = useState(
+    data ? data.circleColor : '#000'
+  );
+  const [cardColor, setCardColor] = useState(data ? data.cardColor : '#000');
   const [ShowSuccessModal, setShowSuccessModal] = useState(false);
   const [ShowFailureModal, setShowFailureModal] = useState(false);
   const [image, setImage] = useState(data ? data.image : null);
