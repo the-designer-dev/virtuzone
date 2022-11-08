@@ -28,7 +28,14 @@ import SuccessModal from '../successBox';
 import FailureModal from '../failureBox';
 const RichTextEditor = dynamic(() => import('react-rte'), { ssr: false });
 
-function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data }) {
+function AddConsultant({
+  setImage,
+  shouldUpdate,
+  setShouldUpdate,
+  edit,
+  id,
+  data
+}) {
   const [ShowLoader, setShowLoader] = useState(false);
   const [ShowSuccessModal, setShowSuccessModal] = useState(false);
   const [ShowFailureModal, setShowFailureModal] = useState(false);
@@ -40,31 +47,6 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
   const [notify, setNotify] = useState(false);
 
   const [value, setValue] = useState(null);
-
-  const LANGUAGES = [
-    'Mandarin Chinese',
-    'Spanish',
-    'English',
-    'Hindi/Urdu',
-    'Arabic',
-    'Bengali',
-    'Portuguese',
-    'Russian',
-    'Japanese',
-    'German',
-    'Javanese',
-    'Punjabi',
-    'Wu',
-    'French',
-    'Telugu',
-    'Vietnamese',
-    'Marathi',
-    'Korean',
-    'Tamil',
-    'Italian',
-    'Turkish',
-    'Cantonese/Yue'
-  ];
 
   const handleOnChange = (value) => {
     setValue(value);
@@ -92,9 +74,8 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
     form.append('lastName', lastName);
     form.append('language', language);
 
-
     if (edit !== true) {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'POST',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/consultant`,
@@ -105,15 +86,15 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
         data: form
       })
         .then((res) => {
-          setShowLoader(false)
-          setShowSuccessModal(true)
+          setShowLoader(false);
+          setShowSuccessModal(true);
         })
         .catch((err) => {
-          setShowLoader(false)
-          setShowFailureModal(true)
+          setShowLoader(false);
+          setShowFailureModal(true);
         });
     } else {
-      setShowLoader(true)
+      setShowLoader(true);
       axios({
         method: 'PUT',
         url: `${process.env.NEXT_PUBLIC_BASE_URL}/consultant?id=${id}`,
@@ -123,12 +104,12 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
         data: form
       })
         .then((res) => {
-          setShowLoader(false)
-          setShowSuccessModal(true)
+          setShowLoader(false);
+          setShowSuccessModal(true);
         })
         .catch((err) => {
-          setShowLoader(false)
-          setShowFailureModal(true)
+          setShowLoader(false);
+          setShowFailureModal(true);
         });
     }
   }
@@ -177,26 +158,21 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
                       label="Last Name"
                       placeholder="Last Name"
                       value={lastName}
-                      onChange={(e) => { setLastName(e.target.value); }}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
                     />
 
-                    <Select
-                      select
+                    <TextField
                       required
                       id="outlined-read-only"
-                      input={<TextField label="Language" />}
-                      label="Language"
-                      placeholder={'Language'}
+                      label="Designation"
+                      placeholder="Designation"
                       value={language}
-                      maxWidth
-                      onChange={(e) => setlanguage(e.target.value)}
-                    >
-                      {LANGUAGES.map((el) => (
-                        <MenuItem value={el}>
-                          <Typography variant="body2">{el}</Typography>
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      onChange={(e) => {
+                        setlanguage(e.target.value);
+                      }}
+                    />
 
                     <TextField
                       required
@@ -218,7 +194,6 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
                       }}
                       component={'div'}
                     >
-
                       <Button type="submit" sx={{ margin: 1 }}>
                         Submit
                       </Button>
@@ -233,30 +208,34 @@ function AddConsultant({ setImage, shouldUpdate, setShouldUpdate, edit, id, data
       <ModalNoClose
         setOpen={setShowSuccessModal}
         open={ShowSuccessModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
-        <SuccessModal executeFunction={() => { setShouldUpdate(!shouldUpdate); }} setShowSuccessModal={setShowSuccessModal} />
+        <SuccessModal
+          executeFunction={() => {
+            setShouldUpdate(!shouldUpdate);
+          }}
+          setShowSuccessModal={setShowSuccessModal}
+        />
       </ModalNoClose>
 
       <ModalNoClose
         setOpen={setShowFailureModal}
         open={ShowFailureModal}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <FailureModal setShowFailureModal={setShowFailureModal} />
       </ModalNoClose>
 
       <ModalNoClose
-        setOpen={() => { }}
+        setOpen={() => {}}
         open={ShowLoader}
-        setEdit={() => { }}
-        setData={() => { }}
+        setEdit={() => {}}
+        setData={() => {}}
       >
         <CircularProgress />
       </ModalNoClose>
-
     </>
   );
 }
