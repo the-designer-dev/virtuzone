@@ -36,17 +36,17 @@ import BasicModal from '../modal';
 import ModalNoClose from '../modal/modalNoClose';
 
 const applyFilters = (cryptoOrders, filters) => {
-  //   return cryptoOrders.filter((cryptoOrder) => {
-  //     let matches = true;
-  //     if (filters.status && cryptoOrder.status !== filters.status) {
-  //       matches = false;
-  //     }
-  //     return matches;
-  //   });
+  return cryptoOrders.filter((cryptoOrder) => {
+    let matches = true;
+    if (filters.status && cryptoOrder.status !== filters.status) {
+      matches = false;
+    }
+    return matches;
+  });
 };
 
 const applyPagination = (cryptoOrders, page, limit) => {
-  //   return cryptoOrders.slice(page * limit, page * limit + limit);
+  return cryptoOrders.slice(page * limit, page * limit + limit);
 };
 
 const CompanyTable = ({
@@ -178,8 +178,8 @@ const CompanyTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data &&
-              data.map((el) => (
+            {paginatedData &&
+              paginatedData.map((el) => (
                 <TableRow hover>
                   <TableCell>
                     <Typography
@@ -419,7 +419,7 @@ const CompanyTable = ({
       <Box p={2}>
         <TablePagination
           component="div"
-          count={10}
+          count={data.length}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleLimitChange}
           page={page}
